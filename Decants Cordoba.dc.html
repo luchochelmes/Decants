@@ -1,8 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="es-AR">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Decants Córdoba — Perfumes árabes originales en decants de 5 ml</title>
+<meta name="description" content="Decants de 5 ml de perfumes árabes 100% originales (Lattafa, Armaf, Rasasi y más). Envíos a todo el país por Andreani o entrega en mano en Córdoba Capital.">
+<meta name="keywords" content="decants, perfumes árabes, perfumes originales, Lattafa, Armaf, Rasasi, Khamrah, Hawas, Córdoba, Argentina, decants 5ml">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Decants Córdoba">
+<link rel="canonical" href="https://decantscba.vercel.app/">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="apple-touch-icon" href="assets/logo.png">
+<meta name="theme-color" content="#FFFCF2">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Decants Córdoba">
+<meta property="og:locale" content="es_AR">
+<meta property="og:url" content="https://decantscba.vercel.app/">
+<meta property="og:title" content="Decants Córdoba — Perfumes árabes originales en decants de 5 ml">
+<meta property="og:description" content="Fraccionamos perfumes árabes 100% originales en atomizadores de vidrio de 5 ml. Envíos a todo el país por Andreani o entrega en mano en Córdoba Capital.">
+<meta property="og:image" content="https://decantscba.vercel.app/assets/logo.png">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Decants Córdoba — Perfumes árabes originales en decants de 5 ml">
+<meta name="twitter:description" content="Fraccionamos perfumes árabes 100% originales en atomizadores de vidrio de 5 ml. Envíos a todo el país o entrega en mano en Córdoba Capital.">
+<meta name="twitter:image" content="https://decantscba.vercel.app/assets/logo.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Decants Córdoba",
+  "description": "Fraccionamos perfumes árabes 100% originales en atomizadores de vidrio de 5 ml.",
+  "url": "https://decantscba.vercel.app/",
+  "image": "https://decantscba.vercel.app/assets/logo.png",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Córdoba",
+    "addressRegion": "Córdoba",
+    "addressCountry": "AR"
+  },
+  "areaServed": "AR"
+}
+</script>
+
 <script src="./support.js"></script>
 </head>
 <body>
@@ -1023,7 +1065,7 @@ class Component extends DCLogic {
     const isAndreani = s.method === 'andreani';
     const orderMsg = `¡Hola Graciano! Quiero coordinar una entrega en Córdoba Capital:\n${cartItems.map(i => `• ${i.qty}× ${i.name}`).join('\n')}\nTotal: ${this.fmt(subtotal)}`;
 
-    const mobile = s.w < 760, sc = mobile ? Math.min(1, (s.w - 40) / 300) * .92 : 1;
+    const mobile = s.w < 760, sc = mobile ? Math.min(1, (s.w - 40) / 300) * .74 : 1;
     return {
       desktop: !mobile, carScale: sc, carH: Math.round(470 * sc + 10), carTop: Math.round(40 / sc * sc),
       cartCount, ringItems, countdown,

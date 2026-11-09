@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /administracion
+Disallow: /backoffice.html
+
+Sitemap: https://decantscba.vercel.app/sitemap.xml
