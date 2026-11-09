@@ -576,6 +576,12 @@ class Component extends DCLogic {
   ];
   FEATURED_IDS = ["khamrah", "club-de-nuit-intense-man-edt", "hawas", "badee-al-oud-sublime", "asad-bourbon", "turathi-blue", "club-de-nuit-precieux", "rayhaan-italia", "erba-pura-100ml", "9-pm-elixir"];
   KIT = { id: 'kit', name: 'Kit Descubrimiento', price: 28900, img: 'assets/products/073-khamrah.jpg' };
+  KIT_IMAGES = [
+    { img: 'assets/kit/2.webp', name: 'The Kingdom' },
+    { img: 'assets/kit/3.webp', name: 'Asad Bourbon' },
+    { img: 'assets/kit/4.webp', name: 'Amber Oud Gold Edition' },
+    { img: 'assets/kit/5.webp', name: 'Bharara King' }
+  ];
   CATS = [
     { id: 'dulces', emoji: '🍯', title: 'Dulces', subtitle: 'Vainilla, caramelo, golosina.', notes: 'Vainilla · Caramelo · Golosina', tint: 'oklch(0.92 0.045 0)', sample: 'yara-rosa' },
     { id: 'calidos', emoji: '🔥', title: 'Cálidos', subtitle: 'Canela, ámbar, azafrán.', notes: 'Canela · Ámbar · Azafrán', tint: 'oklch(0.9 0.06 70)', sample: 'khamrah' },
@@ -1010,10 +1016,7 @@ class Component extends DCLogic {
       ringTransform: `translateZ(${-r}px) rotateY(${-s.idx * a + s.dragDeg}deg)`,
       ringTransition: s.dragging ? 'none' : 'transform .9s cubic-bezier(.2,.8,.2,1)',
       counter: `${pad(mod(s.idx, N) + 1)} / ${pad(N)}`,
-      kitVials: ['khamrah', 'hawas', 'badee-al-oud-for-glory', 'delilah'].map((id, i) => {
-        const p = this.FULL.find(x => x.id === id);
-        return { img: p.img, name: p.name, t: `rotateY(${i * 90}deg) translateZ(95px)` };
-      }),
+      kitVials: this.KIT_IMAGES.map((v, i) => ({ ...v, t: `rotateY(${i * 90}deg) translateZ(95px)` })),
       prev: () => this.setState(st => ({ idx: st.idx - 1 })),
       next: () => this.setState(st => ({ idx: st.idx + 1 })),
       pauseAuto: () => this.setState({ paused: true }), resumeAuto: () => this.setState({ paused: false }),
