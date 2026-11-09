@@ -393,7 +393,7 @@ input{font-family:inherit}
           <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:16px;padding:32px">
             <div style="width:64px;height:64px;border-radius:50%;background:#FFD400;border:2px solid #16140F;display:grid;place-items:center;font-size:28px">✓</div>
             <span style="font-family:'Newsreader',serif;font-weight:800;font-size:32px;letter-spacing:-.01em;line-height:1">¡Pedido recibido!</span>
-            <span style="color:#4A4538;line-height:1.5">Te mandamos el código de seguimiento de Andreani por mail apenas despachamos el paquete.</span>
+            <span style="color:#4A4538;line-height:1.5">{{ doneMsg }}</span>
             <button onClick="{{ resetCart }}" style="align-self:flex-start;background:#16140F;color:#FFFCF2;border:none;border-radius:999px;padding:14px 22px;font-weight:600">Seguir mirando</button>
           </div>
         </sc-if>
@@ -446,18 +446,23 @@ input{font-family:inherit}
         <sc-if value="{{ showInfo }}" hint-placeholder-val="{{ false }}">
           <div style="flex:1;overflow:auto;padding:20px 24px;display:flex;flex-direction:column;gap:16px">
             <button onClick="{{ backToCart }}" style="align-self:flex-start;background:transparent;border:none;padding:0;font-size:13px;font-weight:600;text-decoration:underline;text-underline-offset:3px;color:#16140F">← Volver al carrito</button>
-            <span style="font-family:'Instrument Sans',sans-serif;font-size:11px;font-weight:600;color:#5E584B;letter-spacing:.08em">DATOS PARA EL ENVÍO</span>
+            <span style="font-family:'Instrument Sans',sans-serif;font-size:11px;font-weight:600;color:#5E584B;letter-spacing:.08em">{{ infoTitle }}</span>
             <input value="{{ formNombre }}" onChange="{{ onFormNombre }}" placeholder="Nombre" style="width:100%;border:1.5px solid #16140F;border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
             <input value="{{ formApellido }}" onChange="{{ onFormApellido }}" placeholder="Apellido" style="width:100%;border:1.5px solid #16140F;border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
             <input value="{{ formTelefono }}" onChange="{{ onFormTelefono }}" placeholder="Teléfono" inputmode="tel" style="border:1.5px solid #16140F;border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
-            <input value="{{ formDireccion }}" onChange="{{ onFormDireccion }}" placeholder="Dirección (calle, número, ciudad)" style="border:1.5px solid #16140F;border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
-            <div style="display:flex;flex-direction:column;gap:6px">
-              <input value="{{ cp }}" onChange="{{ onCp }}" placeholder="Código postal" inputmode="numeric" style="border:1.5px solid {{ cpBorder }};border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
-              <span style="font-size:12px;color:#5E584B">{{ shipNote }}</span>
-            </div>
-            <input value="{{ formEmail }}" onChange="{{ onFormEmail }}" placeholder="Email (para el seguimiento del pedido)" type="email" style="border:1.5px solid #16140F;border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
+            <sc-if value="{{ isAndreani }}" hint-placeholder-val="{{ true }}">
+              <input value="{{ formDireccion }}" onChange="{{ onFormDireccion }}" placeholder="Dirección (calle, número, ciudad)" style="border:1.5px solid #16140F;border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <input value="{{ cp }}" onChange="{{ onCp }}" placeholder="Código postal" inputmode="numeric" style="border:1.5px solid {{ cpBorder }};border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
+                <span style="font-size:12px;color:#5E584B">{{ shipNote }}</span>
+              </div>
+              <input value="{{ formEmail }}" onChange="{{ onFormEmail }}" placeholder="Email (para el seguimiento del pedido)" type="email" style="border:1.5px solid #16140F;border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
+            </sc-if>
+            <sc-if value="{{ notAndreani }}" hint-placeholder-val="{{ false }}">
+              <input value="{{ formZona }}" onChange="{{ onFormZona }}" placeholder="Zona o barrio para coordinar la entrega" style="border:1.5px solid #16140F;border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
+            </sc-if>
             <sc-if value="{{ formErr }}" hint-placeholder-val="{{ false }}">
-              <span style="font-size:13px;color:#C0392B">Completá todos los campos con un email válido.</span>
+              <span style="font-size:13px;color:#C0392B">{{ formErrMsg }}</span>
             </sc-if>
           </div>
           <div style="padding:20px 24px 24px;border-top:1.5px solid #16140F;display:flex;flex-direction:column;gap:14px;background:#FFFFFF">
@@ -501,7 +506,7 @@ input{font-family:inherit}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;whatsapp&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;5493510000000&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;autoRotate&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
 class Component extends DCLogic {
-  state = { w: typeof window !== 'undefined' ? window.innerWidth : 1280, idx: 0, q: '', cat: 'todos', view: 'home', cart: [], open: false, now: Date.now(), method: 'andreani', cp: '', cpErr: false, done: false, toast: null, paused: false, dragging: false, dragDeg: 0, scrolled: false, catHover: -1, sprayed: false, detail: null, detailQty: 1, infoOpen: false, formNombre: '', formApellido: '', formTelefono: '', formDireccion: '', formEmail: '', formErr: false };
+  state = { w: typeof window !== 'undefined' ? window.innerWidth : 1280, idx: 0, q: '', cat: 'todos', view: 'home', cart: [], open: false, now: Date.now(), method: 'andreani', cp: '', cpErr: false, done: false, toast: null, paused: false, dragging: false, dragDeg: 0, scrolled: false, catHover: -1, sprayed: false, detail: null, detailQty: 1, infoOpen: false, formNombre: '', formApellido: '', formTelefono: '', formDireccion: '', formEmail: '', formZona: '', formErr: false };
 
   FULL = [
     { id: '9-am-dive', name: '9 AM Dive', price: 6900, img: 'assets/products/001-9-am-dive.jpg' },
@@ -1089,7 +1094,6 @@ class Component extends DCLogic {
     const subtotal = cartItems.reduce((t, i) => t + i.price * i.qty, 0);
     const cartCount = s.cart.reduce((t, i) => t + i.qty, 0);
     const isAndreani = s.method === 'andreani';
-    const orderMsg = `¡Hola Graciano! Quiero coordinar una entrega en Córdoba Capital:\n${cartItems.map(i => `• ${i.qty}× ${i.name}`).join('\n')}\nTotal: ${this.fmt(subtotal)}`;
 
     const mobile = s.w < 760, sc = mobile ? Math.min(1, (s.w - 40) / 300) * .74 : 1;
     return {
@@ -1120,25 +1124,34 @@ class Component extends DCLogic {
       cp: s.cp, cpBorder: s.cpErr ? '#C0392B' : '#16140F',
       onCp: e => this.setState({ cp: e.target.value.replace(/\D/g, '').slice(0, 4), cpErr: false }),
       shipNote: s.cpErr ? 'Ingresá un código postal válido (4 dígitos).' : s.cp.length === 4 ? `Envío a CP ${s.cp}: el costo de Andreani se calcula en el pago.` : 'Ingresá tu CP para calcular el envío a domicilio o sucursal.',
-      checkoutLabel: isAndreani ? 'Continuar →' : 'Enviar pedido por WhatsApp →',
-      checkout: () => {
-        if (isAndreani) this.setState({ infoOpen: true });
-        else window.open(this.waLink(orderMsg), '_blank');
-      },
+      checkoutLabel: 'Continuar →',
+      checkout: () => this.setState({ infoOpen: true }),
+      notAndreani: !isAndreani,
+      infoTitle: isAndreani ? 'DATOS PARA EL ENVÍO' : 'TUS DATOS PARA COORDINAR',
       formNombre: s.formNombre, onFormNombre: e => this.setState({ formNombre: e.target.value, formErr: false }),
       formApellido: s.formApellido, onFormApellido: e => this.setState({ formApellido: e.target.value, formErr: false }),
       formTelefono: s.formTelefono, onFormTelefono: e => this.setState({ formTelefono: e.target.value, formErr: false }),
       formDireccion: s.formDireccion, onFormDireccion: e => this.setState({ formDireccion: e.target.value, formErr: false }),
       formEmail: s.formEmail, onFormEmail: e => this.setState({ formEmail: e.target.value, formErr: false }),
+      formZona: s.formZona, onFormZona: e => this.setState({ formZona: e.target.value, formErr: false }),
       formErr: s.formErr,
+      formErrMsg: isAndreani ? 'Completá todos los campos con un email válido.' : 'Completá nombre, apellido, teléfono y zona.',
+      doneMsg: isAndreani ? 'Te mandamos el código de seguimiento de Andreani por mail apenas despachamos el paquete.' : 'Te escribimos por WhatsApp para coordinar día y horario de entrega en Córdoba Capital.',
       backToCart: () => this.setState({ infoOpen: false }),
       confirmOrder: () => {
-        if (s.cp.length !== 4) return this.setState({ cpErr: true, formErr: true });
-        const valid = s.formNombre.trim() && s.formApellido.trim() && s.formTelefono.trim() && s.formDireccion.trim() && /\S+@\S+\.\S+/.test(s.formEmail);
-        if (!valid) return this.setState({ formErr: true });
-        const infoMsg = `¡Hola Graciano! Confirmo mi pedido por Andreani:\n${cartItems.map(i => `• ${i.qty}× ${i.name}`).join('\n')}\nTotal: ${this.fmt(subtotal)}\n\nDatos de envío:\n${s.formNombre} ${s.formApellido}\nTel: ${s.formTelefono}\nDirección: ${s.formDireccion}, CP ${s.cp}\nEmail para seguimiento: ${s.formEmail}`;
-        window.open(this.waLink(infoMsg), '_blank');
-        this.setState({ done: true, cart: [], cp: '', infoOpen: false, formNombre: '', formApellido: '', formTelefono: '', formDireccion: '', formEmail: '', formErr: false });
+        if (isAndreani) {
+          if (s.cp.length !== 4) return this.setState({ cpErr: true, formErr: true });
+          const valid = s.formNombre.trim() && s.formApellido.trim() && s.formTelefono.trim() && s.formDireccion.trim() && /\S+@\S+\.\S+/.test(s.formEmail);
+          if (!valid) return this.setState({ formErr: true });
+          const infoMsg = `¡Hola Graciano! Confirmo mi pedido por Andreani:\n${cartItems.map(i => `• ${i.qty}× ${i.name}`).join('\n')}\nTotal: ${this.fmt(subtotal)}\n\nDatos de envío:\n${s.formNombre} ${s.formApellido}\nTel: ${s.formTelefono}\nDirección: ${s.formDireccion}, CP ${s.cp}\nEmail para seguimiento: ${s.formEmail}`;
+          window.open(this.waLink(infoMsg), '_blank');
+        } else {
+          const valid = s.formNombre.trim() && s.formApellido.trim() && s.formTelefono.trim() && s.formZona.trim();
+          if (!valid) return this.setState({ formErr: true });
+          const infoMsg = `¡Hola Graciano! Quiero coordinar la entrega en Córdoba Capital:\n${cartItems.map(i => `• ${i.qty}× ${i.name}`).join('\n')}\nTotal: ${this.fmt(subtotal)}\n\nDatos:\n${s.formNombre} ${s.formApellido}\nTel: ${s.formTelefono}\nZona: ${s.formZona}`;
+          window.open(this.waLink(infoMsg), '_blank');
+        }
+        this.setState({ done: true, cart: [], cp: '', infoOpen: false, formNombre: '', formApellido: '', formTelefono: '', formDireccion: '', formEmail: '', formZona: '', formErr: false });
       },
       q: s.q, onQ: e => this.setState({ q: e.target.value }),
       catCards, catChips, catSubtitle, showResetCat, resetCat: () => this.setState({ cat: 'todos', q: '' }), gridItems, noResults: gridItems.length === 0,
