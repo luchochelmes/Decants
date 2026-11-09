@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,500;0,600;0,700;0,800;1,600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth}
+.cat-grid{display:grid;grid-template-columns:1fr;gap:18px}
+@media (min-width:640px){.cat-grid{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1000px){.cat-grid{grid-template-columns:repeat(3,1fr)}}
+@keyframes letterIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes highlightIn{from{opacity:0;transform:rotate(-2deg) scaleX(0)}to{opacity:1;transform:rotate(-2deg) scaleX(1)}}
+@keyframes blockIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+body{margin:0;background:#FFFCF2;color:#16140F;font-family:'Instrument Sans',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+*{box-sizing:border-box}
+a{color:#16140F;text-decoration:none}
+a:hover{color:#000}
+button{font-family:inherit;cursor:pointer}
+input{font-family:inherit}
+</style>
+</helmet>
+<div style="min-height:100vh;background:#FFFCF2">
+
+  <div data-header-group="1" style="position:fixed;top:0;left:0;right:0;z-index:50;transform:{{ headerTransform }};transition:transform .4s cubic-bezier(.2,.8,.2,1)">
+  <div style="background:#16140F;color:#FFD400;overflow:hidden;height:36px;display:flex;align-items:center">
+    <div data-marquee="1" style="display:flex;gap:48px;white-space:nowrap;font-family:'Instrument Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;will-change:transform">
+      <span>Envíos a todo el país por Andreani</span><span>✦</span><span>Entregas en Córdoba Capital por WhatsApp</span><span>✦</span><span>Decants de 5 ml de frascos originales</span><span>✦</span><span>Atomizador de vidrio recargable</span><span>✦</span>
+      <span>Envíos a todo el país por Andreani</span><span>✦</span><span>Entregas en Córdoba Capital por WhatsApp</span><span>✦</span><span>Decants de 5 ml de frascos originales</span><span>✦</span><span>Atomizador de vidrio recargable</span><span>✦</span>
+    </div>
+  </div>
+
+  <nav style="background:rgba(255,252,242,.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(22,20,15,.08)">
+    <div style="max-width:1280px;margin:0 auto;padding:12px clamp(16px,4vw,40px);display:flex;align-items:center;justify-content:space-between;gap:20px">
+      <a href="#top" style="display:flex;align-items:center;gap:12px">
+        <div style="width:48px;height:48px;border-radius:50%;background:#FFFFFF;border:1.5px solid #D9D4C7;overflow:hidden;display:grid;place-items:center">
+          <img src="assets/logo.png" alt="Decants Córdoba" style="width:150%;height:150%;object-fit:cover;object-position:50% 46%"></img>
+        </div>
+        <div style="display:flex;flex-direction:column;line-height:1.05">
+          <span style="font-family:'Newsreader',serif;font-weight:800;font-size:18px;letter-spacing:-.02em">Decants Córdoba</span>
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:11px;color:#5E584B">— Graciano</span>
+        </div>
+      </a>
+      <div style="display:flex;align-items:center;gap:28px;font-size:15px;font-weight:500">
+        <sc-if value="{{ desktop }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;gap:26px;flex-wrap:wrap">
+          <button onClick="{{ goCategoriasSection }}" style="opacity:.8;background:transparent;border:none;font-size:15px;font-weight:500;padding:0">Categorías</button>
+          <button onClick="{{ openCatalog }}" style="opacity:.8;background:transparent;border:none;font-size:15px;font-weight:500;padding:0">Catálogo completo</button>
+          <button onClick="{{ goOfertaSection }}" style="opacity:.8;background:transparent;border:none;font-size:15px;font-weight:500;padding:0">Oferta</button>
+          <button onClick="{{ goNosotrosSection }}" style="opacity:.8;background:transparent;border:none;font-size:15px;font-weight:500;padding:0">Nosotros</button>
+        </div>
+        </sc-if>
+        <button onClick="{{ openCart }}" style="display:flex;align-items:center;gap:10px;background:#16140F;color:#FFFCF2;border:none;border-radius:999px;padding:10px 16px 10px 18px;font-size:14px;font-weight:600">
+          <span>Carrito</span>
+          <span style="background:#FFD400;color:#16140F;border-radius:999px;min-width:24px;height:24px;display:grid;place-items:center;font-size:12px;font-family:'Instrument Sans',sans-serif">{{ cartCount }}</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  </div>
+
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+  <header id="top" style="position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;background:#16140F">
+    <video data-hero-video="1" autoplay muted playsinline preload="auto" src="assets/hero-video.mp4" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 50%"></video>
+    <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(22,20,15,.92) 0%,rgba(22,20,15,.78) 32%,rgba(22,20,15,.4) 60%,rgba(22,20,15,.15) 100%)"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(22,20,15,.55) 0%,rgba(22,20,15,0) 22%,rgba(22,20,15,0) 78%,rgba(22,20,15,.4) 100%)"></div>
+
+    <div style="position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:clamp(40px,6vw,80px) clamp(16px,4vw,40px);width:100%">
+      <div style="display:flex;flex-direction:column;gap:28px;max-width:640px">
+        <span style="font-family:'Newsreader',serif;font-style:italic;font-weight:600;font-size:clamp(20px,2vw,26px);letter-spacing:0;color:#D9D3C3;{{ quoteStyle }}">“Oler bien no debería ser una apuesta.”</span>
+        <h1 style="margin:0;font-family:'Newsreader',serif;font-weight:800;font-size:clamp(44px,6.4vw,92px);line-height:.92;letter-spacing:-.015em;text-wrap:balance;color:#FFFCF2">
+          <sc-for list="{{ headlineWords }}" as="w" hint-placeholder-count="7"><span style="display:inline-block"><sc-for list="{{ w.letters }}" as="l" hint-placeholder-count="8"><span style="{{ l.style }}">{{ l.ch }}</span></sc-for></span> </sc-for><span style="position:relative;display:inline-block;z-index:0"><sc-for list="{{ headlineWord }}" as="l" hint-placeholder-count="6"><span style="{{ l.style }}">{{ l.ch }}</span></sc-for><span style="position:absolute;left:-4%;right:-4%;bottom:6%;height:42%;background:#FFD400;z-index:-1;border-radius:6px;opacity:0;{{ highlightStyle }}"></span></span><sc-for list="{{ headlineEnd }}" as="l" hint-placeholder-count="2"><span style="{{ l.style }}">{{ l.ch }}</span></sc-for>
+        </h1>
+        <p style="margin:0;font-size:clamp(17px,1.5vw,20px);line-height:1.55;color:#D9D3C3;max-width:480px;text-wrap:pretty;{{ paraStyle }}">Fraccionamos perfumes árabes originales en atomizadores de vidrio de 5 ml. Unos 70 disparos para usarlo de verdad, varios días, en tu piel.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;{{ btnsStyle }}">
+          <a href="#catalogo" style="display:inline-flex;align-items:center;gap:10px;background:#FFFCF2;color:#16140F;padding:16px 26px;border-radius:9px;font-weight:600;font-size:15px;transition:transform .2s, box-shadow .2s" style-hover="transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.25);color:#16140F">Ver catálogo <span>→</span></a>
+          <a href="{{ waHref }}" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:transparent;color:#FFFCF2;padding:16px 24px;border-radius:9px;font-weight:600;font-size:15px;border:1px solid rgba(255,252,242,.55);transition:background .2s" style-hover="background:rgba(255,252,242,.12);border-color:#FFFCF2">Pedir por WhatsApp</a>
+        </div>
+        <div style="display:flex;gap:24px;flex-wrap:wrap;padding-top:8px;font-family:'Instrument Sans',sans-serif;font-size:12px;color:#BDB6A5;{{ bulletsStyle }}">
+          <span>✦ Andreani a todo el país</span>
+          <span>✦ Entrega en Córdoba Capital</span>
+          <span>✦ Frascos 100% originales</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="catalogo" style="padding:clamp(60px,8vw,110px) 0 clamp(50px,6vw,80px);background:rgba(255,212,0,.16);color:#16140F;overflow:hidden">
+    <div style="max-width:1280px;margin:0 auto;padding:0 clamp(16px,4vw,40px)">
+      <div data-reveal="0" style="display:flex;flex-direction:column;gap:14px">
+        <span style="font-family:'Instrument Sans',sans-serif;font-size:12px;font-weight:600;color:#8A6A00;letter-spacing:.1em">01 — CATÁLOGO</span>
+        <h2 style="margin:0;font-family:'Newsreader',serif;font-weight:800;font-size:clamp(40px,5.5vw,76px);line-height:.95;letter-spacing:-.015em;color:#16140F">Los más pedidos</h2>
+      </div>
+    </div>
+
+    <div data-carousel="1" onMouseEnter="{{ pauseAuto }}" onMouseLeave="{{ resumeAuto }}" style="position:relative;height:{{ carH }}px;perspective:1600px;margin-top:20px;cursor:grab;touch-action:pan-y" style-active="cursor:grabbing">
+      <div style="position:absolute;left:50%;top:{{ carTop }}px;zoom:{{ carScale }};width:290px;height:390px;margin-left:-145px;transform-style:preserve-3d;transform:{{ ringTransform }};transition:{{ ringTransition }}">
+        <sc-for list="{{ ringItems }}" as="p" hint-placeholder-count="0">
+          <div onClick="{{ p.go }}" style="position:absolute;inset:0;transform:{{ p.transform }};opacity:{{ p.opacity }};transition:opacity .6s;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#FFFCF2;color:#16140F;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:10px;cursor:pointer;border:3px solid {{ p.border }};box-shadow:0 30px 60px rgba(0,0,0,.35)">
+            <div style="position:relative;height:216px;border-radius:16px;background:#F3EEDD;overflow:hidden">
+              <img src="{{ p.img }}" alt="{{ p.name }}" style="width:100%;height:100%;object-fit:contain;object-position:center"></img>
+              <span style="position:absolute;top:10px;left:10px;font-family:'Instrument Sans',sans-serif;font-size:11px;background:#16140F;color:#FFD400;padding:4px 8px;border-radius:999px">5 ML</span>
+            </div>
+            <span style="font-family:'Newsreader',serif;font-weight:800;font-size:21px;line-height:1.1;letter-spacing:-.02em">{{ p.name }}</span>
+            <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between">
+              <span style="font-family:'Newsreader',serif;font-weight:800;font-size:22px">{{ p.priceTxt }}</span>
+              <button onClick="{{ p.add }}" style="background:#16140F;border:none;border-radius:8px;padding:10px 16px;font-weight:600;font-size:13px;color:#FFFCF2" style-hover="background:#33301f">Agregar +</button>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:center;align-items:center;gap:20px">
+      <button onClick="{{ prev }}" style="width:52px;height:52px;border-radius:50%;border:1px solid rgba(22,20,15,.3);background:transparent;color:#16140F;font-size:18px" style-hover="border-color:#16140F;background:#16140F;color:#FFD400">←</button>
+      <span style="font-family:'Instrument Sans',sans-serif;font-size:13px;min-width:80px;text-align:center;color:#16140F">{{ counter }}</span>
+      <button onClick="{{ next }}" style="width:52px;height:52px;border-radius:50%;border:1px solid rgba(22,20,15,.3);background:transparent;color:#16140F;font-size:18px" style-hover="border-color:#16140F;background:#16140F;color:#FFD400">→</button>
+    </div>
+  </section>
+
+  <section id="categorias" style="max-width:1280px;margin:0 auto;padding:clamp(70px,9vw,120px) clamp(16px,4vw,40px)">
+    <div data-reveal="0" style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:28px">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <span style="font-family:'Instrument Sans',sans-serif;font-size:12px;font-weight:600;color:#5E584B;letter-spacing:.1em">02 — CATEGORÍAS</span>
+        <h2 style="margin:0;font-family:'Newsreader',serif;font-weight:700;font-size:clamp(40px,5.5vw,76px);line-height:.95;letter-spacing:-.02em;max-width:700px">Elegí por aroma</h2>
+      </div>
+      <p style="margin:0;max-width:320px;color:#4A4538;line-height:1.5">Tocá una categoría o mirá el catálogo completo con los {{ fullTotal }} perfumes.</p>
+    </div>
+
+    <div data-reveal="40" class="cat-grid" style="margin-bottom:32px">
+      <sc-for list="{{ catCards }}" as="c" hint-placeholder-count="6">
+        <div onClick="{{ c.select }}" onMouseEnter="{{ c.enter }}" onMouseLeave="{{ catLeave }}" style="position:relative;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;height:390px;padding:32px;border-radius:24px;background:{{ c.tint }};overflow:hidden">
+          <div style="position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <span style="font-family:'Newsreader',serif;font-weight:700;font-size:42px;line-height:1;letter-spacing:-.01em;color:#16140F">{{ c.title }}</span>
+              <span style="font-size:15px;color:#3c372a">{{ c.notes }}</span>
+            </div>
+            <span style="flex-shrink:0;width:48px;height:48px;border-radius:50%;background:#16140F;color:#FFFCF2;display:flex;align-items:center;justify-content:center;font-size:19px;transition:transform .35s;transform:{{ c.rot }}">→</span>
+          </div>
+          <img src="{{ c.img }}" alt="{{ c.title }}" style="position:absolute;left:50%;bottom:-6px;width:66%;mix-blend-mode:multiply;transition:transform .6s cubic-bezier(.2,.7,.2,1);transform:{{ c.lift }}"></img>
+        </div>
+      </sc-for>
+    </div>
+
+    <div data-reveal="80" style="display:flex;justify-content:center">
+      <button onClick="{{ openCatalog }}" style="background:#16140F;color:#FFFCF2;border:none;border-radius:9px;padding:16px 28px;font-weight:600;font-size:15px" style-hover="background:#33301f">Ver catálogo completo ({{ fullTotal }}) →</button>
+    </div>
+  </section>
+
+  <section id="oferta" style="background:rgba(255,212,0,.14);border-top:1px solid rgba(22,20,15,.12);border-bottom:1px solid rgba(22,20,15,.12);overflow:hidden">
+    <div style="max-width:1280px;margin:0 auto;padding:clamp(60px,8vw,110px) clamp(16px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:40px;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:22px">
+        <span data-reveal="0" style="font-family:'Instrument Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em">03 — OFERTA DE LA SEMANA</span>
+        <h2 data-reveal="80" style="margin:0;font-family:'Newsreader',serif;font-weight:800;font-size:clamp(52px,7vw,100px);line-height:.88;letter-spacing:-.015em">Kit Descu&shy;brimiento</h2>
+        <p data-reveal="160" style="margin:0;font-size:19px;line-height:1.5;max-width:460px;color:#2E2920">Elegí 4 decants de 5 ml de cualquier categoría. Ideal para encontrar tu perfume firma o para regalar.</p>
+        <div data-reveal="240" style="display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap">
+          <span style="font-family:'Newsreader',serif;font-weight:800;font-size:clamp(48px,5vw,68px);letter-spacing:-.015em;line-height:1">$28.900</span>
+          <span style="font-size:22px;text-decoration:line-through;color:#5A4A00;padding-bottom:8px">$36.000</span>
+          <span style="background:#16140F;color:#FFD400;font-family:'Instrument Sans',sans-serif;font-size:13px;padding:6px 12px;border-radius:999px;margin-bottom:10px;transform:rotate(-4deg)">−20%</span>
+        </div>
+        <div data-reveal="320" style="display:flex;flex-direction:column;gap:10px">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:12px">TERMINA EN</span>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <sc-for list="{{ countdown }}" as="u" hint-placeholder-count="4">
+              <div style="background:#16140F;color:#FFFCF2;border-radius:14px;width:76px;padding:12px 0;display:flex;flex-direction:column;align-items:center;gap:2px">
+                <span style="font-family:'Newsreader',serif;font-weight:800;font-size:30px;font-variant-numeric:tabular-nums">{{ u.v }}</span>
+                <span style="font-family:'Instrument Sans',sans-serif;font-size:11px;color:#FFD400">{{ u.l }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div data-reveal="400" style="display:flex;gap:12px;flex-wrap:wrap;padding-top:6px">
+          <button onClick="{{ addKit }}" style="background:#16140F;color:#FFFCF2;border:none;border-radius:9px;padding:16px 26px;font-weight:600;font-size:15px;transition:transform .2s, box-shadow .2s" style-hover="transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.25)">Sumar kit al carrito →</button>
+          <a href="{{ waKitHref }}" target="_blank" style="display:inline-flex;align-items:center;border:1px solid #16140F;border-radius:9px;padding:16px 22px;font-weight:600;font-size:15px" style-hover="background:#FFFCF2">Elegir mis 4 por WhatsApp</a>
+        </div>
+      </div>
+      <div style="position:relative;height:clamp(380px,44vw,520px);perspective:1100px;display:grid;place-items:center">
+        <div style="position:absolute;bottom:14%;width:min(80%,400px);height:70px;border-radius:50%;background:#16140F"></div>
+        <div data-spin="1" style="position:relative;width:150px;height:184px;transform-style:preserve-3d;margin-bottom:60px">
+          <sc-for list="{{ kitVials }}" as="v" hint-placeholder-count="0">
+            <div style="position:absolute;inset:0;transform:{{ v.t }};border-radius:18px;overflow:hidden;background:#FFFFFF;border:1px solid rgba(22,20,15,.15);box-shadow:0 25px 50px rgba(22,20,15,.25)">
+              <img src="{{ v.img }}" alt="{{ v.name }}" style="width:100%;height:100%;object-fit:contain;object-position:center;padding:12px"></img>
+            </div>
+          </sc-for>
+        </div>
+        <div data-float="1.2" style="position:absolute;top:6%;right:6%;background:#FFFCF2;border:1px solid #16140F;border-radius:12px;padding:12px 16px;box-shadow:0 8px 20px rgba(0,0,0,.12);transform:rotate(4deg);display:flex;flex-direction:column;gap:2px">
+          <span style="font-family:'Newsreader',serif;font-weight:800;font-size:26px">4 × 5 ml</span>
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:11px">20 ml en total</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="nosotros" style="max-width:1280px;margin:0 auto;padding:clamp(70px,9vw,130px) clamp(16px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(40px,6vw,80px);align-items:center">
+    <div data-reveal="0" style="position:relative">
+      <div data-tilt="1" style="aspect-ratio:4/5;border-radius:28px;border:1.5px solid #16140F;background:repeating-linear-gradient(135deg,#F3EEDD 0 12px,#FFFCF2 12px 24px);display:grid;place-items:center;transition:transform .2s ease-out">
+        <span style="font-family:'Instrument Sans',sans-serif;font-size:13px;color:#5E584B;background:#FFFCF2;padding:8px 12px;border-radius:8px;border:1px solid rgba(22,20,15,.15)">foto: Graciano fraccionando</span>
+      </div>
+      <div data-float="3" style="position:absolute;right:-12px;bottom:40px;background:#16140F;color:#FFFCF2;border:none;border-radius:999px;padding:13px 20px;font-family:'Newsreader',serif;font-weight:700;font-size:17px;box-shadow:0 10px 24px rgba(0,0,0,.25);transform:rotate(-3deg)">Hecho en Córdoba</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:24px">
+      <span data-reveal="0" style="font-family:'Instrument Sans',sans-serif;font-size:12px;font-weight:600;color:#5E584B;letter-spacing:.1em">04 — QUIÉNES SOMOS</span>
+      <h2 data-reveal="80" style="margin:0;font-family:'Newsreader',serif;font-weight:800;font-size:clamp(44px,5.5vw,80px);line-height:.92;letter-spacing:-.015em">Hola, soy Graciano.</h2>
+      <p data-reveal="160" style="margin:0;font-size:18px;line-height:1.6;color:#3A3428;max-width:540px;text-wrap:pretty">Empecé comprando perfumes que no me terminaban de convencer. Hoy fracciono frascos originales para que puedas usar una fragancia varios días antes de invertir en el frasco completo.</p>
+      <p data-reveal="220" style="margin:0;font-size:18px;line-height:1.6;color:#3A3428;max-width:540px;text-wrap:pretty">Cada decant se prepara a mano, se etiqueta y se envía desde Córdoba.</p>
+      <div style="display:flex;flex-direction:column;border-top:1.5px solid #16140F;margin-top:8px">
+        <div data-reveal="0" style="display:grid;grid-template-columns:56px 1fr;gap:16px;padding:20px 0;border-bottom:1px solid rgba(22,20,15,.15)">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:13px">01</span>
+          <div style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600;font-size:18px">Frascos originales</span><span style="color:#5E584B;font-size:15px">Comprados a distribuidores oficiales. Sin réplicas.</span></div>
+        </div>
+        <div data-reveal="80" style="display:grid;grid-template-columns:56px 1fr;gap:16px;padding:20px 0;border-bottom:1px solid rgba(22,20,15,.15)">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:13px">02</span>
+          <div style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600;font-size:18px">Atomizador de vidrio</span><span style="color:#5E584B;font-size:15px">Conserva la fragancia y se puede llevar en el bolsillo.</span></div>
+        </div>
+        <div data-reveal="160" style="display:grid;grid-template-columns:56px 1fr;gap:16px;padding:20px 0;border-bottom:1px solid rgba(22,20,15,.15)">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:13px">03</span>
+          <div style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600;font-size:18px">Envío o entrega en mano</span><span style="color:#5E584B;font-size:15px">Andreani a todo el país, o coordinamos en Córdoba Capital.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:rgba(255,212,0,.16);color:#16140F;overflow:hidden">
+    <div style="max-width:1280px;margin:0 auto;padding:clamp(70px,9vw,130px) clamp(16px,4vw,40px) 40px;display:flex;flex-direction:column;gap:50px">
+      <h2 data-reveal="0" style="margin:0;font-family:'Newsreader',serif;font-weight:800;font-size:clamp(54px,9vw,148px);line-height:.88;letter-spacing:-.02em;text-wrap:balance;color:#16140F">Tu próximo perfume empieza con <span style="color:#8A6A00">5 ml.</span></h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:18px">
+        <a data-reveal="0" href="#catalogo" style="display:flex;flex-direction:column;gap:14px;background:#16140F;color:#FFFCF2;border-radius:28px;padding:30px;min-height:220px;justify-content:space-between;transition:transform .25s" style-hover="transform:translateY(-4px);color:#FFFCF2">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:12px;color:#FFD400">ENVÍO A TODO EL PAÍS</span>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-family:'Newsreader',serif;font-weight:800;font-size:34px;letter-spacing:-.01em;line-height:1">Comprar online →</span>
+            <span style="font-size:15px;color:#D9D3C3">Pagás en la web y te llega por Andreani, a domicilio o a sucursal.</span>
+          </div>
+        </a>
+        <a data-reveal="120" href="{{ waHref }}" target="_blank" style="display:flex;flex-direction:column;gap:14px;background:transparent;color:#16140F;border:1.5px solid #16140F;border-radius:28px;padding:30px;min-height:220px;justify-content:space-between;transition:transform .25s" style-hover="transform:translateY(-4px);background:#16140F;color:#FFFCF2">
+          <span style="font-family:'Instrument Sans',sans-serif;font-size:12px;color:#8A6A00">CÓRDOBA CAPITAL</span>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-family:'Newsreader',serif;font-weight:800;font-size:34px;letter-spacing:-.01em;line-height:1">Coordinar por WhatsApp →</span>
+            <span style="font-size:15px;color:#3A3428">Escribime y arreglamos día, horario y punto de entrega.</span>
+          </div>
+        </a>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;border-top:1px solid rgba(22,20,15,.15);padding-top:28px;font-size:14px;color:#5E584B">
+        <div style="display:flex;align-items:center;gap:14px">
+          <div style="width:56px;height:56px;border-radius:50%;background:#FFFFFF;overflow:hidden;display:grid;place-items:center">
+            <img src="assets/logo.png" alt="Decants Córdoba" style="width:150%;height:150%;object-fit:cover;object-position:50% 46%"></img>
+          </div>
+          <span>Decants Córdoba — Graciano · Córdoba, Argentina</span>
+        </div>
+        <div style="display:flex;gap:22px">
+          <a href="#" style="color:#16140F">Instagram</a>
+          <a href="{{ waHref }}" target="_blank" style="color:#16140F">WhatsApp</a>
+          <a href="#catalogo" style="color:#16140F">Catálogo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <sc-if value="{{ isCatalog }}" hint-placeholder-val="{{ false }}">
+  <section id="catalogo-full" style="max-width:1280px;margin:0 auto;padding:clamp(130px,16vw,160px) clamp(16px,4vw,40px) clamp(80px,10vw,120px);min-height:70vh">
+    <button onClick="{{ closeCatalog }}" style="background:transparent;border:none;padding:0;margin-bottom:28px;font-size:14px;font-weight:600;text-decoration:underline;text-underline-offset:3px;color:#16140F">← Volver al inicio</button>
+
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:28px">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <span style="font-family:'Instrument Sans',sans-serif;font-size:12px;font-weight:600;color:#5E584B;letter-spacing:.1em">CATÁLOGO COMPLETO</span>
+        <h1 style="margin:0;font-family:'Newsreader',serif;font-weight:700;font-size:clamp(40px,5.5vw,72px);line-height:.95;letter-spacing:-.02em;max-width:700px">Todos nuestros perfumes árabes</h1>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px">
+      <sc-for list="{{ catChips }}" as="c" hint-placeholder-count="7">
+        <button onClick="{{ c.select }}" style="background:{{ c.bg }};color:{{ c.fg }};border:1px solid {{ c.border }};border-radius:9px;padding:9px 15px;font-size:14px;font-weight:600">{{ c.label }}</button>
+      </sc-for>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px">
+      <span style="font-family:'Instrument Sans',sans-serif;font-size:12px;color:#5E584B;letter-spacing:.06em">{{ catSubtitle }}</span>
+      <sc-if value="{{ showResetCat }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ resetCat }}" style="background:transparent;border:none;font-size:13px;font-weight:600;text-decoration:underline;text-underline-offset:3px;color:#16140F">Ver todos los perfumes</button>
+      </sc-if>
+    </div>
+
+    <div style="margin-bottom:28px">
+      <input value="{{ q }}" onChange="{{ onQ }}" placeholder="Buscar: Khamrah, Hawas, Club de Nuit…" style="width:100%;border:1px solid #16140F;border-radius:10px;padding:16px 20px;font-size:16px;background:#FFFFFF;outline:none"></input>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:16px">
+      <sc-for list="{{ gridItems }}" as="p" hint-placeholder-count="12">
+        <div onClick="{{ p.open }}" style="display:flex;flex-direction:column;gap:10px;background:#FFFFFF;border:1px solid rgba(22,20,15,.18);border-radius:16px;padding:14px;overflow:hidden;cursor:pointer">
+          <div style="position:relative;aspect-ratio:1;border-radius:12px;background:#F3EEDD;overflow:hidden">
+            <img src="{{ p.img }}" alt="{{ p.name }}" style="width:100%;height:100%;object-fit:contain;object-position:center"></img>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:2px">
+            <span style="font-weight:600;font-size:14.5px;line-height:1.25">{{ p.name }}</span>
+            <span style="font-family:'Instrument Sans',sans-serif;font-size:11px;color:#5E584B">{{ p.catTitle }}</span>
+          </div>
+          <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px">
+            <div style="display:flex;flex-direction:column">
+              <span style="font-family:'Newsreader',serif;font-weight:700;font-size:19px">{{ p.priceTxt }}</span>
+              <span style="font-family:'Instrument Sans',sans-serif;font-size:11px;color:#5E584B">5 ML</span>
+            </div>
+            <button onClick="{{ p.add }}" style="background:#16140F;border:none;border-radius:8px;padding:8px 14px;font-weight:600;font-size:13px;color:#FFFCF2" style-hover="background:#33301f">+</button>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+      <div style="text-align:center;padding:60px 0;color:#5E584B">Sin resultados para "{{ q }}".</div>
+    </sc-if>
+  </section>
+  </sc-if>
+
+  <a href="{{ waHref }}" target="_blank" aria-label="Escribinos por WhatsApp" style="position:fixed;right:20px;bottom:20px;z-index:45;width:58px;height:58px;border-radius:50%;background:#FFD400;color:#16140F;display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:transform .2s" style-hover="transform:translateY(-2px) scale(1.05);color:#16140F">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="#16140F"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.4A10 10 0 1 0 12 2Zm5.9 14.2c-.3.7-1.4 1.3-2 1.4-.5.1-1.2.2-3.8-.8-3.2-1.3-5.3-4.5-5.4-4.7-.2-.2-1.3-1.7-1.3-3.2 0-1.5.8-2.3 1.1-2.6.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5.3.6.9 2.1 1 2.3.1.2.1.4 0 .6-.1.2-.2.4-.4.6-.2.2-.4.5-.5.6-.2.2-.4.4-.2.8.3.4 1.1 1.8 2.4 3 1.6 1.4 2.9 1.9 3.3 2 .3.2.6.1.8-.1.2-.2.8-1 1.1-1.3.2-.3.5-.3.8-.2.3.1 1.9.9 2.2 1.1.3.2.5.2.6.4.1.2.1.9-.2 1.5Z"></path></svg>
+  </a>
+
+  <sc-if value="{{ showToast }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:60;background:#16140F;color:#FFFCF2;border:none;border-radius:10px;padding:13px 20px;font-weight:600;font-size:15px;box-shadow:0 10px 28px rgba(0,0,0,.3)">{{ toast }} agregado al carrito ✓</div>
+  </sc-if>
+
+  <sc-if value="{{ cartOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:70;display:flex;justify-content:flex-end">
+      <div onClick="{{ closeCart }}" style="position:absolute;inset:0;background:rgba(22,20,15,.5);backdrop-filter:blur(3px)"></div>
+      <div style="position:relative;width:min(100%,440px);height:100%;background:#FFFCF2;display:flex;flex-direction:column;border-left:2px solid #16140F">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:22px 24px;border-bottom:1.5px solid #16140F">
+          <span style="font-family:'Newsreader',serif;font-weight:800;font-size:28px;letter-spacing:-.01em">Tu carrito</span>
+          <button onClick="{{ closeCart }}" style="width:40px;height:40px;border-radius:50%;border:1px solid #16140F;background:transparent;font-size:16px">✕</button>
+        </div>
+
+        <sc-if value="{{ done }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:16px;padding:32px">
+            <div style="width:64px;height:64px;border-radius:50%;background:#FFD400;border:2px solid #16140F;display:grid;place-items:center;font-size:28px">✓</div>
+            <span style="font-family:'Newsreader',serif;font-weight:800;font-size:32px;letter-spacing:-.01em;line-height:1">¡Pedido recibido!</span>
+            <span style="color:#4A4538;line-height:1.5">Te mandamos el código de seguimiento de Andreani por mail apenas despachamos el paquete.</span>
+            <button onClick="{{ resetCart }}" style="align-self:flex-start;background:#16140F;color:#FFFCF2;border:none;border-radius:999px;padding:14px 22px;font-weight:600">Seguir mirando</button>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ showEmpty }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:14px;padding:32px">
+            <span style="font-family:'Newsreader',serif;font-weight:800;font-size:28px;letter-spacing:-.01em">Todavía está vacío.</span>
+            <span style="color:#4A4538">Sumá un decant desde el catálogo.</span>
+            <button onClick="{{ goCatalog }}" style="background:#16140F;color:#FFFCF2;border:none;border-radius:9px;padding:12px 20px;font-weight:600">Ver catálogo →</button>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ showItems }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1;overflow:auto;padding:8px 24px;display:flex;flex-direction:column">
+            <sc-for list="{{ cartItems }}" as="it" hint-placeholder-count="0">
+              <div style="display:grid;grid-template-columns:44px 1fr auto;gap:14px;align-items:center;padding:16px 0;border-bottom:1px solid rgba(22,20,15,.12)">
+                <div style="width:44px;height:44px;border-radius:10px;background:#F3EEDD;border:1.5px solid rgba(22,20,15,.2);overflow:hidden"><img src="{{ it.img }}" alt="{{ it.name }}" style="width:100%;height:100%;object-fit:contain"></img></div>
+                <div style="display:flex;flex-direction:column;gap:2px">
+                  <span style="font-weight:700">{{ it.name }}</span>
+                  <span style="font-size:14px;color:#4A4538">{{ it.lineTxt }}</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:6px">
+                  <button onClick="{{ it.dec }}" style="width:28px;height:28px;border-radius:50%;border:1px solid #16140F;background:transparent">−</button>
+                  <span style="font-family:'Instrument Sans',sans-serif;min-width:18px;text-align:center">{{ it.qty }}</span>
+                  <button onClick="{{ it.inc }}" style="width:28px;height:28px;border-radius:50%;border:none;background:#16140F;color:#FFFCF2">+</button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="padding:20px 24px 24px;border-top:1.5px solid #16140F;display:flex;flex-direction:column;gap:14px;background:#FFFFFF">
+            <span style="font-family:'Instrument Sans',sans-serif;font-size:11px;font-weight:600;color:#5E584B;letter-spacing:.08em">¿CÓMO LO RECIBÍS?</span>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              <button onClick="{{ setAndreani }}" style="text-align:left;border:1px solid #16140F;border-radius:10px;padding:12px;background:{{ andBg }};display:flex;flex-direction:column;gap:2px">
+                <span style="font-weight:600;font-size:15px">Envío Andreani</span>
+                <span style="font-size:12px;color:#4A4538">Todo el país</span>
+              </button>
+              <button onClick="{{ setCba }}" style="text-align:left;border:1px solid #16140F;border-radius:10px;padding:12px;background:{{ cbaBg }};display:flex;flex-direction:column;gap:2px">
+                <span style="font-weight:600;font-size:15px">Córdoba Capital</span>
+                <span style="font-size:12px;color:#4A4538">Coordinamos por WhatsApp</span>
+              </button>
+            </div>
+            <sc-if value="{{ isAndreani }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <input value="{{ cp }}" onChange="{{ onCp }}" placeholder="Código postal" inputmode="numeric" style="border:1.5px solid {{ cpBorder }};border-radius:12px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
+                <span style="font-size:12px;color:#5E584B">{{ shipNote }}</span>
+              </div>
+            </sc-if>
+            <div style="display:flex;justify-content:space-between;align-items:baseline">
+              <span style="font-weight:600">Subtotal</span>
+              <span style="font-family:'Newsreader',serif;font-weight:800;font-size:28px">{{ subtotalTxt }}</span>
+            </div>
+            <button onClick="{{ checkout }}" style="background:#16140F;color:#FFFCF2;border:none;border-radius:9px;padding:17px;font-weight:600;font-size:15px">{{ checkoutLabel }}</button>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ detailOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:20px">
+      <div onClick="{{ closeDetail }}" style="position:absolute;inset:0;background:rgba(22,20,15,.55);backdrop-filter:blur(3px)"></div>
+      <div style="position:relative;width:min(100%,520px);max-height:88vh;overflow:auto;background:#FFFCF2;border-radius:24px;border:1.5px solid #16140F;padding:28px;display:flex;flex-direction:column;gap:18px">
+        <button onClick="{{ closeDetail }}" style="position:absolute;top:18px;right:18px;width:36px;height:36px;border-radius:50%;border:1px solid #16140F;background:#FFFFFF;font-size:14px">✕</button>
+        <div style="display:flex;gap:18px;align-items:center;padding-right:30px">
+          <div style="width:110px;height:110px;flex-shrink:0;border-radius:14px;background:#F3EEDD;overflow:hidden">
+            <img src="{{ detailImg }}" alt="{{ detailName }}" style="width:100%;height:100%;object-fit:contain;object-position:center"></img>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <span style="font-family:'Newsreader',serif;font-weight:800;font-size:24px;line-height:1.1">{{ detailName }}</span>
+            <span style="display:inline-flex;align-self:flex-start;background:{{ detailTint }};color:#16140F;font-size:12px;font-weight:600;padding:5px 10px;border-radius:999px">{{ detailCat }}</span>
+            <span style="font-family:'Newsreader',serif;font-weight:800;font-size:22px">{{ detailPrice }}</span>
+          </div>
+        </div>
+        <p style="margin:0;font-size:15.5px;line-height:1.6;color:#3A3428">{{ detailDesc }}</p>
+        <button onClick="{{ detailAdd }}" style="background:#16140F;color:#FFFCF2;border:none;border-radius:9px;padding:15px 22px;font-weight:600;font-size:15px" style-hover="background:#33301f">Agregar al carrito — {{ detailPrice }}</button>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;whatsapp&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;5493510000000&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;autoRotate&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { w: typeof window !== 'undefined' ? window.innerWidth : 1280, idx: 0, q: '', cat: 'todos', view: 'home', cart: [], open: false, now: Date.now(), method: 'andreani', cp: '', cpErr: false, done: false, toast: null, paused: false, dragging: false, dragDeg: 0, scrolled: false, catHover: -1, sprayed: false, detail: null };
+
+  FULL = [
+    { id: '9-am-dive', name: '9 AM Dive', price: 6900, img: 'assets/products/001-9-am-dive.jpg' },
+    { id: '9-am-rosa', name: '9 AM Rosa', price: 6400, img: 'assets/products/002-9-am-rosa.jpg' },
+    { id: '9-pm', name: '9 PM', price: 6100, img: 'assets/products/003-9-pm.jpg' },
+    { id: '9-pm-elixir', name: '9 PM Elixir', price: 7700, img: 'assets/products/004-9-pm-elixir.jpg' },
+    { id: '9-pm-night-out', name: '9 PM Night Out', price: 8900, img: 'assets/products/005-9-pm-night-out.jpg' },
+    { id: '9-pm-rebel', name: '9 PM Rebel', price: 8800, img: 'assets/products/006-9-pm-rebel.jpg' },
+    { id: 'supremacy-colector-edition', name: 'Supremacy Colector Edition', price: 12100, img: 'assets/products/007-supremacy-colector-edition.jpg' },
+    { id: 'turathi-blue', name: 'Turathi Blue', price: 6800, img: 'assets/products/008-turathi-blue.jpg' },
+    { id: 'aqua-dubai', name: 'Aqua Dubai', price: 9000, img: 'assets/products/009-aqua-dubai.jpg' },
+    { id: 'dubai-night', name: 'Dubai Night', price: 9600, img: 'assets/products/010-dubai-night.jpg' },
+    { id: 'gold-edition-120ml', name: 'Gold Edition 120ml', price: 8200, img: 'assets/products/011-gold-edition-120ml.jpg' },
+    { id: 'al-wataniah-sabah-al-ward', name: 'Al Wataniah Sabah Al Ward', price: 4800, img: 'assets/products/012-al-wataniah-sabah-al-ward.jpg' },
+    { id: 'club-de-nuit-bling', name: 'Club de Nuit Bling', price: 9100, img: 'assets/products/013-club-de-nuit-bling.jpg' },
+    { id: 'club-de-nuit-iconic', name: 'Club de Nuit Iconic', price: 7200, img: 'assets/products/014-club-de-nuit-iconic.jpg' },
+    { id: 'club-de-nuit-intense-man-edt', name: 'Club de Nuit Intense Man EDT', price: 6500, img: 'assets/products/015-club-de-nuit-intense-man-edt.jpg' },
+    { id: 'club-de-nuit-maleka', name: 'Club de Nuit Maleka', price: 6800, img: 'assets/products/016-club-de-nuit-maleka.jpg' },
+    { id: 'club-de-nuit-precieux', name: 'Club de Nuit Precieux', price: 14700, img: 'assets/products/017-club-de-nuit-precieux.jpg' },
+    { id: 'club-de-nuit-sillage', name: 'Club de Nuit Sillage', price: 6700, img: 'assets/products/018-club-de-nuit-sillage.jpg' },
+    { id: 'club-de-nuit-untold', name: 'Club de Nuit Untold', price: 7300, img: 'assets/products/019-club-de-nuit-untold.jpg' },
+    { id: 'club-de-nuit-urban-man-elixir', name: 'Club de Nuit Urban Man Elixir', price: 7100, img: 'assets/products/020-club-de-nuit-urban-man-elixir.jpg' },
+    { id: 'club-de-nuit-woman', name: 'Club de Nuit Woman', price: 6800, img: 'assets/products/021-club-de-nuit-woman.jpg' },
+    { id: 'dunescape-dubai', name: 'Dunescape Dubai', price: 8100, img: 'assets/products/022-dunescape-dubai.jpg' },
+    { id: 'mandarin-sky', name: 'Mandarin Sky', price: 5900, img: 'assets/products/023-mandarin-sky.jpg' },
+    { id: 'mandarin-sky-elixir', name: 'Mandarin Sky Elixir', price: 7100, img: 'assets/products/024-mandarin-sky-elixir.jpg' },
+    { id: 'odyssey-aqua', name: 'Odyssey Aqua', price: 5900, img: 'assets/products/025-odyssey-aqua.jpg' },
+    { id: 'odyssey-candy', name: 'Odyssey Candy', price: 5000, img: 'assets/products/026-odyssey-candy.jpg' },
+    { id: 'odyssey-homme-blanco', name: 'Odyssey Homme Blanco', price: 6200, img: 'assets/products/027-odyssey-homme-blanco.jpg' },
+    { id: 'odyssey-homme-negro', name: 'Odyssey Homme Negro', price: 5400, img: 'assets/products/028-odyssey-homme-negro.jpg' },
+    { id: 'odyssey-mega', name: 'Odyssey Mega', price: 5600, img: 'assets/products/029-odyssey-mega.jpg' },
+    { id: 'yum-yum', name: 'Yum Yum', price: 7200, img: 'assets/products/030-yum-yum.jpg' },
+    { id: 'bharara-king-100ml', name: 'Bharara King 100ml', price: 9800, img: 'assets/products/031-bharara-king-100ml.jpg' },
+    { id: 'rome-extradose', name: 'Rome Extradose', price: 6900, img: 'assets/products/032-rome-extradose.jpg' },
+    { id: 'rome-extradose-fem', name: 'Rome Extradose Fem', price: 6900, img: 'assets/products/033-rome-extradose-fem.jpg' },
+    { id: 'erba-pura-100ml', name: 'Erba Pura 100ml', price: 26000, img: 'assets/products/034-erba-pura-100ml.jpg' },
+    { id: 'stallion-53', name: 'Stallion 53', price: 6100, img: 'assets/products/035-stallion-53.jpg' },
+    { id: 'uomo-intense', name: 'Uomo Intense', price: 5100, img: 'assets/products/036-uomo-intense.jpg' },
+    { id: 'aether', name: 'Aether', price: 7300, img: 'assets/products/037-aether.jpg' },
+    { id: 'atlantis-extrait', name: 'Atlantis Extrait', price: 7400, img: 'assets/products/038-atlantis-extrait.jpg' },
+    { id: 'liquid-brun', name: 'Liquid Brun', price: 8000, img: 'assets/products/039-liquid-brun.jpg' },
+    { id: 'liquid-brun-limited-edition-150ml', name: 'Liquid Brun Limited Edition 150ml', price: 8400, img: 'assets/products/040-liquid-brun-limited-edition-150ml.jpg' },
+    { id: 'spectre-ghost', name: 'Spectre Ghost', price: 8900, img: 'assets/products/041-spectre-ghost.jpg' },
+    { id: 'veneno', name: 'Veneno', price: 8700, img: 'assets/products/042-veneno.jpg' },
+    { id: 'vulcan-feu', name: 'Vulcan Feu', price: 7800, img: 'assets/products/043-vulcan-feu.jpg' },
+    { id: 'ajwad', name: 'Ajwad', price: 6400, img: 'assets/products/044-ajwad.jpg' },
+    { id: 'angham', name: 'Angham', price: 5900, img: 'assets/products/045-angham.jpg' },
+    { id: 'art-of-universe', name: 'Art of Universe', price: 8200, img: 'assets/products/046-art-of-universe.jpg' },
+    { id: 'asad', name: 'Asad', price: 6200, img: 'assets/products/047-asad.jpg' },
+    { id: 'asad-bourbon', name: 'Asad Bourbon', price: 7800, img: 'assets/products/048-asad-bourbon.jpg' },
+    { id: 'asad-elixir', name: 'Asad Elixir', price: 6700, img: 'assets/products/049-asad-elixir.jpg' },
+    { id: 'asad-zanzibar', name: 'Asad Zanzibar', price: 5100, img: 'assets/products/050-asad-zanzibar.jpg' },
+    { id: 'atlas', name: 'Atlas', price: 9300, img: 'assets/products/051-atlas.jpg' },
+    { id: 'badee-al-oud-amethyst', name: 'Badee Al Oud Amethyst', price: 4700, img: 'assets/products/052-badee-al-oud-amethyst.jpg' },
+    { id: 'badee-al-oud-for-glory', name: 'Badee Al Oud For Glory', price: 5000, img: 'assets/products/053-badee-al-oud-for-glory.jpg' },
+    { id: 'badee-al-oud-noble-blush', name: 'Badee Al Oud Noble Blush', price: 5400, img: 'assets/products/054-badee-al-oud-noble-blush.jpg' },
+    { id: 'badee-al-oud-sublime', name: 'Badee Al Oud Sublime', price: 5900, img: 'assets/products/055-badee-al-oud-sublime.jpg' },
+    { id: 'badee-honor-and-glory', name: 'Badee Honor and Glory', price: 5100, img: 'assets/products/056-badee-honor-and-glory.jpg' },
+    { id: 'confidential-gold', name: 'Confidential Gold', price: 5100, img: 'assets/products/057-confidential-gold.jpg' },
+    { id: 'delilah', name: 'Delilah', price: 6400, img: 'assets/products/058-delilah.jpg' },
+    { id: 'eclaire', name: 'Eclaire', price: 7800, img: 'assets/products/059-eclaire.jpg' },
+    { id: 'emaan', name: 'Emaan', price: 5100, img: 'assets/products/060-emaan.jpg' },
+    { id: 'fakhar-black', name: 'Fakhar Black', price: 5800, img: 'assets/products/061-fakhar-black.jpg' },
+    { id: 'fakhar-gold', name: 'Fakhar Gold', price: 5300, img: 'assets/products/062-fakhar-gold.jpg' },
+    { id: 'fakhar-rosa', name: 'Fakhar Rosa', price: 6300, img: 'assets/products/063-fakhar-rosa.jpg' },
+    { id: 'fakhar-silver', name: 'Fakhar Silver', price: 5400, img: 'assets/products/064-fakhar-silver.jpg' },
+    { id: 'habik-for-men', name: 'Habik for Men', price: 5200, img: 'assets/products/065-habik-for-men.jpg' },
+    { id: 'haya', name: 'Haya', price: 6000, img: 'assets/products/066-haya.jpg' },
+    { id: 'hayaati-al-maleki', name: 'Hayaati Al Maleki', price: 4600, img: 'assets/products/067-hayaati-al-maleki.jpg' },
+    { id: 'hayaati-gold-elixir', name: 'Hayaati Gold Elixir', price: 4000, img: 'assets/products/068-hayaati-gold-elixir.jpg' },
+    { id: 'hayaati-masc', name: 'Hayaati Masc', price: 4500, img: 'assets/products/069-hayaati-masc.jpg' },
+    { id: 'hayaati-rosa', name: 'Hayaati Rosa', price: 5300, img: 'assets/products/070-hayaati-rosa.jpg' },
+    { id: 'her-confession', name: 'Her Confession', price: 7100, img: 'assets/products/071-her-confession.jpg' },
+    { id: 'his-confession', name: 'His Confession', price: 6500, img: 'assets/products/072-his-confession.jpg' },
+    { id: 'khamrah', name: 'Khamrah', price: 6700, img: 'assets/products/073-khamrah.jpg' },
+    { id: 'khamrah-dukhan', name: 'Khamrah Dukhan', price: 5100, img: 'assets/products/074-khamrah-dukhan.jpg' },
+    { id: 'khamrah-qahwa', name: 'Khamrah Qahwa', price: 5300, img: 'assets/products/075-khamrah-qahwa.jpg' },
+    { id: 'khamrah-waha', name: 'Khamrah Waha', price: 10100, img: 'assets/products/076-khamrah-waha.jpg' },
+    { id: 'khanjar', name: 'Khanjar', price: 8800, img: 'assets/products/077-khanjar.jpg' },
+    { id: 'mayar', name: 'Mayar', price: 5000, img: 'assets/products/078-mayar.jpg' },
+    { id: 'mayar-cherry-intense', name: 'Mayar Cherry Intense', price: 4900, img: 'assets/products/079-mayar-cherry-intense.jpg' },
+    { id: 'mayar-natural-intense', name: 'Mayar Natural Intense', price: 5100, img: 'assets/products/080-mayar-natural-intense.jpg' },
+    { id: 'musaman-black', name: 'Musaman Black', price: 7500, img: 'assets/products/081-musaman-black.jpg' },
+    { id: 'musaman-white', name: 'Musaman White', price: 8200, img: 'assets/products/082-musaman-white.jpg' },
+    { id: 'nebras-pride', name: 'Nebras Pride', price: 6600, img: 'assets/products/083-nebras-pride.jpg' },
+    { id: 'opulent-dubai', name: 'Opulent Dubai', price: 5000, img: 'assets/products/084-opulent-dubai.jpg' },
+    { id: 'pisa', name: 'Pisa', price: 7600, img: 'assets/products/085-pisa.jpg' },
+    { id: 'qaed-al-fursan', name: 'Qaed Al Fursan', price: 5200, img: 'assets/products/086-qaed-al-fursan.jpg' },
+    { id: 'qaed-unlimited', name: 'Qaed Unlimited', price: 3900, img: 'assets/products/087-qaed-unlimited.jpg' },
+    { id: 'qaed-untamed', name: 'Qaed Untamed', price: 4400, img: 'assets/products/088-qaed-untamed.jpg' },
+    { id: 'teriaq-intense', name: 'Teriaq Intense', price: 6800, img: 'assets/products/089-teriaq-intense.jpg' },
+    { id: 'the-kingdom', name: 'The Kingdom', price: 6200, img: 'assets/products/090-the-kingdom.jpg' },
+    { id: 'the-kingdom-fem', name: 'The Kingdom Fem', price: 5900, img: 'assets/products/091-the-kingdom-fem.jpg' },
+    { id: 'victoria', name: 'Victoria', price: 6100, img: 'assets/products/092-victoria.jpg' },
+    { id: 'vintage-radio', name: 'Vintage Radio', price: 6400, img: 'assets/products/093-vintage-radio.jpg' },
+    { id: 'yara-candy', name: 'Yara Candy', price: 5900, img: 'assets/products/094-yara-candy.jpg' },
+    { id: 'yara-elixir', name: 'Yara Elixir', price: 6300, img: 'assets/products/095-yara-elixir.jpg' },
+    { id: 'yara-moi', name: 'Yara Moi', price: 5400, img: 'assets/products/096-yara-moi.jpg' },
+    { id: 'yara-rosa', name: 'Yara Rosa', price: 6600, img: 'assets/products/097-yara-rosa.jpg' },
+    { id: 'yara-tous', name: 'Yara Tous', price: 5100, img: 'assets/products/098-yara-tous.jpg' },
+    { id: 'baroque-extreme', name: 'Baroque Extreme', price: 4500, img: 'assets/products/099-baroque-extreme.jpg' },
+    { id: 'baroque-rouge', name: 'Baroque Rouge', price: 4300, img: 'assets/products/100-baroque-rouge.jpg' },
+    { id: 'glacier-bella', name: 'Glacier Bella', price: 4600, img: 'assets/products/101-glacier-bella.jpg' },
+    { id: 'glacier-bold', name: 'Glacier Bold', price: 4300, img: 'assets/products/102-glacier-bold.jpg' },
+    { id: 'intrude', name: 'Intrude', price: 4500, img: 'assets/products/103-intrude.jpg' },
+    { id: 'jean-lowe-inmortal', name: 'Jean Lowe Inmortal', price: 5200, img: 'assets/products/104-jean-lowe-inmortal.jpg' },
+    { id: 'jean-lowe-noir', name: 'Jean Lowe Noir', price: 5100, img: 'assets/products/105-jean-lowe-noir.jpg' },
+    { id: 'jean-lowe-vibe', name: 'Jean Lowe Vibe', price: 5600, img: 'assets/products/106-jean-lowe-vibe.jpg' },
+    { id: 'la-vivacite-edp', name: 'La Vivacite EDP', price: 5300, img: 'assets/products/107-la-vivacite-edp.jpg' },
+    { id: 'la-voie', name: 'La Voie', price: 5400, img: 'assets/products/108-la-voie.jpg' },
+    { id: 'papillon-door-fem', name: 'Papillon Door Fem', price: 6700, img: 'assets/products/109-papillon-door-fem.jpg' },
+    { id: 'philos-pura', name: 'Philos Pura', price: 4500, img: 'assets/products/110-philos-pura.jpg' },
+    { id: 'rose-seduction-vip', name: 'Rose Seduction VIP', price: 5900, img: 'assets/products/111-rose-seduction-vip.jpg' },
+    { id: 'salvo-edp', name: 'Salvo EDP', price: 5700, img: 'assets/products/112-salvo-edp.jpg' },
+    { id: 'salvo-elixir', name: 'Salvo Elixir', price: 7500, img: 'assets/products/113-salvo-elixir.jpg' },
+    { id: 'spectre-malachite', name: 'Spectre Malachite', price: 5400, img: 'assets/products/114-spectre-malachite.jpg' },
+    { id: 'yeah-man-edp', name: 'Yeah Man EDP', price: 5100, img: 'assets/products/115-yeah-man-edp.jpg' },
+    { id: 'yeah-man-parfum', name: 'Yeah Man Parfum', price: 4700, img: 'assets/products/116-yeah-man-parfum.jpg' },
+    { id: 'your-touch-amber', name: 'Your Touch Amber', price: 4000, img: 'assets/products/117-your-touch-amber.jpg' },
+    { id: 'your-touch-intense', name: 'Your Touch Intense', price: 5500, img: 'assets/products/118-your-touch-intense.jpg' },
+    { id: 'hawas', name: 'Hawas', price: 5800, img: 'assets/products/119-hawas.jpg' },
+    { id: 'hawas-black', name: 'Hawas Black', price: 8500, img: 'assets/products/120-hawas-black.jpg' },
+    { id: 'hawas-chrome', name: 'Hawas Chrome', price: 8700, img: 'assets/products/121-hawas-chrome.jpg' },
+    { id: 'hawas-diva', name: 'Hawas Diva', price: 8300, img: 'assets/products/122-hawas-diva.jpg' },
+    { id: 'hawas-fire', name: 'Hawas Fire', price: 7100, img: 'assets/products/123-hawas-fire.jpg' },
+    { id: 'hawas-ice', name: 'Hawas Ice', price: 7000, img: 'assets/products/124-hawas-ice.jpg' },
+    { id: 'hawas-kobra', name: 'Hawas Kobra', price: 6600, img: 'assets/products/125-hawas-kobra.jpg' },
+    { id: 'hawas-malibu', name: 'Hawas Malibu', price: 6400, img: 'assets/products/126-hawas-malibu.jpg' },
+    { id: 'hawas-tropical', name: 'Hawas Tropical', price: 6500, img: 'assets/products/127-hawas-tropical.jpg' },
+    { id: 'hawas-verde', name: 'Hawas Verde', price: 8000, img: 'assets/products/128-hawas-verde.jpg' },
+    { id: 'rayhaan-aquatica', name: 'Rayhaan Aquatica', price: 6800, img: 'assets/products/129-rayhaan-aquatica.jpg' },
+    { id: 'rayhaan-elixir', name: 'Rayhaan Elixir', price: 6500, img: 'assets/products/130-rayhaan-elixir.jpg' },
+    { id: 'rayhaan-italia', name: 'Rayhaan Italia', price: 9200, img: 'assets/products/131-rayhaan-italia.jpg' },
+    { id: 'rayhaan-kiss', name: 'Rayhaan Kiss', price: 6700, img: 'assets/products/132-rayhaan-kiss.jpg' },
+    { id: 'rayhaan-obsidian', name: 'Rayhaan Obsidian', price: 7400, img: 'assets/products/133-rayhaan-obsidian.jpg' },
+    { id: 'rayhaan-pacific-aura', name: 'Rayhaan Pacific Aura', price: 6800, img: 'assets/products/134-rayhaan-pacific-aura.jpg' },
+    { id: 'rayhaan-wolf', name: 'Rayhaan Wolf', price: 7300, img: 'assets/products/135-rayhaan-wolf.jpg' },
+    { id: 'tropical-vibes', name: 'Tropical Vibes', price: 6200, img: 'assets/products/136-tropical-vibes.jpg' },
+    { id: 'freeze-in-flames', name: 'Freeze in Flames', price: 9800, img: 'assets/products/137-freeze-in-flames.jpg' },
+    { id: 'riiffs-momento', name: 'Riiffs Momento', price: 8000, img: 'assets/products/138-riiffs-momento.jpg' },
+    { id: 'ameerat-al-arab', name: 'Ameerat Al Arab', price: 4300, img: 'assets/products/139-ameerat-al-arab.jpg' },
+    { id: 'ameerat-al-arab-prive-rose', name: 'Ameerat Al Arab Prive Rose', price: 5000, img: 'assets/products/140-ameerat-al-arab-prive-rose.jpg' },
+    { id: 'fatima-rosa', name: 'Fatima Rosa', price: 5100, img: 'assets/products/141-fatima-rosa.jpg' },
+    { id: 'mykonos-reflection-100ml', name: 'Mykonos Reflection 100ml', price: 7300, img: 'assets/products/142-mykonos-reflection-100ml.jpg' },
+    { id: 'nitro-red-edp', name: 'Nitro Red EDP', price: 7100, img: 'assets/products/143-nitro-red-edp.jpg' }
+  ];
+  FEATURED_IDS = ["khamrah", "club-de-nuit-intense-man-edt", "hawas", "badee-al-oud-sublime", "asad-bourbon", "turathi-blue", "club-de-nuit-precieux", "rayhaan-italia", "erba-pura-100ml", "9-pm-elixir"];
+  KIT = { id: 'kit', name: 'Kit Descubrimiento', price: 28900, img: 'assets/products/073-khamrah.jpg' };
+  CATS = [
+    { id: 'dulces', emoji: '🍯', title: 'Dulces', subtitle: 'Vainilla, caramelo, golosina.', notes: 'Vainilla · Caramelo · Golosina', tint: 'oklch(0.92 0.045 0)', sample: 'yara-rosa' },
+    { id: 'calidos', emoji: '🔥', title: 'Cálidos', subtitle: 'Canela, ámbar, azafrán.', notes: 'Canela · Ámbar · Azafrán', tint: 'oklch(0.9 0.06 70)', sample: 'khamrah' },
+    { id: 'secos', emoji: '🪵', title: 'Amaderados', subtitle: 'Oud, cuero, tabaco, ahumados.', notes: 'Oud · Cuero · Ahumados', tint: 'oklch(0.88 0.025 60)', sample: 'badee-al-oud-for-glory' },
+    { id: 'frescos', emoji: '🌊', title: 'Frescos', subtitle: 'Cítricos, notas marinas, acuáticas.', notes: 'Cítricos · Marinas · Acuáticas', tint: 'oklch(0.91 0.045 260)', sample: 'hawas' },
+    { id: 'frutales', emoji: '🍍', title: 'Frutales', subtitle: 'Ananá, manzana, frutas tropicales.', notes: 'Ananá · Manzana · Tropical', tint: 'oklch(0.92 0.06 100)', sample: 'qaed-al-fursan' },
+    { id: 'florales', emoji: '🌹', title: 'Florales', subtitle: 'Rosa, flores blancas.', notes: 'Rosa · Flores blancas', tint: 'oklch(0.92 0.04 340)', sample: 'delilah' }
+  ];
+  CAT_MAP = {
+    '9-pm': 'dulces',
+    '9-pm-elixir': 'dulces',
+    '9-pm-night-out': 'dulces',
+    '9-pm-rebel': 'dulces',
+    'mandarin-sky': 'dulces',
+    'mandarin-sky-elixir': 'dulces',
+    'odyssey-candy': 'dulces',
+    'yum-yum': 'dulces',
+    'bharara-king-100ml': 'dulces',
+    'rome-extradose': 'dulces',
+    'rome-extradose-fem': 'dulces',
+    'ajwad': 'dulces',
+    'angham': 'dulces',
+    'badee-honor-and-glory': 'dulces',
+    'badee-al-oud-noble-blush': 'dulces',
+    'eclaire': 'dulces',
+    'haya': 'dulces',
+    'hayaati-gold-elixir': 'dulces',
+    'khamrah-qahwa': 'dulces',
+    'mayar-cherry-intense': 'dulces',
+    'nebras-pride': 'dulces',
+    'teriaq-intense': 'dulces',
+    'the-kingdom': 'dulces',
+    'the-kingdom-fem': 'dulces',
+    'yara-rosa': 'dulces',
+    'yara-candy': 'dulces',
+    'yara-elixir': 'dulces',
+    'yara-moi': 'dulces',
+    'la-vivacite-edp': 'dulces',
+    'nitro-red-edp': 'dulces',
+    'ameerat-al-arab': 'dulces',
+    'club-de-nuit-bling': 'dulces',
+    'fakhar-gold': 'dulces',
+    'rayhaan-kiss': 'dulces',
+    'rayhaan-elixir': 'dulces',
+    'victoria': 'dulces',
+    'jean-lowe-inmortal': 'dulces',
+    'khamrah': 'calidos',
+    'khamrah-waha': 'calidos',
+    'asad': 'calidos',
+    'asad-bourbon': 'calidos',
+    'asad-elixir': 'calidos',
+    'her-confession': 'calidos',
+    'his-confession': 'calidos',
+    'liquid-brun': 'calidos',
+    'liquid-brun-limited-edition-150ml': 'calidos',
+    'club-de-nuit-untold': 'calidos',
+    'baroque-extreme': 'calidos',
+    'baroque-rouge': 'calidos',
+    'your-touch-amber': 'calidos',
+    'your-touch-intense': 'calidos',
+    'opulent-dubai': 'calidos',
+    'dubai-night': 'calidos',
+    'gold-edition-120ml': 'calidos',
+    'confidential-gold': 'calidos',
+    'hawas-fire': 'calidos',
+    'hawas-black': 'calidos',
+    'stallion-53': 'calidos',
+    'rayhaan-obsidian': 'calidos',
+    'khanjar': 'calidos',
+    'freeze-in-flames': 'calidos',
+    'vulcan-feu': 'calidos',
+    'khamrah-dukhan': 'secos',
+    'vintage-radio': 'secos',
+    'badee-al-oud-for-glory': 'secos',
+    'badee-al-oud-amethyst': 'secos',
+    'jean-lowe-noir': 'secos',
+    'musaman-black': 'secos',
+    'odyssey-homme-negro': 'secos',
+    'rayhaan-wolf': 'secos',
+    'spectre-ghost': 'secos',
+    'spectre-malachite': 'secos',
+    'veneno': 'secos',
+    'habik-for-men': 'secos',
+    '9-am-dive': 'frescos',
+    'turathi-blue': 'frescos',
+    'club-de-nuit-iconic': 'frescos',
+    'club-de-nuit-sillage': 'frescos',
+    'club-de-nuit-urban-man-elixir': 'frescos',
+    'odyssey-aqua': 'frescos',
+    'odyssey-homme-blanco': 'frescos',
+    'asad-zanzibar': 'frescos',
+    'atlas': 'frescos',
+    'fakhar-black': 'frescos',
+    'fakhar-silver': 'frescos',
+    'salvo-edp': 'frescos',
+    'salvo-elixir': 'frescos',
+    'yeah-man-edp': 'frescos',
+    'yeah-man-parfum': 'frescos',
+    'glacier-bold': 'frescos',
+    'glacier-bella': 'frescos',
+    'hawas': 'frescos',
+    'hawas-ice': 'frescos',
+    'hawas-chrome': 'frescos',
+    'hawas-verde': 'frescos',
+    'hawas-malibu': 'frescos',
+    'rayhaan-aquatica': 'frescos',
+    'rayhaan-pacific-aura': 'frescos',
+    'rayhaan-italia': 'frescos',
+    'mykonos-reflection-100ml': 'frescos',
+    'aqua-dubai': 'frescos',
+    'aether': 'frescos',
+    'atlantis-extrait': 'frescos',
+    'uomo-intense': 'frescos',
+    'la-voie': 'frescos',
+    'intrude': 'frescos',
+    'jean-lowe-vibe': 'frescos',
+    'musaman-white': 'frescos',
+    'qaed-unlimited': 'frescos',
+    'hayaati-masc': 'frescos',
+    'dunescape-dubai': 'frescos',
+    'supremacy-colector-edition': 'frutales',
+    'club-de-nuit-intense-man-edt': 'frutales',
+    'club-de-nuit-precieux': 'frutales',
+    'erba-pura-100ml': 'frutales',
+    'philos-pura': 'frutales',
+    'art-of-universe': 'frutales',
+    'badee-al-oud-sublime': 'frutales',
+    'qaed-al-fursan': 'frutales',
+    'qaed-untamed': 'frutales',
+    'yara-tous': 'frutales',
+    'tropical-vibes': 'frutales',
+    'hawas-tropical': 'frutales',
+    'hawas-kobra': 'frutales',
+    'odyssey-mega': 'frutales',
+    'hayaati-al-maleki': 'frutales',
+    'riiffs-momento': 'frutales',
+    'pisa': 'frutales',
+    'al-wataniah-sabah-al-ward': 'florales',
+    'club-de-nuit-woman': 'florales',
+    'club-de-nuit-maleka': 'florales',
+    'delilah': 'florales',
+    'emaan': 'florales',
+    'fakhar-rosa': 'florales',
+    'hayaati-rosa': 'florales',
+    'mayar': 'florales',
+    'mayar-natural-intense': 'florales',
+    'rose-seduction-vip': 'florales',
+    'ameerat-al-arab-prive-rose': 'florales',
+    'fatima-rosa': 'florales',
+    '9-am-rosa': 'florales',
+    'papillon-door-fem': 'florales',
+    'hawas-diva': 'florales',
+  };
+
+  componentDidMount() {
+    this.t1 = setInterval(() => this.setState({ now: Date.now() }), 1000);
+    this.t2 = setInterval(() => {
+      if (!this.state.paused && (this.props.autoRotate ?? true) && !this.state.open) this.setState(s => ({ idx: s.idx + 1 }));
+    }, 3800);
+    setTimeout(() => this.setupFx(), 50);
+    setTimeout(() => this.startHeroVideo(), 50);
+    setTimeout(() => this.setupDrag(), 50);
+    setTimeout(() => this.setupHeaderScroll(), 50);
+    this.onResize = () => this.setState({ w: window.innerWidth });
+    window.addEventListener('resize', this.onResize);
+  }
+  setupHeaderScroll() {
+    let ticking = false;
+    this.onHeaderScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const show = window.scrollY > 40;
+        if (show !== this._headerShown) { this._headerShown = show; this.setState({ scrolled: show }); }
+        ticking = false;
+      });
+    };
+    window.addEventListener('scroll', this.onHeaderScroll, { passive: true });
+    this.onHeaderScroll();
+  }
+  startHeroVideo() {
+    const v = document.querySelector('[data-hero-video]');
+    if (!v) return;
+    v.muted = true; v.defaultMuted = true; v.playsInline = true;
+    const tryPlay = () => v.play().catch(() => {});
+    tryPlay();
+    v.addEventListener('loadedmetadata', tryPlay);
+    v.addEventListener('canplay', tryPlay);
+    const reveal = () => { if (!this.state.sprayed) this.setState({ sprayed: true }); };
+    v.addEventListener('timeupdate', () => { if (v.currentTime >= 0.75) reveal(); });
+    this.sprayFallback = setTimeout(reveal, 2200);
+  }
+  setupDrag() {
+    const car = document.querySelector('[data-carousel]');
+    if (!car) return;
+    const N = this.FEATURED_IDS.length;
+    const a = 360 / Math.max(6, N);
+    let active = false, startX = 0, moved = 0;
+    const suppressClick = e => { e.stopPropagation(); e.preventDefault(); car.removeEventListener('click', suppressClick, true); };
+    const onMove = e => {
+      if (!active) return;
+      const dx = e.clientX - startX;
+      moved = Math.abs(dx);
+      this.setState({ dragDeg: dx * (a / 260) });
+    };
+    const onUp = () => {
+      if (!active) return;
+      active = false;
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+      window.removeEventListener('pointercancel', onUp);
+      if (moved > 6) car.addEventListener('click', suppressClick, true);
+      this.setState(s => {
+        const steps = Math.round(-s.dragDeg / a);
+        return { idx: s.idx + steps, dragDeg: 0, dragging: false };
+      });
+      clearTimeout(this._dragResume);
+      this._dragResume = setTimeout(() => this.setState({ paused: false }), 2500);
+    };
+    car.addEventListener('pointerdown', e => {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      active = true; moved = 0; startX = e.clientX;
+      this.setState({ dragging: true, paused: true, dragDeg: 0 });
+      window.addEventListener('pointermove', onMove);
+      window.addEventListener('pointerup', onUp);
+      window.addEventListener('pointercancel', onUp);
+    });
+  }
+  componentWillUnmount() {
+    clearInterval(this.t1); clearInterval(this.t2); clearTimeout(this.tt); clearTimeout(this.sprayFallback); clearTimeout(this._dragResume);
+    cancelAnimationFrame(this.raf); clearTimeout(this.safety);
+    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('scroll', this.onHeaderScroll);
+    window.removeEventListener('mousemove', this.mm);
+    window.removeEventListener('resize', this.onResize);
+  }
+
+  setupFx() {
+    const vh = window.innerHeight;
+    let pending = [...document.querySelectorAll('[data-reveal]')].filter(el => el.getBoundingClientRect().top > vh * .95);
+    const show = el => { el.style.opacity = '1'; el.style.transform = 'none'; };
+    pending.forEach(el => {
+      const d = +el.dataset.reveal || 0;
+      el.style.opacity = '0'; el.style.transform = 'translateY(32px)';
+      el.style.transition = `opacity .9s ${d}ms cubic-bezier(.2,.8,.2,1), transform .9s ${d}ms cubic-bezier(.2,.8,.2,1)`;
+    });
+    this.onScroll = () => {
+      const h = window.innerHeight;
+      pending = pending.filter(el => { if (el.getBoundingClientRect().top < h * .9) { show(el); return false; } return true; });
+      if (!pending.length) window.removeEventListener('scroll', this.onScroll);
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    this.safety = setTimeout(() => { pending.forEach(show); pending = []; }, 2500);
+
+    document.querySelectorAll('[data-tilt]').forEach(el => {
+      el.addEventListener('mousemove', e => {
+        const r = el.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+        el.style.transform = `rotateY(${x * 14}deg) rotateX(${-y * 14}deg) translateZ(0)`;
+      });
+      el.addEventListener('mouseleave', () => { el.style.transform = 'none'; });
+    });
+
+    this.mx = 0; this.my = 0; this.cx = 0; this.cy = 0;
+    this.mm = e => { this.mx = e.clientX / window.innerWidth - .5; this.my = e.clientY / window.innerHeight - .5; };
+    window.addEventListener('mousemove', this.mm);
+
+    const floats = [...document.querySelectorAll('[data-float]')].map(el => ({ el, ph: +el.dataset.float, base: el.style.transform || '' }));
+    const spin = document.querySelector('[data-spin]');
+    const mq = document.querySelector('[data-marquee]');
+    let mqx = 0; const t0 = performance.now();
+    const loop = now => {
+      const t = (now - t0) / 1000;
+      this.cx += (this.mx - this.cx) * .06; this.cy += (this.my - this.cy) * .06;
+      if (spin) spin.style.transform = `rotateX(-10deg) rotateY(${t * 32}deg)`;
+      floats.forEach(f => { f.el.style.transform = `${f.base} translateY(${Math.sin(t * 1.4 + f.ph) * 9}px)`; });
+      if (mq) { mqx -= .5; const w = mq.scrollWidth / 2 + 24; if (-mqx >= w) mqx += w; mq.style.transform = `translateX(${mqx}px)`; }
+      this.raf = requestAnimationFrame(loop);
+    };
+    this.raf = requestAnimationFrame(loop);
+  }
+
+  FAMILY_DESC = {
+    dulces: ['es dulce y goloso, con notas que recuerdan a vainilla, caramelo y postre.', 'tiene un perfil dulce y envolvente, con vainilla, caramelo y un fondo goloso.', 'es un dulce intenso, con caramelo, vainilla y un cierre goloso en piel.'],
+    calidos: ['es cálido y especiado, con canela, ámbar y un toque de azafrán.', 'tiene un perfil cálido y envolvente, con especias, ámbar y azafrán de fondo.', 'es un cálido potente, con especias, ámbar y una base envolvente.'],
+    secos: ['es amaderado y seco, con oud, cuero y un fondo ahumado.', 'tiene un perfil amaderado intenso, con oud, cuero y notas ahumadas.', 'es seco y profundo, con oud, tabaco y cuero de fondo.'],
+    frescos: ['es fresco y acuático, con cítricos y notas marinas.', 'tiene un perfil fresco, con cítricos, brisa marina y un fondo limpio.', 'es fresco y liviano, ideal para el día, con cítricos y acuáticos.'],
+    frutales: ['es frutal y jugoso, con ananá, manzana y frutas tropicales.', 'tiene un perfil frutal y vibrante, con notas tropicales.', 'es frutal intenso, con un corazón jugoso y dulce.'],
+    florales: ['es floral, con rosa y flores blancas en el centro.', 'tiene un perfil floral delicado, con rosa y flores blancas.', 'es floral y elegante, con rosa como protagonista.']
+  };
+  catOf(id) { const catId = this.CAT_MAP[id]; return this.CATS.find(c => c.id === catId) || null; }
+  describe(p) {
+    const cat = this.catOf(p.id);
+    if (!cat) return `${p.name}. Decant de 5 ml de frasco original, con atomizador de vidrio recargable.`;
+    const variants = this.FAMILY_DESC[cat.id] || [];
+    const v = variants.length ? variants[p.id.length % variants.length] : '';
+    return `${p.name} ${v} Pertenece a la familia ${cat.title} (${cat.notes}). Decant de 5 ml de frasco original, con atomizador de vidrio recargable.`;
+  }
+  fmt(n) { return '$' + n.toLocaleString('es-AR'); }
+  letterStyle(i) {
+    if (!this.state.sprayed) return 'display:inline-block;opacity:0';
+    return `display:inline-block;opacity:0;animation:letterIn .5s cubic-bezier(.2,.8,.2,1) ${i * 26}ms forwards`;
+  }
+  blockStyle(delayMs) {
+    if (!this.state.sprayed) return 'opacity:0;transform:translateY(16px)';
+    return `opacity:0;transform:translateY(16px);animation:blockIn .7s cubic-bezier(.2,.8,.2,1) ${delayMs}ms forwards`;
+  }
+  wa() { return this.props.whatsapp || '5493510000000'; }
+  waLink(msg) { return `https://wa.me/${this.wa()}?text=${encodeURIComponent(msg)}`; }
+  find(id) { return id === 'kit' ? this.KIT : this.FULL.find(p => p.id === id); }
+
+  add(id) {
+    this.setState(s => {
+      const c = s.cart.slice(); const i = c.findIndex(x => x.id === id);
+      if (i >= 0) c[i] = { ...c[i], qty: c[i].qty + 1 }; else c.push({ id, qty: 1 });
+      return { cart: c, toast: this.find(id).name, done: false };
+    });
+    clearTimeout(this.tt); this.tt = setTimeout(() => this.setState({ toast: null }), 1800);
+  }
+  setQty(id, d) {
+    this.setState(s => ({ cart: s.cart.map(x => x.id === id ? { ...x, qty: x.qty + d } : x).filter(x => x.qty > 0) }));
+  }
+  scrollTo(id) {
+    const el = document.getElementById(id);
+    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 70, behavior: 'smooth' });
+  }
+  goHomeSection(id) {
+    if (this.state.view !== 'home') {
+      this.setState({ view: 'home' });
+      setTimeout(() => this.scrollTo(id), 60);
+    } else {
+      this.scrollTo(id);
+    }
+  }
+
+  renderVals() {
+    const s = this.state;
+    let li = 0;
+    const mkLetter = ch => ({ ch, style: this.letterStyle(li++) });
+    const headlineWords = ['Probá', 'el', 'perfume', 'antes', 'de', 'comprar', 'el'].map(w => ({ letters: [...w].map(mkLetter) }));
+    const headlineWord = [...'frasco'].map(mkLetter);
+    const highlightDelay = li * 26 + 100;
+    const highlightStyle = s.sprayed ? `animation:highlightIn .45s ease ${highlightDelay}ms forwards` : '';
+    const headlineEnd = [...'.'].map(mkLetter);
+    const headlineMs = li * 26;
+    const quoteStyle = this.blockStyle(0);
+    const paraStyle = this.blockStyle(headlineMs + 550);
+    const btnsStyle = this.blockStyle(headlineMs + 800);
+    const bulletsStyle = this.blockStyle(headlineMs + 1000);
+    const P = this.FEATURED_IDS.map(id => this.FULL.find(p => p.id === id)).filter(Boolean);
+    const N = P.length;
+    const ring = []; while (ring.length < 6 || ring.length < N) ring.push(...P);
+    const L = ring.length, a = 360 / L, r = Math.round(145 / Math.tan(Math.PI / L) + 60);
+    const mod = (n, m) => ((n % m) + m) % m;
+    const act = mod(s.idx, L);
+    const ringItems = ring.map((p, j) => {
+      let d = mod(j - act, L); if (d > L / 2) d -= L;
+      return {
+        ...p, priceTxt: this.fmt(p.price),
+        transform: `rotateY(${j * a}deg) translateZ(${r}px)`,
+        opacity: d === 0 ? 1 : Math.abs(d) === 1 ? .8 : .25,
+        border: d === 0 ? '#FFD400' : '#16140F',
+        go: () => d === 0 ? this.setState({ detail: p.id }) : this.setState(st => ({ idx: st.idx + d })),
+        add: e => { e.stopPropagation(); this.add(p.id); }
+      };
+    });
+
+    const end = new Date(s.now); end.setDate(end.getDate() + ((7 - end.getDay()) % 7)); end.setHours(23, 59, 59, 0);
+    let rem = Math.max(0, Math.floor((end - s.now) / 1000));
+    const pad = n => String(n).padStart(2, '0');
+    const countdown = [
+      { v: pad(Math.floor(rem / 86400)), l: 'DÍAS' }, { v: pad(Math.floor(rem % 86400 / 3600)), l: 'HORAS' },
+      { v: pad(Math.floor(rem % 3600 / 60)), l: 'MIN' }, { v: pad(rem % 60), l: 'SEG' }
+    ];
+
+    const detailP = s.detail ? this.find(s.detail) : null;
+    const detailCatObj = detailP ? this.catOf(detailP.id) : null;
+    const qNorm = s.q.trim().toLowerCase();
+    const activeCat = s.cat || 'todos';
+    const byCat = activeCat === 'todos' ? this.FULL : this.FULL.filter(p => this.CAT_MAP[p.id] === activeCat);
+    const gridList = qNorm ? byCat.filter(p => p.name.toLowerCase().includes(qNorm)) : byCat;
+    const gridItems = gridList.map(p => {
+      const cat = this.catOf(p.id);
+      return {
+        ...p, priceTxt: this.fmt(p.price),
+        catTitle: cat ? cat.title : '',
+        open: () => this.setState({ detail: p.id }),
+        add: e => { e.stopPropagation(); this.add(p.id); }
+      };
+    });
+    const activeCatObj = this.CATS.find(c => c.id === activeCat);
+    const catCards = this.CATS.map((c, i) => {
+      const sample = this.FULL.find(p => p.id === c.sample);
+      const hovered = s.catHover === i;
+      return {
+        ...c,
+        img: sample ? sample.img : '',
+        select: () => this.setState({ cat: c.id, q: '', view: 'catalog' }),
+        enter: () => this.setState({ catHover: i }),
+        rot: hovered ? 'rotate(-45deg)' : 'none',
+        lift: hovered ? 'translate(-50%,-14px) rotate(-2deg) scale(1.05)' : 'translate(-50%,0)'
+      };
+    });
+    const catLeave = () => this.setState({ catHover: -1 });
+    const catChips = [{ id: 'todos', emoji: '', title: 'Todos' }, ...this.CATS].map(c => ({
+      ...c,
+      label: c.title,
+      bg: activeCat === c.id ? '#16140F' : 'transparent',
+      fg: activeCat === c.id ? '#FFFCF2' : '#16140F',
+      border: activeCat === c.id ? '#16140F' : 'rgba(22,20,15,.25)',
+      select: () => this.setState({ cat: c.id, q: '' })
+    }));
+    const catSubtitle = activeCatObj ? `${activeCatObj.title} — ${activeCatObj.subtitle} · ${byCat.length} perfumes` : `${this.FULL.length} perfumes disponibles en decants de 5 ml.`;
+    const showResetCat = activeCat !== 'todos';
+    const isHome = s.view !== 'catalog', isCatalog = s.view === 'catalog';
+    const headerVisible = s.scrolled || isCatalog;
+    const headerTransform = headerVisible ? 'translateY(0)' : 'translateY(-100%)';
+
+    const cartItems = s.cart.map(x => {
+      const p = this.find(x.id);
+      return { ...p, qty: x.qty, lineTxt: `${this.fmt(p.price)} · ${x.id === 'kit' ? '4 × 5 ml' : '5 ml'}`, inc: () => this.setQty(x.id, 1), dec: () => this.setQty(x.id, -1) };
+    });
+    const subtotal = cartItems.reduce((t, i) => t + i.price * i.qty, 0);
+    const cartCount = s.cart.reduce((t, i) => t + i.qty, 0);
+    const isAndreani = s.method === 'andreani';
+    const orderMsg = `¡Hola Graciano! Quiero coordinar una entrega en Córdoba Capital:\n${cartItems.map(i => `• ${i.qty}× ${i.name}`).join('\n')}\nTotal: ${this.fmt(subtotal)}`;
+
+    const mobile = s.w < 760, sc = mobile ? Math.min(1, (s.w - 40) / 300) * .92 : 1;
+    return {
+      desktop: !mobile, carScale: sc, carH: Math.round(470 * sc + 10), carTop: Math.round(40 / sc * sc),
+      cartCount, ringItems, countdown,
+      ringTransform: `translateZ(${-r}px) rotateY(${-s.idx * a + s.dragDeg}deg)`,
+      ringTransition: s.dragging ? 'none' : 'transform .9s cubic-bezier(.2,.8,.2,1)',
+      counter: `${pad(mod(s.idx, N) + 1)} / ${pad(N)}`,
+      kitVials: ['khamrah', 'hawas', 'badee-al-oud-for-glory', 'delilah'].map((id, i) => {
+        const p = this.FULL.find(x => x.id === id);
+        return { img: p.img, name: p.name, t: `rotateY(${i * 90}deg) translateZ(95px)` };
+      }),
+      prev: () => this.setState(st => ({ idx: st.idx - 1 })),
+      next: () => this.setState(st => ({ idx: st.idx + 1 })),
+      pauseAuto: () => this.setState({ paused: true }), resumeAuto: () => this.setState({ paused: false }),
+      addKit: () => this.add('kit'),
+      waHref: this.waLink('¡Hola Graciano! Quiero consultar por decants.'),
+      waKitHref: this.waLink('¡Hola Graciano! Quiero armar mi Kit Descubrimiento de 4 decants.'),
+      showToast: !!s.toast && !s.open, toast: s.toast,
+      cartOpen: s.open,
+      openCart: () => this.setState({ open: true }),
+      closeCart: () => this.setState({ open: false }),
+      goCatalog: () => { this.setState({ open: false }); this.scrollTo('catalogo'); },
+      resetCart: () => this.setState({ open: false, done: false }),
+      done: s.done, showEmpty: !s.done && !s.cart.length, showItems: !s.done && !!s.cart.length,
+      cartItems, subtotalTxt: this.fmt(subtotal),
+      isAndreani,
+      andBg: isAndreani ? '#FFD400' : '#FFFFFF', cbaBg: !isAndreani ? '#FFD400' : '#FFFFFF',
+      setAndreani: () => this.setState({ method: 'andreani' }), setCba: () => this.setState({ method: 'cba' }),
+      cp: s.cp, cpBorder: s.cpErr ? '#C0392B' : '#16140F',
+      onCp: e => this.setState({ cp: e.target.value.replace(/\D/g, '').slice(0, 4), cpErr: false }),
+      shipNote: s.cpErr ? 'Ingresá un código postal válido (4 dígitos).' : s.cp.length === 4 ? `Envío a CP ${s.cp}: el costo de Andreani se calcula en el pago.` : 'Ingresá tu CP para calcular el envío a domicilio o sucursal.',
+      checkoutLabel: isAndreani ? 'Continuar al pago →' : 'Enviar pedido por WhatsApp →',
+      checkout: () => {
+        if (isAndreani) {
+          if (s.cp.length !== 4) return this.setState({ cpErr: true });
+          this.setState({ done: true, cart: [], cp: '' });
+        } else window.open(this.waLink(orderMsg), '_blank');
+      },
+      q: s.q, onQ: e => this.setState({ q: e.target.value }),
+      catCards, catChips, catSubtitle, showResetCat, resetCat: () => this.setState({ cat: 'todos', q: '' }), gridItems, noResults: gridItems.length === 0,
+      isHome, isCatalog,
+      openCatalog: () => { this.setState({ view: 'catalog', cat: 'todos', q: '' }); window.scrollTo({ top: 0, behavior: 'smooth' }); },
+      closeCatalog: () => { this.setState({ view: 'home' }); window.scrollTo({ top: 0, behavior: 'smooth' }); },
+      goCategoriasSection: () => this.goHomeSection('categorias'),
+      goOfertaSection: () => this.goHomeSection('oferta'),
+      goNosotrosSection: () => this.goHomeSection('nosotros'),
+      fullTotal: this.FULL.length, headerTransform, catLeave,
+      detailOpen: !!s.detail,
+      detailImg: detailP ? detailP.img : '',
+      detailName: detailP ? detailP.name : '',
+      detailPrice: detailP ? this.fmt(detailP.price) : '',
+      detailCat: detailCatObj ? detailCatObj.title : '',
+      detailTint: detailCatObj ? detailCatObj.tint : '#F3EEDD',
+      detailDesc: detailP ? this.describe(detailP) : '',
+      closeDetail: () => this.setState({ detail: null }),
+      detailAdd: () => { this.add(s.detail); this.setState({ detail: null }); },
+      headlineWords, headlineWord, headlineEnd, highlightStyle,
+      quoteStyle, paraStyle, btnsStyle, bulletsStyle
+    };
+  }
+}
+</script>
+</body>
+</html>
+
