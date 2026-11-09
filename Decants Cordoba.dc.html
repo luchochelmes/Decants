@@ -129,7 +129,7 @@ input{font-family:inherit}
         </h1>
         <p data-hero-p="1" style="margin:0;font-size:clamp(17px,1.5vw,20px);line-height:1.55;color:#D9D3C3;max-width:480px;text-wrap:pretty;{{ paraStyle }}">Decants de 5 ml de perfumes<br>árabes 100% originales.</p>
         <div data-hero-btns="1" style="display:flex;gap:12px;flex-wrap:wrap;{{ btnsStyle }}">
-          <a href="#catalogo" style="display:inline-flex;align-items:center;gap:10px;background:#FFFCF2;color:#16140F;padding:16px 26px;border-radius:9px;font-weight:600;font-size:15px;transition:transform .2s, box-shadow .2s" style-hover="transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.25);color:#16140F">Ver catálogo <span>→</span></a>
+          <a href="#categorias" style="display:inline-flex;align-items:center;gap:10px;background:#FFFCF2;color:#16140F;padding:16px 26px;border-radius:9px;font-weight:600;font-size:15px;transition:transform .2s, box-shadow .2s" style-hover="transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.25);color:#16140F">Ver catálogo <span>→</span></a>
           <a href="{{ waHref }}" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:transparent;color:#FFFCF2;padding:16px 24px;border-radius:9px;font-weight:600;font-size:15px;border:1px solid rgba(255,252,242,.55);transition:background .2s" style-hover="background:rgba(255,252,242,.12);border-color:#FFFCF2">Pedir por WhatsApp</a>
         </div>
         <div style="display:flex;gap:24px;flex-wrap:wrap;padding-top:8px;font-family:'Instrument Sans',sans-serif;font-size:12px;color:#BDB6A5;{{ bulletsStyle }}">
@@ -285,7 +285,7 @@ input{font-family:inherit}
     <div style="max-width:1280px;margin:0 auto;padding:clamp(70px,9vw,130px) clamp(16px,4vw,40px) 40px;display:flex;flex-direction:column;gap:50px">
       <h2 data-reveal="0" style="margin:0;font-family:'Newsreader',serif;font-weight:800;font-size:clamp(54px,9vw,148px);line-height:.88;letter-spacing:-.02em;text-wrap:balance;color:#16140F">Tu próximo perfume empieza con <span style="color:#8A6A00">5 ml.</span></h2>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:18px">
-        <a data-reveal="0" href="#catalogo" style="display:flex;flex-direction:column;gap:14px;background:#16140F;color:#FFFCF2;border-radius:28px;padding:30px;min-height:220px;justify-content:space-between;transition:transform .25s" style-hover="transform:translateY(-4px);color:#FFFCF2">
+        <a data-reveal="0" href="#categorias" style="display:flex;flex-direction:column;gap:14px;background:#16140F;color:#FFFCF2;border-radius:28px;padding:30px;min-height:220px;justify-content:space-between;transition:transform .25s" style-hover="transform:translateY(-4px);color:#FFFCF2">
           <span style="font-family:'Instrument Sans',sans-serif;font-size:12px;color:#FFD400">ENVÍO A TODO EL PAÍS</span>
           <div style="display:flex;flex-direction:column;gap:8px">
             <span style="font-family:'Newsreader',serif;font-weight:800;font-size:34px;letter-spacing:-.01em;line-height:1">Comprar online →</span>
@@ -310,7 +310,7 @@ input{font-family:inherit}
         <div style="display:flex;gap:22px">
           <a href="#" style="color:#16140F">Instagram</a>
           <a href="{{ waHref }}" target="_blank" style="color:#16140F">WhatsApp</a>
-          <a href="#catalogo" style="color:#16140F">Catálogo</a>
+          <a href="#categorias" style="color:#16140F">Catálogo</a>
         </div>
       </div>
     </div>
@@ -468,7 +468,12 @@ input{font-family:inherit}
           </div>
         </div>
         <p style="margin:0;font-size:15.5px;line-height:1.6;color:#3A3428">{{ detailDesc }}</p>
-        <button onClick="{{ detailAdd }}" style="background:#16140F;color:#FFFCF2;border:none;border-radius:9px;padding:15px 22px;font-weight:600;font-size:15px" style-hover="background:#33301f">Agregar al carrito — {{ detailPrice }}</button>
+        <div style="display:flex;align-items:center;justify-content:center;gap:4px;border:1.5px solid #16140F;border-radius:9px;align-self:flex-start;overflow:hidden">
+          <button onClick="{{ detailDec }}" style="width:44px;height:44px;border:none;background:transparent;font-size:18px;font-weight:600">−</button>
+          <span style="min-width:32px;text-align:center;font-family:'Newsreader',serif;font-weight:800;font-size:17px">{{ detailQty }}</span>
+          <button onClick="{{ detailInc }}" style="width:44px;height:44px;border:none;background:transparent;font-size:18px;font-weight:600">+</button>
+        </div>
+        <button onClick="{{ detailAdd }}" style="background:#16140F;color:#FFFCF2;border:none;border-radius:9px;padding:15px 22px;font-weight:600;font-size:15px" style-hover="background:#33301f">{{ detailAddTxt }}</button>
       </div>
     </div>
   </sc-if>
@@ -476,7 +481,7 @@ input{font-family:inherit}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;whatsapp&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;5493510000000&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;autoRotate&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
 class Component extends DCLogic {
-  state = { w: typeof window !== 'undefined' ? window.innerWidth : 1280, idx: 0, q: '', cat: 'todos', view: 'home', cart: [], open: false, now: Date.now(), method: 'andreani', cp: '', cpErr: false, done: false, toast: null, paused: false, dragging: false, dragDeg: 0, scrolled: false, catHover: -1, sprayed: false, detail: null };
+  state = { w: typeof window !== 'undefined' ? window.innerWidth : 1280, idx: 0, q: '', cat: 'todos', view: 'home', cart: [], open: false, now: Date.now(), method: 'andreani', cp: '', cpErr: false, done: false, toast: null, paused: false, dragging: false, dragDeg: 0, scrolled: false, catHover: -1, sprayed: false, detail: null, detailQty: 1 };
 
   FULL = [
     { id: '9-am-dive', name: '9 AM Dive', price: 6900, img: 'assets/products/001-9-am-dive.jpg' },
@@ -942,14 +947,15 @@ class Component extends DCLogic {
   waLink(msg) { return `https://wa.me/${this.wa()}?text=${encodeURIComponent(msg)}`; }
   find(id) { return id === 'kit' ? this.KIT : this.FULL.find(p => p.id === id); }
 
-  add(id) {
+  add(id, qty = 1) {
     this.setState(s => {
       const c = s.cart.slice(); const i = c.findIndex(x => x.id === id);
-      if (i >= 0) c[i] = { ...c[i], qty: c[i].qty + 1 }; else c.push({ id, qty: 1 });
+      if (i >= 0) c[i] = { ...c[i], qty: c[i].qty + qty }; else c.push({ id, qty });
       return { cart: c, toast: this.find(id).name, done: false };
     });
     clearTimeout(this.tt); this.tt = setTimeout(() => this.setState({ toast: null }), 1800);
   }
+  openDetail(id) { this.setState({ detail: id, detailQty: 1 }); }
   setQty(id, d) {
     this.setState(s => ({ cart: s.cart.map(x => x.id === id ? { ...x, qty: x.qty + d } : x).filter(x => x.qty > 0) }));
   }
@@ -993,7 +999,7 @@ class Component extends DCLogic {
         transform: `rotateY(${j * a}deg) translateZ(${r}px)`,
         opacity: d === 0 ? 1 : Math.abs(d) === 1 ? .8 : .25,
         border: d === 0 ? '#FFD400' : '#16140F',
-        go: () => d === 0 ? this.setState({ detail: p.id }) : this.setState(st => ({ idx: st.idx + d })),
+        go: () => d === 0 ? this.openDetail(p.id) : this.setState(st => ({ idx: st.idx + d })),
         add: e => { e.stopPropagation(); this.add(p.id); }
       };
     });
@@ -1017,7 +1023,7 @@ class Component extends DCLogic {
       return {
         ...p, priceTxt: this.fmt(p.price),
         catTitle: cat ? cat.title : '',
-        open: () => this.setState({ detail: p.id }),
+        open: () => this.openDetail(p.id),
         add: e => { e.stopPropagation(); this.add(p.id); }
       };
     });
@@ -1083,7 +1089,7 @@ class Component extends DCLogic {
       cartOpen: s.open,
       openCart: () => this.setState({ open: true }),
       closeCart: () => this.setState({ open: false }),
-      goCatalog: () => { this.setState({ open: false }); this.scrollTo('catalogo'); },
+      goCatalog: () => { this.setState({ open: false }); this.scrollTo('categorias'); },
       resetCart: () => this.setState({ open: false, done: false }),
       done: s.done, showEmpty: !s.done && !s.cart.length, showItems: !s.done && !!s.cart.length,
       cartItems, subtotalTxt: this.fmt(subtotal),
@@ -1116,8 +1122,12 @@ class Component extends DCLogic {
       detailCat: detailCatObj ? detailCatObj.title : '',
       detailTint: detailCatObj ? detailCatObj.tint : '#F3EEDD',
       detailDesc: detailP ? this.describe(detailP) : '',
+      detailQty: s.detailQty,
+      detailDec: () => this.setState(st => ({ detailQty: Math.max(1, st.detailQty - 1) })),
+      detailInc: () => this.setState(st => ({ detailQty: Math.min(20, st.detailQty + 1) })),
+      detailAddTxt: `Agregar ${s.detailQty} al carrito — ${detailP ? this.fmt(detailP.price * s.detailQty) : ''}`,
       closeDetail: () => this.setState({ detail: null }),
-      detailAdd: () => { this.add(s.detail); this.setState({ detail: null }); },
+      detailAdd: () => { this.add(s.detail, s.detailQty); this.setState({ detail: null }); },
       headlineWords, headlineWord, headlineEnd, highlightStyle,
       quoteStyle, paraStyle, btnsStyle, bulletsStyle
     };
