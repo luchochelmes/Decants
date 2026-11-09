@@ -143,15 +143,20 @@ input{font-family:inherit}
 
     <div data-reveal="40" class="cat-grid" style="margin-bottom:32px">
       <sc-for list="{{ catCards }}" as="c" hint-placeholder-count="6">
-        <div onClick="{{ c.select }}" onMouseEnter="{{ c.enter }}" onMouseLeave="{{ catLeave }}" style="position:relative;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;height:390px;padding:32px;border-radius:24px;background:{{ c.tint }};overflow:hidden">
+        <div onClick="{{ c.select }}" onMouseEnter="{{ c.enter }}" onMouseLeave="{{ catLeave }}" style="position:relative;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;height:390px;padding:32px;border-radius:24px;background:{{ c.cardBg }};overflow:hidden">
+          <sc-if value="{{ c.hasBg }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,20,15,.08) 0%,rgba(22,20,15,.62) 100%);z-index:0"></div>
+          </sc-if>
           <div style="position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
             <div style="display:flex;flex-direction:column;gap:8px">
-              <span style="font-family:'Newsreader',serif;font-weight:700;font-size:42px;line-height:1;letter-spacing:-.01em;color:#16140F">{{ c.title }}</span>
-              <span style="font-size:15px;color:#3c372a">{{ c.notes }}</span>
+              <span style="font-family:'Newsreader',serif;font-weight:700;font-size:42px;line-height:1;letter-spacing:-.01em;color:{{ c.titleColor }}">{{ c.title }}</span>
+              <span style="font-size:15px;color:{{ c.notesColor }}">{{ c.notes }}</span>
             </div>
-            <span style="flex-shrink:0;width:48px;height:48px;border-radius:50%;background:#16140F;color:#FFFCF2;display:flex;align-items:center;justify-content:center;font-size:19px;transition:transform .35s;transform:{{ c.rot }}">→</span>
+            <span style="flex-shrink:0;width:48px;height:48px;border-radius:50%;background:{{ c.arrowBg }};color:{{ c.arrowColor }};display:flex;align-items:center;justify-content:center;font-size:19px;transition:transform .35s;transform:{{ c.rot }}">→</span>
           </div>
-          <img src="{{ c.img }}" alt="{{ c.title }}" style="position:absolute;left:50%;bottom:-6px;width:66%;mix-blend-mode:multiply;transition:transform .6s cubic-bezier(.2,.7,.2,1);transform:{{ c.lift }}"></img>
+          <sc-if value="{{ c.showSample }}" hint-placeholder-val="{{ true }}">
+            <img src="{{ c.img }}" alt="{{ c.title }}" style="position:absolute;left:50%;bottom:-6px;width:66%;mix-blend-mode:multiply;transition:transform .6s cubic-bezier(.2,.7,.2,1);transform:{{ c.lift }}"></img>
+          </sc-if>
         </div>
       </sc-for>
     </div>
@@ -585,7 +590,7 @@ class Component extends DCLogic {
     { img: 'assets/kit/5.webp', name: 'Bharara King' }
   ];
   CATS = [
-    { id: 'dulces', emoji: '🍯', title: 'Dulces', subtitle: 'Vainilla, caramelo, golosina.', notes: 'Vainilla · Caramelo · Golosina', tint: 'oklch(0.92 0.045 0)', sample: 'yara-rosa' },
+    { id: 'dulces', emoji: '🍯', title: 'Dulces', subtitle: 'Vainilla, caramelo, golosina.', notes: 'Vainilla · Caramelo · Golosina', tint: 'oklch(0.92 0.045 0)', sample: 'yara-rosa', bg: 'assets/categories/dulces-bg.png' },
     { id: 'calidos', emoji: '🔥', title: 'Cálidos', subtitle: 'Canela, ámbar, azafrán.', notes: 'Canela · Ámbar · Azafrán', tint: 'oklch(0.9 0.06 70)', sample: 'khamrah' },
     { id: 'secos', emoji: '🪵', title: 'Amaderados', subtitle: 'Oud, cuero, tabaco, ahumados.', notes: 'Oud · Cuero · Ahumados', tint: 'oklch(0.88 0.025 60)', sample: 'badee-al-oud-for-glory' },
     { id: 'frescos', emoji: '🌊', title: 'Frescos', subtitle: 'Cítricos, notas marinas, acuáticas.', notes: 'Cítricos · Marinas · Acuáticas', tint: 'oklch(0.91 0.045 260)', sample: 'hawas' },
@@ -978,9 +983,16 @@ class Component extends DCLogic {
     const catCards = this.CATS.map((c, i) => {
       const sample = this.FULL.find(p => p.id === c.sample);
       const hovered = s.catHover === i;
+      const hasBg = !!c.bg;
       return {
         ...c,
         img: sample ? sample.img : '',
+        hasBg, showSample: !hasBg,
+        cardBg: hasBg ? `url('${c.bg}') center/cover no-repeat` : c.tint,
+        titleColor: hasBg ? '#FFFCF2' : '#16140F',
+        notesColor: hasBg ? '#EDE7D6' : '#3c372a',
+        arrowBg: hasBg ? '#FFFCF2' : '#16140F',
+        arrowColor: hasBg ? '#16140F' : '#FFFCF2',
         select: () => this.setState({ cat: c.id, q: '', view: 'catalog' }),
         enter: () => this.setState({ catHover: i }),
         rot: hovered ? 'rotate(-45deg)' : 'none',
