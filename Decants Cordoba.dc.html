@@ -435,12 +435,6 @@ input{font-family:inherit}
                 <span style="font-size:12px;color:#4A4538">Coordinamos por WhatsApp</span>
               </button>
             </div>
-            <sc-if value="{{ isAndreani }}" hint-placeholder-val="{{ true }}">
-              <div style="display:flex;flex-direction:column;gap:6px">
-                <input value="{{ cp }}" onChange="{{ onCp }}" placeholder="Código postal" inputmode="numeric" style="border:1.5px solid {{ cpBorder }};border-radius:12px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
-                <span style="font-size:12px;color:#5E584B">{{ shipNote }}</span>
-              </div>
-            </sc-if>
             <div style="display:flex;justify-content:space-between;align-items:baseline">
               <span style="font-weight:600">Subtotal</span>
               <span style="font-family:'Newsreader',serif;font-weight:800;font-size:28px">{{ subtotalTxt }}</span>
@@ -459,7 +453,10 @@ input{font-family:inherit}
             </div>
             <input value="{{ formTelefono }}" onChange="{{ onFormTelefono }}" placeholder="Teléfono" inputmode="tel" style="border:1.5px solid #16140F;border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
             <input value="{{ formDireccion }}" onChange="{{ onFormDireccion }}" placeholder="Dirección (calle, número, ciudad)" style="border:1.5px solid #16140F;border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
-            <span style="font-size:12px;color:#5E584B">Envío a CP {{ cp }} por Andreani.</span>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <input value="{{ cp }}" onChange="{{ onCp }}" placeholder="Código postal" inputmode="numeric" style="border:1.5px solid {{ cpBorder }};border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
+              <span style="font-size:12px;color:#5E584B">{{ shipNote }}</span>
+            </div>
             <input value="{{ formEmail }}" onChange="{{ onFormEmail }}" placeholder="Email (para el seguimiento del pedido)" type="email" style="border:1.5px solid #16140F;border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
             <sc-if value="{{ formErr }}" hint-placeholder-val="{{ false }}">
               <span style="font-size:13px;color:#C0392B">Completá todos los campos con un email válido.</span>
@@ -1127,10 +1124,8 @@ class Component extends DCLogic {
       shipNote: s.cpErr ? 'Ingresá un código postal válido (4 dígitos).' : s.cp.length === 4 ? `Envío a CP ${s.cp}: el costo de Andreani se calcula en el pago.` : 'Ingresá tu CP para calcular el envío a domicilio o sucursal.',
       checkoutLabel: isAndreani ? 'Continuar →' : 'Enviar pedido por WhatsApp →',
       checkout: () => {
-        if (isAndreani) {
-          if (s.cp.length !== 4) return this.setState({ cpErr: true });
-          this.setState({ infoOpen: true });
-        } else window.open(this.waLink(orderMsg), '_blank');
+        if (isAndreani) this.setState({ infoOpen: true });
+        else window.open(this.waLink(orderMsg), '_blank');
       },
       formNombre: s.formNombre, onFormNombre: e => this.setState({ formNombre: e.target.value, formErr: false }),
       formApellido: s.formApellido, onFormApellido: e => this.setState({ formApellido: e.target.value, formErr: false }),
@@ -1140,6 +1135,7 @@ class Component extends DCLogic {
       formErr: s.formErr,
       backToCart: () => this.setState({ infoOpen: false }),
       confirmOrder: () => {
+        if (s.cp.length !== 4) return this.setState({ cpErr: true, formErr: true });
         const valid = s.formNombre.trim() && s.formApellido.trim() && s.formTelefono.trim() && s.formDireccion.trim() && /\S+@\S+\.\S+/.test(s.formEmail);
         if (!valid) return this.setState({ formErr: true });
         const infoMsg = `¡Hola Graciano! Confirmo mi pedido por Andreani:\n${cartItems.map(i => `• ${i.qty}× ${i.name}`).join('\n')}\nTotal: ${this.fmt(subtotal)}\n\nDatos de envío:\n${s.formNombre} ${s.formApellido}\nTel: ${s.formTelefono}\nDirección: ${s.formDireccion}, CP ${s.cp}\nEmail para seguimiento: ${s.formEmail}`;
