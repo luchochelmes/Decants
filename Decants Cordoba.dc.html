@@ -447,10 +447,8 @@ input{font-family:inherit}
           <div style="flex:1;overflow:auto;padding:20px 24px;display:flex;flex-direction:column;gap:16px">
             <button onClick="{{ backToCart }}" style="align-self:flex-start;background:transparent;border:none;padding:0;font-size:13px;font-weight:600;text-decoration:underline;text-underline-offset:3px;color:#16140F">← Volver al carrito</button>
             <span style="font-family:'Instrument Sans',sans-serif;font-size:11px;font-weight:600;color:#5E584B;letter-spacing:.08em">DATOS PARA EL ENVÍO</span>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-              <input value="{{ formNombre }}" onChange="{{ onFormNombre }}" placeholder="Nombre" style="border:1.5px solid #16140F;border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
-              <input value="{{ formApellido }}" onChange="{{ onFormApellido }}" placeholder="Apellido" style="border:1.5px solid #16140F;border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
-            </div>
+            <input value="{{ formNombre }}" onChange="{{ onFormNombre }}" placeholder="Nombre" style="width:100%;border:1.5px solid #16140F;border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
+            <input value="{{ formApellido }}" onChange="{{ onFormApellido }}" placeholder="Apellido" style="width:100%;border:1.5px solid #16140F;border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
             <input value="{{ formTelefono }}" onChange="{{ onFormTelefono }}" placeholder="Teléfono" inputmode="tel" style="border:1.5px solid #16140F;border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
             <input value="{{ formDireccion }}" onChange="{{ onFormDireccion }}" placeholder="Dirección (calle, número, ciudad)" style="border:1.5px solid #16140F;border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
             <div style="display:flex;flex-direction:column;gap:6px">
