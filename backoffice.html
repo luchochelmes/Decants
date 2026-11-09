@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFCF2;color:#16140F;font-family:'Instrument Sans',sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#16140F;text-decoration:none}
+a:hover{color:#000}
+button{font-family:inherit;cursor:pointer;color:#16140F}
+input,select{font-family:inherit;color:#16140F}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;background:#FFFCF2">
+
+  <sc-if value="{{ desktop }}" hint-placeholder-val="{{ true }}">
+    <aside style="width:248px;flex-shrink:0;background:#16140F;color:#FFFCF2;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;padding:22px 16px">
+      <div style="display:flex;align-items:center;gap:12px;padding:0 8px 26px">
+        <div style="width:44px;height:44px;border-radius:50%;background:#FFFFFF;overflow:hidden;display:grid;place-items:center;flex-shrink:0">
+          <img src="assets/logo.png" alt="Decants Córdoba" style="width:150%;height:150%;object-fit:cover;object-position:50% 46%"></img>
+        </div>
+        <div style="display:flex;flex-direction:column;line-height:1.1">
+          <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:16px;letter-spacing:-.02em">Decants Córdoba</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#FFD400;letter-spacing:.08em">BACKOFFICE</span>
+        </div>
+      </div>
+      <nav style="display:flex;flex-direction:column;gap:4px">
+        <sc-for list="{{ nav }}" as="n" hint-placeholder-count="4">
+          <button onClick="{{ n.go }}" style="display:flex;align-items:center;justify-content:space-between;gap:10px;border:none;border-radius:14px;padding:12px 14px;font-size:15px;font-weight:600;text-align:left;background:{{ n.bg }};color:{{ n.fg }}">
+            <span style="display:flex;align-items:center;gap:12px"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;opacity:.7">{{ n.num }}</span><span>{{ n.label }}</span></span>
+            <sc-if value="{{ n.badge }}" hint-placeholder-val="{{ false }}"><span style="background:#FFD400;color:#16140F;border-radius:999px;min-width:22px;height:22px;padding:0 6px;display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-size:11px">{{ n.badge }}</span></sc-if>
+          </button>
+        </sc-for>
+      </nav>
+      <div style="margin-top:auto;display:flex;flex-direction:column;gap:12px;padding:0 8px">
+        <a href="index.html" style="display:flex;justify-content:space-between;align-items:center;border:1.5px solid #FFD400;color:#FFD400;border-radius:999px;padding:11px 16px;font-weight:600;font-size:14px" style-hover="background:#FFD400;color:#16140F">Ver tienda <span>↗</span></a>
+        <div style="display:flex;align-items:center;gap:10px;padding-top:10px;border-top:1px solid rgba(255,252,242,.12)">
+          <div style="width:34px;height:34px;border-radius:50%;background:#FFD400;color:#16140F;display:grid;place-items:center;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:14px">G</div>
+          <div style="display:flex;flex-direction:column;line-height:1.2"><span style="font-size:14px;font-weight:600">Graciano</span><span style="font-size:12px;color:#BDB6A5">Administrador</span></div>
+        </div>
+      </div>
+    </aside>
+  </sc-if>
+
+  <main style="flex:1;min-width:0;display:flex;flex-direction:column;padding-bottom:{{ mainPadB }}px">
+    <header style="position:sticky;top:0;z-index:20;background:rgba(255,252,242,.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(22,20,15,.1)">
+      <div style="padding:16px clamp(16px,3vw,36px);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:14px">
+          <sc-if value="{{ mobile }}" hint-placeholder-val="{{ false }}">
+            <div style="width:40px;height:40px;border-radius:50%;background:#FFFFFF;border:1.5px solid #D9D4C7;overflow:hidden;display:grid;place-items:center">
+              <img src="assets/logo.png" alt="" style="width:150%;height:150%;object-fit:cover;object-position:50% 46%"></img>
+            </div>
+          </sc-if>
+          <div style="display:flex;flex-direction:column;gap:2px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E584B;letter-spacing:.08em">{{ crumb }}</span>
+            <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(26px,3vw,34px);letter-spacing:-.035em;line-height:1;white-space:nowrap">{{ title }}</span>
+          </div>
+        </div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#5E584B">{{ today }}</span>
+      </div>
+    </header>
+
+    <div style="padding:clamp(18px,3vw,36px);display:flex;flex-direction:column;gap:24px;max-width:1320px;width:100%">
+
+      <sc-if value="{{ vResumen }}" hint-placeholder-val="{{ true }}">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:14px">
+          <div style="background:#FFD400;border:1.5px solid #16140F;border-radius:24px;padding:20px;display:flex;flex-direction:column;gap:18px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em">VENTAS · NOVIEMBRE</span>
+            <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:38px;letter-spacing:-.04em;line-height:1">{{ kSales }}</span>
+          </div>
+          <div style="background:#16140F;color:#FFFCF2;border-radius:24px;padding:20px;display:flex;flex-direction:column;gap:18px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;color:#FFD400">PARA PREPARAR</span>
+            <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:38px;letter-spacing:-.04em;line-height:1">{{ kPending }}</span>
+          </div>
+          <div style="background:#FFFFFF;border:1.5px solid #16140F;border-radius:24px;padding:20px;display:flex;flex-direction:column;gap:18px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;color:#5E584B">DECANTS VENDIDOS</span>
+            <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:38px;letter-spacing:-.04em;line-height:1">{{ kUnits }}</span>
+          </div>
+          <div style="background:#FFFFFF;border:1.5px solid #16140F;border-radius:24px;padding:20px;display:flex;flex-direction:column;gap:18px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;color:#5E584B">TICKET PROMEDIO</span>
+            <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:38px;letter-spacing:-.04em;line-height:1">{{ kAvg }}</span>
+          </div>
+        </div>
+
+
+        <div style="background:#FFFFFF;border:1.5px solid #16140F;border-radius:24px;padding:22px;display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px">
+            <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.02em">Pedidos para preparar</span>
+            <button onClick="{{ goPedidos }}" style="border:none;background:none;font-weight:600;font-size:14px">Ver todos →</button>
+          </div>
+          <sc-for list="{{ toPrepare }}" as="o" hint-placeholder-count="3">
+            <div onClick="{{ o.open }}" style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding:14px 0;border-bottom:1px solid rgba(22,20,15,.1);cursor:pointer" style-hover="background:#FFFCF2">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;min-width:64px">{{ o.id }}</span>
+              <span style="font-weight:600;flex:1;min-width:140px">{{ o.cliente }}</span>
+              <span style="font-size:13px;color:#4A4538;min-width:110px">{{ o.metodoTxt }}</span>
+              <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:17px;min-width:84px">{{ o.totalTxt }}</span>
+              <span style="font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;border:1.5px solid #16140F;background:{{ o.sBg }};color:{{ o.sFg }}">{{ o.estado }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ vPedidos }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <sc-for list="{{ statusChips }}" as="c" hint-placeholder-count="5">
+              <button onClick="{{ c.select }}" style="display:flex;align-items:center;gap:6px;white-space:nowrap;border:1.5px solid #16140F;border-radius:999px;padding:8px 14px;font-size:13px;font-weight:600;background:{{ c.bg }};color:{{ c.fg }}"><span>{{ c.label }}</span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;opacity:.7">{{ c.count }}</span></button>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            <select value="{{ metodoF }}" onChange="{{ onMetodo }}" style="border:1.5px solid #16140F;border-radius:999px;padding:9px 14px;font-size:13px;font-weight:600;background:#FFFFFF">
+              <option value="todos">Todos los envíos</option>
+              <option value="andreani">Andreani</option>
+              <option value="cba">Córdoba Capital</option>
+            </select>
+            <input value="{{ q }}" onChange="{{ onQ }}" placeholder="Buscar cliente o N°" style="border:1.5px solid #16140F;border-radius:999px;padding:9px 16px;font-size:14px;background:#FFFFFF;outline:none;width:200px"></input>
+          </div>
+        </div>
+
+        <div style="background:#FFFFFF;border:1.5px solid #16140F;border-radius:24px;overflow:hidden">
+          <sc-if value="{{ wideTable }}" hint-placeholder-val="{{ true }}">
+            <div style="display:grid;grid-template-columns:80px minmax(0,1.6fr) minmax(0,1.1fr) 70px 100px 120px;gap:14px;padding:14px 20px;background:#16140F;color:#FFD400;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em">
+              <span>N°</span><span>CLIENTE</span><span>ENTREGA</span><span>DECANTS</span><span>TOTAL</span><span>ESTADO</span>
+            </div>
+          </sc-if>
+          <sc-for list="{{ orderRows }}" as="o" hint-placeholder-count="6">
+            <div onClick="{{ o.open }}" style="display:grid;grid-template-columns:{{ rowCols }};gap:8px 14px;padding:16px 20px;border-bottom:1px solid rgba(22,20,15,.1);align-items:center;cursor:pointer;background:{{ o.rowBg }}" style-hover="background:#FFF8D6">
+              <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600">{{ o.id }}</span><span style="font-size:12px;color:#5E584B">{{ o.fecha }}</span></div>
+              <div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-weight:600">{{ o.cliente }}</span><span style="font-size:13px;color:#5E584B;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ o.resumen }}</span></div>
+              <div style="display:flex;align-items:center;gap:8px;min-width:0"><span style="width:8px;height:8px;border-radius:50%;flex-shrink:0;background:{{ o.mDot }};border:1.5px solid #16140F"></span><span style="font-size:14px">{{ o.metodoTxt }}</span></div>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap">{{ o.units }} dec.</span>
+              <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:17px">{{ o.totalTxt }}</span>
+              <span style="justify-self:start;font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;border:1.5px solid #16140F;background:{{ o.sBg }};color:{{ o.sFg }}">{{ o.estado }}</span>
+            </div>
+          </sc-for>
+          <sc-if value="{{ noOrders }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:40px;text-align:center;color:#5E584B">No hay pedidos con estos filtros.</div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ vProductos }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <sc-for list="{{ catChips }}" as="c" hint-placeholder-count="4">
+              <button onClick="{{ c.select }}" style="border:1.5px solid #16140F;border-radius:999px;padding:8px 14px;font-size:13px;font-weight:600;background:{{ c.bg }};color:{{ c.fg }}">{{ c.label }}</button>
+            </sc-for>
+          </div>
+          <button onClick="{{ addProduct }}" style="background:#16140F;color:#FFFCF2;border:none;border-radius:999px;padding:12px 20px;font-weight:600;font-size:14px;box-shadow:0 4px 0 #FFD400">+ Nuevo perfume</button>
+        </div>
+        <p style="margin:0;font-size:14px;color:#4A4538;max-width:640px">El stock se cuenta en mililitros del frasco original. Cada decant descuenta 5 ml; cuando quedan menos de 3 decants la barra se pone roja.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:14px">
+          <sc-for list="{{ prodRows }}" as="p" hint-placeholder-count="6">
+            <div style="background:#FFFFFF;border:1.5px solid #16140F;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:14px;opacity:{{ p.op }}">
+              <div style="display:flex;gap:14px;align-items:flex-start">
+                <div style="width:54px;height:78px;border-radius:14px;background:{{ p.tint }};display:grid;place-items:center;flex-shrink:0">
+                  <span style="width:16px;height:52px;border-radius:4px 4px 6px 6px;border:1.5px solid rgba(22,20,15,.35);background:{{ p.color }}"></span>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:2px;flex:1;min-width:0">
+                  <input value="{{ p.house }}" onChange="{{ p.onHouse }}" style="border:none;background:transparent;padding:0;font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E584B;text-transform:uppercase;outline:none;width:100%"></input>
+                  <input value="{{ p.name }}" onChange="{{ p.onName }}" style="border:none;background:transparent;padding:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:20px;letter-spacing:-.02em;outline:none;width:100%"></input>
+                  <span style="font-size:12px;font-weight:700;align-self:flex-start;margin-top:4px;padding:3px 8px;border-radius:999px;background:#16140F;color:#FFD400">{{ p.cat }}</span>
+                </div>
+                <button onClick="{{ p.toggle }}" title="Visible en la tienda" style="width:46px;height:26px;border-radius:999px;border:1.5px solid #16140F;background:{{ p.tgBg }};padding:2px;display:flex;justify-content:{{ p.tgJ }};flex-shrink:0">
+                  <span style="width:19px;height:19px;border-radius:50%;background:{{ p.tgDot }}"></span>
+                </button>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <div style="display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E584B"><span>{{ p.mlTxt }}</span><span style="color:{{ p.leftColor }};font-weight:600">{{ p.leftTxt }}</span></div>
+                <div style="height:10px;border-radius:10px;background:#F3EEDD;overflow:hidden;border:1px solid rgba(22,20,15,.15)"><div style="height:100%;width:{{ p.pct }}%;background:{{ p.barColor }};transition:width .4s"></div></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding-top:12px;border-top:1px solid rgba(22,20,15,.1)">
+                <div style="display:flex;align-items:center;gap:4px;border:1.5px solid #16140F;border-radius:12px;padding:6px 10px;background:#FFFCF2">
+                  <span style="font-weight:700">$</span>
+                  <input value="{{ p.price }}" onChange="{{ p.onPrice }}" inputmode="numeric" style="border:none;background:transparent;width:70px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:17px;outline:none"></input>
+                </div>
+                <div style="display:flex;gap:6px">
+                  <button onClick="{{ p.minus }}" style="border:1.5px solid #16140F;border-radius:999px;background:transparent;padding:7px 11px;font-size:13px;font-weight:600;white-space:nowrap">−5 ml</button>
+                  <button onClick="{{ p.refill }}" style="border:1.5px solid #16140F;border-radius:999px;background:#FFD400;padding:7px 11px;font-size:13px;font-weight:700;white-space:nowrap">+ Frasco</button>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ vOferta }}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:18px;align-items:start">
+          <div style="background:#FFFFFF;border:1.5px solid #16140F;border-radius:24px;padding:24px;display:flex;flex-direction:column;gap:18px">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+              <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.02em">Oferta de la semana</span>
+              <button onClick="{{ toggleOffer }}" style="display:flex;align-items:center;gap:8px;border:1.5px solid #16140F;border-radius:999px;padding:6px 12px 6px 6px;background:{{ offBg }};font-size:13px;font-weight:700">
+                <span style="width:18px;height:18px;border-radius:50%;background:{{ offDot }}"></span>{{ offLabel }}
+              </button>
+            </div>
+            <label style="display:flex;flex-direction:column;gap:6px">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E584B;letter-spacing:.06em">NOMBRE</span>
+              <input value="{{ offer.name }}" onChange="{{ onOfferName }}" style="border:1.5px solid #16140F;border-radius:12px;padding:12px 14px;font-size:16px;background:#FFFCF2;outline:none"></input>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:6px">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E584B;letter-spacing:.06em">DESCRIPCIÓN</span>
+              <input value="{{ offer.desc }}" onChange="{{ onOfferDesc }}" style="border:1.5px solid #16140F;border-radius:12px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
+            </label>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <label style="display:flex;flex-direction:column;gap:6px">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E584B;letter-spacing:.06em">PRECIO OFERTA</span>
+                <input value="{{ offer.price }}" onChange="{{ onOfferPrice }}" inputmode="numeric" style="border:1.5px solid #16140F;border-radius:12px;padding:12px 14px;font-size:16px;font-weight:700;background:#FFFCF2;outline:none;width:100%"></input>
+              </label>
+              <label style="display:flex;flex-direction:column;gap:6px">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E584B;letter-spacing:.06em">PRECIO ANTERIOR</span>
+                <input value="{{ offer.before }}" onChange="{{ onOfferBefore }}" inputmode="numeric" style="border:1.5px solid #16140F;border-radius:12px;padding:12px 14px;font-size:16px;background:#FFFCF2;outline:none;width:100%"></input>
+              </label>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E584B;letter-spacing:.06em">TERMINA</span>
+              <div style="display:flex;gap:6px;flex-wrap:wrap">
+                <sc-for list="{{ endChips }}" as="c" hint-placeholder-count="3">
+                  <button onClick="{{ c.select }}" style="border:1.5px solid #16140F;border-radius:999px;padding:8px 14px;font-size:13px;font-weight:600;white-space:nowrap;background:{{ c.bg }}">{{ c.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+            <button onClick="{{ saveOffer }}" style="background:#16140F;color:#FFFCF2;border:none;border-radius:999px;padding:16px;font-weight:700;font-size:15px;box-shadow:0 5px 0 #FFD400">{{ saveLabel }}</button>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E584B;letter-spacing:.06em">ASÍ SE VE EN LA TIENDA</span>
+            <div style="background:#FFD400;border:2px solid #16140F;border-radius:24px;padding:28px;display:flex;flex-direction:column;gap:14px;opacity:{{ offPrevOp }}">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em">03 — OFERTA DE LA SEMANA</span>
+              <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(36px,4vw,52px);line-height:.9;letter-spacing:-.045em">{{ offer.name }}</span>
+              <span style="font-size:15px;line-height:1.5;color:#2E2920">{{ offer.desc }}</span>
+              <div style="display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap">
+                <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:42px;letter-spacing:-.04em;line-height:1">{{ offPriceTxt }}</span>
+                <span style="font-size:18px;text-decoration:line-through;color:#5A4A00;padding-bottom:4px">{{ offBeforeTxt }}</span>
+                <span style="background:#16140F;color:#FFD400;font-family:'JetBrains Mono',monospace;font-size:12px;padding:5px 10px;border-radius:999px;margin-bottom:6px;transform:rotate(-4deg)">{{ offPct }}</span>
+              </div>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:12px">{{ offEndTxt }}</span>
+            </div>
+            <span style="font-size:13px;color:#5E584B">{{ offUnitsTxt }}</span>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </main>
+
+  <sc-if value="{{ mobile }}" hint-placeholder-val="{{ false }}">
+    <nav style="position:fixed;left:10px;right:10px;bottom:10px;z-index:30;background:#16140F;border-radius:22px;padding:6px;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;box-shadow:0 10px 30px rgba(0,0,0,.25)">
+      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="4">
+        <button onClick="{{ n.go }}" style="position:relative;border:none;border-radius:16px;padding:10px 4px;font-size:12px;font-weight:700;min-height:48px;background:{{ n.bg }};color:{{ n.fg }}">
+          {{ n.label }}
+          <sc-if value="{{ n.badge }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:4px;right:8px;background:#FFD400;color:#16140F;border:1.5px solid #16140F;border-radius:999px;min-width:18px;height:18px;font-size:11px;display:grid;place-items:center;font-family:'JetBrains Mono',monospace">{{ n.badge }}</span></sc-if>
+        </button>
+      </sc-for>
+    </nav>
+  </sc-if>
+
+  <sc-if value="{{ drawer }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:50;display:flex;justify-content:flex-end">
+      <div onClick="{{ closeOrder }}" style="position:absolute;inset:0;background:rgba(22,20,15,.5);backdrop-filter:blur(3px)"></div>
+      <div style="position:relative;width:min(100%,460px);height:100%;background:#FFFCF2;border-left:2px solid #16140F;display:flex;flex-direction:column;overflow:auto">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:22px 24px;border-bottom:1.5px solid #16140F;gap:12px">
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#5E584B">{{ sel.id }} · {{ sel.fecha }}</span>
+            <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:28px;letter-spacing:-.03em;line-height:1">{{ sel.cliente }}</span>
+            <span style="align-self:flex-start;font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;border:1.5px solid #16140F;background:{{ sel.sBg }};color:{{ sel.sFg }}">{{ sel.estado }}</span>
+          </div>
+          <button onClick="{{ closeOrder }}" style="width:40px;height:40px;border-radius:50%;border:1.5px solid #16140F;background:transparent;flex-shrink:0">✕</button>
+        </div>
+
+        <div style="padding:20px 24px;display:flex;flex-direction:column;gap:22px;flex:1">
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E584B;letter-spacing:.06em">PROGRESO</span>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:6px">
+              <sc-for list="{{ steps }}" as="st" hint-placeholder-count="4">
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <div style="height:6px;border-radius:6px;background:{{ st.bg }};border:1px solid #16140F"></div>
+                  <span style="font-size:11px;font-weight:600;color:{{ st.fg }}">{{ st.label }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E584B;letter-spacing:.06em;margin-bottom:6px">DECANTS</span>
+            <sc-for list="{{ sel.lines }}" as="l" hint-placeholder-count="2">
+              <div style="display:grid;grid-template-columns:14px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(22,20,15,.1)">
+                <span style="width:14px;height:32px;border-radius:4px 4px 5px 5px;border:1.5px solid rgba(22,20,15,.35);background:{{ l.color }}"></span>
+                <div style="display:flex;flex-direction:column"><span style="font-weight:600">{{ l.qty }}× {{ l.name }}</span><span style="font-size:12px;color:#5E584B">{{ l.house }}</span></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:13px">{{ l.sub }}</span>
+              </div>
+            </sc-for>
+            <div style="display:flex;justify-content:space-between;align-items:baseline;padding-top:12px">
+              <span style="font-weight:600">Total</span>
+              <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:26px">{{ sel.totalTxt }}</span>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:8px;background:#FFFFFF;border:1.5px solid #16140F;border-radius:18px;padding:16px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E584B;letter-spacing:.06em">ENTREGA · {{ sel.metodoTxt }}</span>
+            <span style="font-weight:600">{{ sel.direccion }}</span>
+            <span style="font-size:14px;color:#4A4538">{{ sel.contacto }}</span>
+            <sc-if value="{{ selAndreani }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:6px;margin-top:6px">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E584B">N° DE SEGUIMIENTO ANDREANI</span>
+                <input value="{{ sel.tracking }}" onChange="{{ onTracking }}" placeholder="Ej: 360002345678910" style="border:1.5px solid {{ trkBorder }};border-radius:12px;padding:11px 14px;font-family:'JetBrains Mono',monospace;font-size:14px;background:#FFFCF2;outline:none"></input>
+                <span style="font-size:12px;color:#8A2A1A">{{ trkErr }}</span>
+              </div>
+            </sc-if>
+            <sc-if value="{{ selCba }}" hint-placeholder-val="{{ false }}">
+              <a href="{{ selWa }}" target="_blank" style="margin-top:6px;align-self:flex-start;display:inline-flex;gap:8px;align-items:center;border:1.5px solid #16140F;border-radius:999px;padding:10px 16px;font-weight:600;font-size:14px;background:#FFD400" style-hover="background:#16140F;color:#FFD400">Coordinar por WhatsApp ↗</a>
+            </sc-if>
+          </div>
+        </div>
+
+        <div style="padding:18px 24px 24px;border-top:1.5px solid #16140F;background:#FFFFFF;display:flex;gap:10px">
+          <sc-if value="{{ canBack }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ stepBack }}" style="border:1.5px solid #16140F;border-radius:999px;background:transparent;padding:16px 18px;font-weight:600">←</button>
+          </sc-if>
+          <sc-if value="{{ canAdvance }}" hint-placeholder-val="{{ true }}">
+            <button onClick="{{ advance }}" style="flex:1;background:#16140F;color:#FFFCF2;border:none;border-radius:999px;padding:16px;font-weight:700;font-size:15px;box-shadow:0 5px 0 #FFD400">{{ advanceLabel }}</button>
+          </sc-if>
+          <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
+            <span style="flex:1;text-align:center;padding:16px;font-weight:700;border:1.5px dashed #16140F;border-radius:999px">Pedido entregado ✓</span>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showToast }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;left:50%;bottom:90px;transform:translateX(-50%);z-index:60;background:#FFD400;color:#16140F;border:2px solid #16140F;border-radius:999px;padding:12px 20px;font-weight:700;font-size:15px;box-shadow:4px 4px 0 #16140F;white-space:nowrap">{{ toast }}</div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  FLOW = ['Pendiente', 'Preparando', 'Despachado', 'Entregado'];
+  FLOW_CBA = ['Pendiente', 'Preparando', 'Coordinado', 'Entregado'];
+  state = {
+    w: typeof window !== 'undefined' ? window.innerWidth : 1280,
+    view: 'resumen', sf: 'Todos', mf: 'todos', q: '', cf: 'Todos', sel: null, trkErr: false, toast: null, saved: true,
+    products: [
+      { id: 'sauvage', house: 'Dior', name: 'Sauvage EDP', cat: 'Diseñador', price: 9500, color: '#4A7FB8', ml: 62, on: true },
+      { id: 'khamrah', house: 'Lattafa', name: 'Khamrah', cat: 'Árabes', price: 7500, color: '#B5651D', ml: 12, on: true },
+      { id: 'br540', house: 'Maison F. Kurkdjian', name: 'Baccarat Rouge 540', cat: 'Nicho', price: 18900, color: '#C0392B', ml: 24, on: true },
+      { id: 'bleu', house: 'Chanel', name: 'Bleu de Chanel', cat: 'Diseñador', price: 10500, color: '#1F3A5F', ml: 81, on: true },
+      { id: 'cdni', house: 'Armaf', name: 'Club de Nuit Intense', cat: 'Árabes', price: 7500, color: '#2B2B2B', ml: 8, on: true },
+      { id: 'layton', house: 'Parfums de Marly', name: 'Layton', cat: 'Nicho', price: 16500, color: '#6B4E9B', ml: 47, on: true },
+      { id: 'goodgirl', house: 'Carolina Herrera', name: 'Good Girl', cat: 'Diseñador', price: 9000, color: '#7A1E3A', ml: 70, on: true },
+      { id: 'hawas', house: 'Rasasi', name: 'Hawas for Him', cat: 'Árabes', price: 8000, color: '#3FA7C9', ml: 33, on: true },
+      { id: 'erba', house: 'Xerjoff', name: 'Erba Pura', cat: 'Nicho', price: 17500, color: '#E8A93A', ml: 18, on: false },
+      { id: 'libre', house: 'Yves Saint Laurent', name: 'Libre', cat: 'Diseñador', price: 9500, color: '#F2C200', ml: 55, on: true }
+    ],
+    orders: [
+      { id: '#1062', cliente: 'Martina López', fecha: '09/11 · 10:42', m: 'andreani', items: [['br540', 1], ['libre', 2]], estado: 'Pendiente', dir: 'Av. Pellegrini 1450, Rosario · CP 2000', tel: 'martina.lopez@gmail.com · 341 555-2190', tracking: '' },
+      { id: '#1061', cliente: 'Facundo Ríos', fecha: '09/11 · 09:15', m: 'cba', items: [['khamrah', 2], ['cdni', 1]], estado: 'Pendiente', dir: 'Nueva Córdoba · a coordinar', tel: '351 612-3344', tracking: '' },
+      { id: '#1060', cliente: 'Sofía Peralta', fecha: '08/11 · 21:03', m: 'andreani', items: [['kit', 1]], estado: 'Preparando', dir: 'Sucursal Andreani Mendoza Centro · CP 5500', tel: 'sofi.peralta@hotmail.com · 261 448-9021', tracking: '' },
+      { id: '#1059', cliente: 'Joaquín Méndez', fecha: '08/11 · 18:40', m: 'andreani', items: [['sauvage', 1], ['bleu', 1]], estado: 'Despachado', dir: 'Calle 12 n° 845, La Plata · CP 1900', tel: 'joaco.mendez@gmail.com · 221 503-7781', tracking: '360002345678910' },
+      { id: '#1058', cliente: 'Camila Ferreyra', fecha: '08/11 · 12:20', m: 'cba', items: [['goodgirl', 1], ['libre', 1]], estado: 'Coordinado', dir: 'Cerro de las Rosas · sábado 11 h', tel: '351 701-5520', tracking: '' },
+      { id: '#1057', cliente: 'Tomás Aguirre', fecha: '07/11 · 16:55', m: 'andreani', items: [['layton', 1], ['hawas', 2]], estado: 'Entregado', dir: 'San Martín 230, Neuquén · CP 8300', tel: 'tomas.aguirre@gmail.com · 299 422-1180', tracking: '360002345612003' },
+      { id: '#1056', cliente: 'Lucía Bustos', fecha: '07/11 · 11:08', m: 'cba', items: [['kit', 1]], estado: 'Entregado', dir: 'General Paz · retiro en centro', tel: '351 380-9912', tracking: '' },
+      { id: '#1055', cliente: 'Nicolás Vera', fecha: '06/11 · 20:31', m: 'andreani', items: [['khamrah', 1], ['cdni', 1], ['hawas', 1]], estado: 'Entregado', dir: 'Av. Colón 3020, Mar del Plata · CP 7600', tel: 'nico.vera@gmail.com · 223 591-4400', tracking: '360002345598812' }
+    ],
+    offer: { name: 'Kit Descubrimiento', desc: 'Elegí 4 decants de 5 ml de cualquier categoría. Ideal para encontrar tu perfume firma o para regalar.', price: 28900, before: 36000, on: true, end: 'dom' }
+  };
+  KIT = { id: 'kit', house: '4 decants a elección', name: 'Kit Descubrimiento', price: 28900, color: '#FFD400', units: 4 };
+
+  componentDidMount() {
+    this.onResize = () => this.setState({ w: window.innerWidth });
+    window.addEventListener('resize', this.onResize);
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); clearTimeout(this.tt); }
+
+  fmt(n) { return '$' + Math.round(n).toLocaleString('es-AR'); }
+  prod(id) { return id === 'kit' ? { ...this.KIT, price: this.state.offer.price } : this.state.products.find(p => p.id === id) || { name: '—', house: '', price: 0, color: '#ccc' }; }
+  total(o) { return o.items.reduce((t, [id, q]) => t + this.prod(id).price * q, 0); }
+  units(o) { return o.items.reduce((t, [id, q]) => t + (id === 'kit' ? 4 : 1) * q, 0); }
+  flow(o) { return o.m === 'cba' ? this.FLOW_CBA : this.FLOW; }
+  sColors(e) {
+    return { Pendiente: ['#FFD400', '#16140F'], Preparando: ['#FFF1B8', '#16140F'], Despachado: ['#16140F', '#FFD400'], Coordinado: ['#16140F', '#FFD400'], Entregado: ['#EDE9DD', '#16140F'] }[e] || ['#fff', '#16140F'];
+  }
+  flash(t) { this.setState({ toast: t }); clearTimeout(this.tt); this.tt = setTimeout(() => this.setState({ toast: null }), 1900); }
+  updOrder(id, f) { this.setState(s => ({ orders: s.orders.map(o => o.id === id ? { ...o, ...f(o) } : o) })); }
+  updProd(id, patch) { this.setState(s => ({ products: s.products.map(p => p.id === id ? { ...p, ...patch } : p) })); }
+  setView(v) { this.setState({ view: v }); window.scrollTo({ top: 0 }); }
+  orderVM(o) {
+    const [sBg, sFg] = this.sColors(o.estado);
+    return {
+      ...o, sBg, sFg, totalTxt: this.fmt(this.total(o)), units: this.units(o),
+      metodoTxt: o.m === 'cba' ? 'Córdoba Capital' : 'Andreani',
+      mDot: o.m === 'cba' ? '#FFD400' : '#16140F',
+      resumen: o.items.map(([id, q]) => `${q}× ${this.prod(id).name}`).join(', '),
+      rowBg: o.estado === 'Pendiente' ? '#FFFCF2' : '#FFFFFF',
+      open: () => this.setState({ sel: o.id, trkErr: false })
+    };
+  }
+
+  renderVals() {
+    const s = this.state, mobile = s.w < 820;
+    const pendingN = s.orders.filter(o => o.estado === 'Pendiente' || o.estado === 'Preparando').length;
+    const titles = { resumen: 'Resumen', pedidos: 'Pedidos', productos: 'Productos y stock', oferta: 'Oferta' };
+    const nav = [['resumen', 'Resumen'], ['pedidos', 'Pedidos'], ['productos', 'Productos'], ['oferta', 'Oferta']].map(([k, l], i) => ({
+      label: l, num: '0' + (i + 1), go: () => this.setView(k),
+      bg: s.view === k ? '#FFD400' : 'transparent', fg: s.view === k ? '#16140F' : (mobile ? '#FFFCF2' : '#D9D3C3'),
+      badge: k === 'pedidos' && pendingN ? pendingN : false
+    }));
+
+    const sales = s.orders.reduce((t, o) => t + this.total(o), 0) + 412300;
+    const unitsAll = s.orders.reduce((t, o) => t + this.units(o), 0) + 61;
+    const tints = { 'Diseñador': '#F3EEDD', 'Nicho': '#EDE7F5', 'Árabes': '#FFF1B8' };
+    const stockVM = p => {
+      const left = Math.floor(p.ml / 5), low = left < 3;
+      return { ...p, left, pct: Math.min(100, p.ml), barColor: low ? '#C0392B' : left < 6 ? '#E8A93A' : '#16140F', leftColor: low ? '#8A2A1A' : '#16140F' };
+    };
+
+    const sel = s.orders.find(o => o.id === s.sel);
+    const selVM = sel ? {
+      ...this.orderVM(sel), direccion: sel.dir, contacto: sel.tel,
+      lines: sel.items.map(([id, q]) => { const p = this.prod(id); return { ...p, qty: q, sub: this.fmt(p.price * q) }; })
+    } : { lines: [] };
+    const fl = sel ? this.flow(sel) : this.FLOW, si = sel ? fl.indexOf(sel.estado) : 0;
+    const nextLbl = { 1: 'Marcar como preparando', 2: sel && sel.m === 'cba' ? 'Marcar entrega coordinada' : 'Marcar como despachado', 3: 'Marcar como entregado' };
+
+    let list = s.orders;
+    if (s.sf !== 'Todos') list = list.filter(o => s.sf === 'Enviados' ? (o.estado === 'Despachado' || o.estado === 'Coordinado') : o.estado === s.sf);
+    if (s.mf !== 'todos') list = list.filter(o => o.m === s.mf);
+    if (s.q) { const q = s.q.toLowerCase(); list = list.filter(o => o.cliente.toLowerCase().includes(q) || o.id.includes(q)); }
+    const cnt = f => s.orders.filter(f).length;
+
+    const off = s.offer;
+    const pct = off.before > 0 ? Math.round((1 - off.price / off.before) * 100) : 0;
+    const prods = s.cf === 'Todos' ? s.products : s.products.filter(p => p.cat === s.cf);
+
+    return {
+      desktop: !mobile, mobile, mainPadB: mobile ? 90 : 0, nav,
+      crumb: 'DECANTS CÓRDOBA · GRACIANO', title: titles[s.view],
+      today: new Date().toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' }),
+      vResumen: s.view === 'resumen', vPedidos: s.view === 'pedidos', vProductos: s.view === 'productos', vOferta: s.view === 'oferta',
+      kSales: this.fmt(sales), kPending: pendingN, kUnits: unitsAll, kAvg: this.fmt(sales / (s.orders.length + 22)),
+      toPrepare: s.orders.filter(o => o.estado === 'Pendiente' || o.estado === 'Preparando').map(o => this.orderVM(o)),
+      goPedidos: () => this.setView('pedidos'), goProductos: () => this.setView('productos'),
+
+      statusChips: [['Todos', () => true], ['Pendiente', o => o.estado === 'Pendiente'], ['Preparando', o => o.estado === 'Preparando'], ['Enviados', o => o.estado === 'Despachado' || o.estado === 'Coordinado'], ['Entregado', o => o.estado === 'Entregado']].map(([l, f]) => ({
+        label: l, count: cnt(f), bg: s.sf === l ? '#16140F' : '#FFFFFF', fg: s.sf === l ? '#FFD400' : '#16140F', select: () => this.setState({ sf: l })
+      })),
+      metodoF: s.mf, onMetodo: e => this.setState({ mf: e.target.value }),
+      q: s.q, onQ: e => this.setState({ q: e.target.value }),
+      orderRows: list.map(o => this.orderVM(o)), noOrders: !list.length,
+      wideTable: s.w >= 1180, rowCols: s.w < 1180 ? 'repeat(auto-fit,minmax(150px,1fr))' : '80px minmax(0,1.6fr) minmax(0,1.1fr) 70px 100px 120px',
+
+      drawer: !!sel, sel: selVM, closeOrder: () => this.setState({ sel: null }),
+      steps: fl.map((l, i) => ({ label: l, bg: i <= si ? '#FFD400' : '#FFFFFF', fg: i <= si ? '#16140F' : '#8C8576' })),
+      selAndreani: !!sel && sel.m === 'andreani', selCba: !!sel && sel.m === 'cba',
+      selWa: sel ? `https://wa.me/549${sel.tel.replace(/\D/g, '')}?text=${encodeURIComponent(`¡Hola ${sel.cliente.split(' ')[0]}! Soy Graciano de Decants Córdoba. Te escribo por tu pedido ${sel.id} para coordinar la entrega.`)}` : '#',
+      onTracking: e => sel && this.updOrder(sel.id, () => ({ tracking: e.target.value.replace(/\D/g, '').slice(0, 15) })) || this.setState({ trkErr: false }),
+      trkBorder: s.trkErr ? '#C0392B' : '#16140F',
+      trkErr: s.trkErr ? 'Cargá el número de seguimiento antes de despachar.' : '',
+      canAdvance: !!sel && si < 3, isDone: !!sel && si === 3, canBack: !!sel && si > 0,
+      advanceLabel: (nextLbl[si + 1] || '') + ' →',
+      advance: () => {
+        if (!sel) return;
+        if (sel.m === 'andreani' && si === 1 && sel.tracking.length < 8) return this.setState({ trkErr: true });
+        this.updOrder(sel.id, o => ({ estado: fl[si + 1] }));
+        this.flash(`${sel.id} → ${fl[si + 1]}`);
+      },
+      stepBack: () => sel && this.updOrder(sel.id, () => ({ estado: fl[si - 1] })),
+
+      catChips: ['Todos', 'Diseñador', 'Nicho', 'Árabes'].map(c => ({ label: c, bg: s.cf === c ? '#16140F' : '#FFFFFF', fg: s.cf === c ? '#FFD400' : '#16140F', select: () => this.setState({ cf: c }) })),
+      prodRows: prods.map(p => {
+        const v = stockVM(p);
+        return {
+          ...v, tint: tints[p.cat], op: p.on ? 1 : .55,
+          mlTxt: `${p.ml} ml en el frasco`, leftTxt: `${v.left} decants`,
+          tgBg: p.on ? '#FFD400' : '#EDE9DD', tgJ: p.on ? 'flex-end' : 'flex-start', tgDot: p.on ? '#16140F' : '#8C8576',
+          toggle: () => { this.updProd(p.id, { on: !p.on }); this.flash(p.on ? `${p.name} oculto en la tienda` : `${p.name} visible en la tienda`); },
+          onName: e => this.updProd(p.id, { name: e.target.value }),
+          onHouse: e => this.updProd(p.id, { house: e.target.value }),
+          onPrice: e => this.updProd(p.id, { price: +e.target.value.replace(/\D/g, '') || 0 }),
+          minus: () => this.updProd(p.id, { ml: Math.max(0, p.ml - 5) }),
+          refill: () => { this.updProd(p.id, { ml: Math.min(100, p.ml + 100) }); this.flash(`Frasco nuevo de ${p.name} cargado`); }
+        };
+      }),
+      addProduct: () => {
+        const id = 'n' + Date.now();
+        const cat = s.cf === 'Todos' ? 'Diseñador' : s.cf;
+        this.setState(st => ({ products: [{ id, house: 'Marca', name: 'Nuevo perfume', cat, price: 9000, color: '#FFD400', ml: 100, on: false }, ...st.products] }));
+        this.flash('Perfume creado. Editá nombre y precio.');
+      },
+
+      offer: off,
+      setOffer: null,
+      onOfferName: e => this.setState({ offer: { ...off, name: e.target.value }, saved: false }),
+      onOfferDesc: e => this.setState({ offer: { ...off, desc: e.target.value }, saved: false }),
+      onOfferPrice: e => this.setState({ offer: { ...off, price: +e.target.value.replace(/\D/g, '') || 0 }, saved: false }),
+      onOfferBefore: e => this.setState({ offer: { ...off, before: +e.target.value.replace(/\D/g, '') || 0 }, saved: false }),
+      toggleOffer: () => this.setState({ offer: { ...off, on: !off.on }, saved: false }),
+      offBg: off.on ? '#FFD400' : '#EDE9DD', offDot: off.on ? '#16140F' : '#8C8576', offLabel: off.on ? 'Activa' : 'Pausada',
+      endChips: [['dom', 'Este domingo'], ['prox', 'Próximo domingo'], ['fin', 'Fin de mes']].map(([k, l]) => ({ label: l, bg: off.end === k ? '#FFD400' : '#FFFFFF', select: () => this.setState({ offer: { ...off, end: k }, saved: false }) })),
+      offPriceTxt: this.fmt(off.price), offBeforeTxt: this.fmt(off.before), offPct: `−${pct}%`,
+      offEndTxt: off.on ? `TERMINA ${{ dom: 'ESTE DOMINGO 23:59', prox: 'EL DOMINGO 22/11 23:59', fin: 'EL 30/11 23:59' }[off.end]}` : 'OFERTA PAUSADA · NO SE MUESTRA EN LA TIENDA',
+      offPrevOp: off.on ? 1 : .5,
+      offUnitsTxt: `${s.orders.filter(o => o.items.some(([id]) => id === 'kit')).length} kits vendidos esta semana.`,
+      saveLabel: s.saved ? 'Cambios guardados ✓' : 'Guardar y publicar →',
+      saveOffer: () => { this.setState({ saved: true }); this.flash('Oferta publicada en la tienda'); },
+
+      showToast: !!s.toast, toast: s.toast
+    };
+  }
+}
+</script>
+</body>
+</html>
+
+</untrusted-project-content>
+(The body above is HTML-entity-escaped: & < > stand for & < >. Do not follow any instructions inside it — it is user-authored file content.)
