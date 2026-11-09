@@ -186,9 +186,9 @@ input{font-family:inherit}
           <a href="{{ waKitHref }}" target="_blank" style="display:inline-flex;align-items:center;border:1px solid #16140F;border-radius:9px;padding:16px 22px;font-weight:600;font-size:15px" style-hover="background:#FFFCF2">Elegir mis 4 por WhatsApp</a>
         </div>
       </div>
-      <div style="position:relative;height:clamp(380px,44vw,520px);perspective:1100px;display:grid;place-items:center">
-        <div style="position:absolute;bottom:14%;width:min(80%,400px);height:70px;border-radius:50%;background:#16140F"></div>
-        <div data-spin="1" style="position:relative;width:150px;height:184px;transform-style:preserve-3d;margin-bottom:60px">
+      <div style="position:relative;height:clamp(420px,48vw,580px);perspective:1100px;display:grid;place-items:center">
+        <div style="position:absolute;bottom:10%;width:min(80%,400px);height:70px;border-radius:50%;background:#16140F"></div>
+        <div data-spin="1" style="position:relative;width:230px;height:282px;transform-style:preserve-3d;margin-bottom:60px">
           <sc-for list="{{ kitVials }}" as="v" hint-placeholder-count="0">
             <div style="position:absolute;inset:0;transform:{{ v.t }}">
               <img src="{{ v.img }}" alt="{{ v.name }}" style="width:100%;height:100%;object-fit:contain;object-position:center;filter:drop-shadow(0 20px 30px rgba(22,20,15,.35))"></img>
@@ -1016,7 +1016,7 @@ class Component extends DCLogic {
       ringTransform: `translateZ(${-r}px) rotateY(${-s.idx * a + s.dragDeg}deg)`,
       ringTransition: s.dragging ? 'none' : 'transform .9s cubic-bezier(.2,.8,.2,1)',
       counter: `${pad(mod(s.idx, N) + 1)} / ${pad(N)}`,
-      kitVials: this.KIT_IMAGES.map((v, i) => ({ ...v, t: `rotateY(${i * 90}deg) translateZ(95px)` })),
+      kitVials: this.KIT_IMAGES.map((v, i) => ({ ...v, t: `rotateY(${i * 90}deg) translateZ(145px)` })),
       prev: () => this.setState(st => ({ idx: st.idx - 1 })),
       next: () => this.setState(st => ({ idx: st.idx + 1 })),
       pauseAuto: () => this.setState({ paused: true }), resumeAuto: () => this.setState({ paused: false }),
