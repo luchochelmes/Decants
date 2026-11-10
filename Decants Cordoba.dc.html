@@ -67,6 +67,7 @@ html{scroll-behavior:smooth}
   [data-hero-h1]{font-size:clamp(30px,10.5vw,42px) !important;font-weight:300 !important;letter-spacing:-.02em !important;transform:scaleX(.92);transform-origin:left}
   [data-hero-p]{font-size:14.5px !important}
   [data-hero-btns] a{padding:11px 16px !important;font-size:13px !important;gap:6px !important}
+  [data-hero-bullets]{margin-top:28px !important}
 }
 body{margin:0;background:#FFFCF2;color:#16140F;font-family:'Instrument Sans',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 *{box-sizing:border-box}
@@ -133,7 +134,7 @@ input{font-family:inherit}
           <a href="#categorias" style="display:inline-flex;align-items:center;gap:10px;background:#FFFCF2;color:#16140F;padding:16px 26px;border-radius:9px;font-weight:600;font-size:15px;transition:transform .2s, box-shadow .2s" style-hover="transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.25);color:#16140F">Ver catálogo <span>→</span></a>
           <a href="{{ waHref }}" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:transparent;color:#FFFCF2;padding:16px 24px;border-radius:9px;font-weight:600;font-size:15px;border:1px solid rgba(255,252,242,.55);transition:background .2s" style-hover="background:rgba(255,252,242,.12);border-color:#FFFCF2">Pedir por WhatsApp</a>
         </div>
-        <div style="display:flex;gap:24px;flex-wrap:wrap;padding-top:8px;font-family:'Instrument Sans',sans-serif;font-size:12px;color:#BDB6A5;{{ bulletsStyle }}">
+        <div data-hero-bullets="1" style="display:flex;gap:24px;flex-wrap:wrap;padding-top:8px;font-family:'Instrument Sans',sans-serif;font-size:12px;color:#BDB6A5;{{ bulletsStyle }}">
           <span>✦ Andreani a todo el país</span>
           <span>✦ Entrega en Córdoba Capital</span>
           <span>✦ Frascos 100% originales</span>
