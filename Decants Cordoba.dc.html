@@ -61,7 +61,7 @@ html{scroll-behavior:smooth}
 @keyframes highlightIn{from{opacity:0;transform:rotate(-2deg) scaleX(0)}to{opacity:1;transform:rotate(-2deg) scaleX(1)}}
 @keyframes blockIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 @media (max-width:640px){
-  [data-hero-video]{object-position:65% 50% !important}
+  [data-hero-video],[data-hero-poster]{object-position:65% 50% !important}
   [data-hero-content]{margin-top:-60px !important}
   [data-hero-quote]{font-size:15px !important}
   [data-hero-h1]{font-size:clamp(30px,10.5vw,42px) !important;font-weight:300 !important;letter-spacing:-.02em !important;transform:scaleX(.92);transform-origin:left}
@@ -117,7 +117,8 @@ input{font-family:inherit}
 
   <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
   <header id="top" style="position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;background:#16140F">
-    <video data-hero-video="1" autoplay muted playsinline preload="auto" src="assets/hero-video.mp4" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 50%"></video>
+    <img data-hero-poster="1" src="assets/hero-poster.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 50%"></img>
+    <video data-hero-video="1" autoplay muted playsinline preload="auto" src="assets/hero-video.mp4" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 50%;pointer-events:none"></video>
     <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(22,20,15,.92) 0%,rgba(22,20,15,.78) 32%,rgba(22,20,15,.4) 60%,rgba(22,20,15,.15) 100%)"></div>
     <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(22,20,15,.55) 0%,rgba(22,20,15,0) 22%,rgba(22,20,15,0) 78%,rgba(22,20,15,.4) 100%)"></div>
 
@@ -845,10 +846,13 @@ class Component extends DCLogic {
     const v = document.querySelector('[data-hero-video]');
     if (!v) return;
     v.muted = true; v.defaultMuted = true; v.playsInline = true;
+    let started = false;
+    v.addEventListener('playing', () => { started = true; });
     const tryPlay = () => v.play().catch(() => {});
     tryPlay();
     v.addEventListener('loadedmetadata', tryPlay);
     v.addEventListener('canplay', tryPlay);
+    setTimeout(() => { if (!started) v.style.display = 'none'; }, 1800);
     const reveal = () => { if (!this.state.sprayed) this.setState({ sprayed: true }); };
     v.addEventListener('timeupdate', () => { if (v.currentTime >= 0.75) reveal(); });
     this.sprayFallback = setTimeout(reveal, 2200);
