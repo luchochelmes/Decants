@@ -1,0 +1,13 @@
+{
+  "name": "Decants Córdoba",
+  "short_name": "Decants Córdoba",
+  "description": "Perfumes árabes originales en decants de 5 ml. Córdoba, Argentina.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFCF2",
+  "theme_color": "#FFFCF2",
+  "lang": "es-AR",
+  "icons": [
+    { "src": "assets/logo.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

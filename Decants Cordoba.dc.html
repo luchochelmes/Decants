@@ -6,12 +6,19 @@
 <title>Decants Córdoba — Perfumes árabes originales en decants de 5 ml</title>
 <meta name="description" content="Decants de 5 ml de perfumes árabes 100% originales (Lattafa, Armaf, Rasasi y más). Envíos a todo el país por Andreani o entrega en mano en Córdoba Capital.">
 <meta name="keywords" content="decants, perfumes árabes, perfumes originales, Lattafa, Armaf, Rasasi, Khamrah, Hawas, Córdoba, Argentina, decants 5ml">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="author" content="Decants Córdoba">
+<meta name="geo.region" content="AR-X">
+<meta name="geo.placename" content="Córdoba, Argentina">
 <link rel="canonical" href="https://decantscba.vercel.app/">
 <link rel="icon" type="image/png" href="assets/logo.png">
 <link rel="apple-touch-icon" href="assets/logo.png">
+<link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#FFFCF2">
+<meta name="application-name" content="Decants Córdoba">
+<meta name="apple-mobile-web-app-title" content="Decants Córdoba">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Decants Córdoba">
@@ -19,12 +26,16 @@
 <meta property="og:url" content="https://decantscba.vercel.app/">
 <meta property="og:title" content="Decants Córdoba — Perfumes árabes originales en decants de 5 ml">
 <meta property="og:description" content="Fraccionamos perfumes árabes 100% originales en atomizadores de vidrio de 5 ml. Envíos a todo el país por Andreani o entrega en mano en Córdoba Capital.">
-<meta property="og:image" content="https://decantscba.vercel.app/assets/logo.png">
+<meta property="og:image" content="https://decantscba.vercel.app/assets/hero-poster.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="Decant de perfume árabe original de Decants Córdoba">
 
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Decants Córdoba — Perfumes árabes originales en decants de 5 ml">
 <meta name="twitter:description" content="Fraccionamos perfumes árabes 100% originales en atomizadores de vidrio de 5 ml. Envíos a todo el país o entrega en mano en Córdoba Capital.">
-<meta name="twitter:image" content="https://decantscba.vercel.app/assets/logo.png">
+<meta name="twitter:image" content="https://decantscba.vercel.app/assets/hero-poster.jpg">
+<meta name="twitter:image:alt" content="Decant de perfume árabe original de Decants Córdoba">
 
 <script type="application/ld+json">
 {
@@ -33,7 +44,7 @@
   "name": "Decants Córdoba",
   "description": "Fraccionamos perfumes árabes 100% originales en atomizadores de vidrio de 5 ml.",
   "url": "https://decantscba.vercel.app/",
-  "image": "https://decantscba.vercel.app/assets/logo.png",
+  "image": "https://decantscba.vercel.app/assets/hero-poster.jpg",
   "priceRange": "$$",
   "address": {
     "@type": "PostalAddress",
@@ -42,6 +53,20 @@
     "addressCountry": "AR"
   },
   "areaServed": "AR"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": [
+    { "@type": "Product", "position": 1, "name": "Khamrah", "brand": "Lattafa", "image": "https://decantscba.vercel.app/assets/products/073-khamrah.jpg", "offers": { "@type": "Offer", "price": "6700", "priceCurrency": "ARS", "availability": "https://schema.org/InStock", "url": "https://decantscba.vercel.app/" } },
+    { "@type": "Product", "position": 2, "name": "Hawas", "brand": "Rasasi", "image": "https://decantscba.vercel.app/assets/products/119-hawas.jpg", "offers": { "@type": "Offer", "price": "5800", "priceCurrency": "ARS", "availability": "https://schema.org/InStock", "url": "https://decantscba.vercel.app/" } },
+    { "@type": "Product", "position": 3, "name": "Club de Nuit Intense Man EDT", "brand": "Armaf", "image": "https://decantscba.vercel.app/assets/products/015-club-de-nuit-intense-man-edt.jpg", "offers": { "@type": "Offer", "price": "6500", "priceCurrency": "ARS", "availability": "https://schema.org/InStock", "url": "https://decantscba.vercel.app/" } },
+    { "@type": "Product", "position": 4, "name": "Asad Bourbon", "brand": "Lattafa", "image": "https://decantscba.vercel.app/assets/products/048-asad-bourbon.jpg", "offers": { "@type": "Offer", "price": "7800", "priceCurrency": "ARS", "availability": "https://schema.org/InStock", "url": "https://decantscba.vercel.app/" } },
+    { "@type": "Product", "position": 5, "name": "Turathi Blue", "image": "https://decantscba.vercel.app/assets/products/008-turathi-blue.jpg", "offers": { "@type": "Offer", "price": "6800", "priceCurrency": "ARS", "availability": "https://schema.org/InStock", "url": "https://decantscba.vercel.app/" } }
+  ]
 }
 </script>
 
@@ -156,7 +181,7 @@ input{font-family:inherit}
         <sc-for list="{{ ringItems }}" as="p" hint-placeholder-count="0">
           <div onClick="{{ p.go }}" style="position:absolute;inset:0;transform:{{ p.transform }};opacity:{{ p.opacity }};transition:opacity .6s;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#FFFCF2;color:#16140F;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:10px;cursor:pointer;border:3px solid {{ p.border }};box-shadow:0 30px 60px rgba(0,0,0,.35)">
             <div style="position:relative;height:216px;border-radius:16px;background:#F3EEDD;overflow:hidden">
-              <img src="{{ p.img }}" alt="{{ p.name }}" style="width:100%;height:100%;object-fit:contain;object-position:center"></img>
+              <img src="{{ p.img }}" alt="{{ p.name }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;object-position:center"></img>
               <span style="position:absolute;top:10px;left:10px;font-family:'Instrument Sans',sans-serif;font-size:11px;background:#16140F;color:#FFD400;padding:4px 8px;border-radius:999px">5 ML</span>
             </div>
             <span style="font-family:'Newsreader',serif;font-weight:800;font-size:21px;line-height:1.1;letter-spacing:-.02em">{{ p.name }}</span>
@@ -199,7 +224,7 @@ input{font-family:inherit}
             <span style="flex-shrink:0;width:48px;height:48px;border-radius:50%;background:{{ c.arrowBg }};color:{{ c.arrowColor }};display:flex;align-items:center;justify-content:center;font-size:19px;transition:transform .35s;transform:{{ c.rot }}">→</span>
           </div>
           <sc-if value="{{ c.showSample }}" hint-placeholder-val="{{ true }}">
-            <img src="{{ c.img }}" alt="{{ c.title }}" style="position:absolute;left:50%;bottom:-6px;width:66%;mix-blend-mode:multiply;transition:transform .6s cubic-bezier(.2,.7,.2,1);transform:{{ c.lift }}"></img>
+            <img src="{{ c.img }}" alt="{{ c.title }}" loading="lazy" decoding="async" style="position:absolute;left:50%;bottom:-6px;width:66%;mix-blend-mode:multiply;transition:transform .6s cubic-bezier(.2,.7,.2,1);transform:{{ c.lift }}"></img>
           </sc-if>
         </div>
       </sc-for>
@@ -242,7 +267,7 @@ input{font-family:inherit}
         <div data-spin="1" style="position:relative;width:230px;height:282px;transform-style:preserve-3d;margin-bottom:60px">
           <sc-for list="{{ kitVials }}" as="v" hint-placeholder-count="0">
             <div style="position:absolute;inset:0;transform:{{ v.t }}">
-              <img src="{{ v.img }}" alt="{{ v.name }}" style="width:100%;height:100%;object-fit:contain;object-position:center;filter:drop-shadow(0 20px 30px rgba(22,20,15,.35))"></img>
+              <img src="{{ v.img }}" alt="{{ v.name }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;object-position:center;filter:drop-shadow(0 20px 30px rgba(22,20,15,.35))"></img>
             </div>
           </sc-for>
         </div>
@@ -353,7 +378,7 @@ input{font-family:inherit}
       <sc-for list="{{ gridItems }}" as="p" hint-placeholder-count="12">
         <div onClick="{{ p.open }}" style="display:flex;flex-direction:column;gap:10px;background:#FFFFFF;border:1px solid rgba(22,20,15,.18);border-radius:16px;padding:14px;overflow:hidden;cursor:pointer">
           <div style="position:relative;aspect-ratio:1;border-radius:12px;background:#F3EEDD;overflow:hidden">
-            <img src="{{ p.img }}" alt="{{ p.name }}" style="width:100%;height:100%;object-fit:contain;object-position:center"></img>
+            <img src="{{ p.img }}" alt="{{ p.name }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;object-position:center"></img>
           </div>
           <div style="display:flex;flex-direction:column;gap:2px">
             <span style="font-weight:600;font-size:14.5px;line-height:1.25">{{ p.name }}</span>
@@ -414,7 +439,7 @@ input{font-family:inherit}
           <div style="flex:1;overflow:auto;padding:8px 24px;display:flex;flex-direction:column">
             <sc-for list="{{ cartItems }}" as="it" hint-placeholder-count="0">
               <div style="display:grid;grid-template-columns:44px 1fr auto;gap:14px;align-items:center;padding:16px 0;border-bottom:1px solid rgba(22,20,15,.12)">
-                <div style="width:44px;height:44px;border-radius:10px;background:#F3EEDD;border:1.5px solid rgba(22,20,15,.2);overflow:hidden"><img src="{{ it.img }}" alt="{{ it.name }}" style="width:100%;height:100%;object-fit:contain"></img></div>
+                <div style="width:44px;height:44px;border-radius:10px;background:#F3EEDD;border:1.5px solid rgba(22,20,15,.2);overflow:hidden"><img src="{{ it.img }}" alt="{{ it.name }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain"></img></div>
                 <div style="display:flex;flex-direction:column;gap:2px">
                   <span style="font-weight:700">{{ it.name }}</span>
                   <span style="font-size:14px;color:#4A4538">{{ it.lineTxt }}</span>
@@ -488,7 +513,7 @@ input{font-family:inherit}
         <button onClick="{{ closeDetail }}" style="position:absolute;top:18px;right:18px;width:36px;height:36px;border-radius:50%;border:1px solid #16140F;background:#FFFFFF;font-size:14px">✕</button>
         <div style="display:flex;gap:18px;align-items:center;padding-right:30px">
           <div style="width:110px;height:110px;flex-shrink:0;border-radius:14px;background:#F3EEDD;overflow:hidden">
-            <img src="{{ detailImg }}" alt="{{ detailName }}" style="width:100%;height:100%;object-fit:contain;object-position:center"></img>
+            <img src="{{ detailImg }}" alt="{{ detailName }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;object-position:center"></img>
           </div>
           <div style="display:flex;flex-direction:column;gap:6px">
             <span style="font-family:'Newsreader',serif;font-weight:800;font-size:24px;line-height:1.1">{{ detailName }}</span>
