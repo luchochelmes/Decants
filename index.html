@@ -321,7 +321,7 @@ input{font-family:inherit}
 
   <sc-if value="{{ isCatalog }}" hint-placeholder-val="{{ false }}">
   <section id="catalogo-full" style="max-width:1280px;margin:0 auto;padding:clamp(130px,16vw,160px) clamp(16px,4vw,40px) clamp(80px,10vw,120px);min-height:70vh">
-    <button onClick="{{ closeCatalog }}" style="background:transparent;border:none;padding:0;margin-bottom:28px;font-size:14px;font-weight:600;text-decoration:underline;text-underline-offset:3px;color:#16140F">← Volver al inicio</button>
+    <button onClick="{{ closeCatalog }}" style="background:transparent;border:none;padding:0;margin-bottom:28px;font-size:14px;font-weight:600;text-decoration:underline;text-underline-offset:3px;color:#16140F">← Volver a categorías</button>
 
     <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:28px">
       <div style="display:flex;flex-direction:column;gap:10px">
@@ -330,21 +330,23 @@ input{font-family:inherit}
       </div>
     </div>
 
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px">
-      <sc-for list="{{ catChips }}" as="c" hint-placeholder-count="7">
-        <button onClick="{{ c.select }}" style="background:{{ c.bg }};color:{{ c.fg }};border:1px solid {{ c.border }};border-radius:9px;padding:9px 15px;font-size:14px;font-weight:600">{{ c.label }}</button>
-      </sc-for>
-    </div>
+    <div style="position:sticky;top:108px;z-index:40;background:#FFFCF2;padding-top:4px;padding-bottom:16px;margin-bottom:12px;border-bottom:1px solid rgba(22,20,15,.1)">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+        <sc-for list="{{ catChips }}" as="c" hint-placeholder-count="7">
+          <button onClick="{{ c.select }}" style="background:{{ c.bg }};color:{{ c.fg }};border:1px solid {{ c.border }};border-radius:9px;padding:9px 15px;font-size:14px;font-weight:600">{{ c.label }}</button>
+        </sc-for>
+      </div>
 
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px">
-      <span style="font-family:'Instrument Sans',sans-serif;font-size:12px;color:#5E584B;letter-spacing:.06em">{{ catSubtitle }}</span>
-      <sc-if value="{{ showResetCat }}" hint-placeholder-val="{{ false }}">
-        <button onClick="{{ resetCat }}" style="background:transparent;border:none;font-size:13px;font-weight:600;text-decoration:underline;text-underline-offset:3px;color:#16140F">Ver todos los perfumes</button>
-      </sc-if>
-    </div>
+      <div style="margin-bottom:10px">
+        <input value="{{ q }}" onChange="{{ onQ }}" placeholder="Buscar: Khamrah, Hawas, Club de Nuit…" style="width:100%;border:1px solid #16140F;border-radius:10px;padding:14px 18px;font-size:16px;background:#FFFFFF;outline:none"></input>
+      </div>
 
-    <div style="margin-bottom:28px">
-      <input value="{{ q }}" onChange="{{ onQ }}" placeholder="Buscar: Khamrah, Hawas, Club de Nuit…" style="width:100%;border:1px solid #16140F;border-radius:10px;padding:16px 20px;font-size:16px;background:#FFFFFF;outline:none"></input>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+        <span style="font-family:'Instrument Sans',sans-serif;font-size:12px;color:#5E584B;letter-spacing:.06em">{{ catSubtitle }}</span>
+        <sc-if value="{{ showResetCat }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ resetCat }}" style="background:transparent;border:none;font-size:13px;font-weight:600;text-decoration:underline;text-underline-offset:3px;color:#16140F">Ver todos los perfumes</button>
+        </sc-if>
+      </div>
     </div>
 
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:16px">
@@ -1162,7 +1164,7 @@ class Component extends DCLogic {
       catCards, catChips, catSubtitle, showResetCat, resetCat: () => this.setState({ cat: 'todos', q: '' }), gridItems, noResults: gridItems.length === 0,
       isHome, isCatalog,
       openCatalog: () => { this.setState({ view: 'catalog', cat: 'todos', q: '' }); window.scrollTo({ top: 0, behavior: 'smooth' }); },
-      closeCatalog: () => { this.setState({ view: 'home' }); window.scrollTo({ top: 0, behavior: 'smooth' }); },
+      closeCatalog: () => { this.setState({ view: 'home' }); setTimeout(() => this.scrollTo('categorias'), 60); },
       goCategoriasSection: () => this.goHomeSection('categorias'),
       goOfertaSection: () => this.goHomeSection('oferta'),
       goNosotrosSection: () => this.goHomeSection('nosotros'),
