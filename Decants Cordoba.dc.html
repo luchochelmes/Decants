@@ -70,6 +70,7 @@
 }
 </script>
 
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -536,153 +537,11 @@ input{font-family:inherit}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;whatsapp&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;5493510000000&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;autoRotate&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
 class Component extends DCLogic {
-  state = { w: typeof window !== 'undefined' ? window.innerWidth : 1280, idx: 0, q: '', cat: 'todos', view: 'home', cart: [], open: false, now: Date.now(), method: 'andreani', cp: '', cpErr: false, done: false, toast: null, paused: false, dragging: false, dragDeg: 0, scrolled: false, catHover: -1, sprayed: false, detail: null, detailQty: 1, infoOpen: false, formNombre: '', formApellido: '', formTelefono: '', formDireccion: '', formEmail: '', formZona: '', formErr: false };
+  state = { w: typeof window !== 'undefined' ? window.innerWidth : 1280, idx: 0, q: '', cat: 'todos', view: 'home', cart: [], open: false, now: Date.now(), method: 'andreani', cp: '', cpErr: false, done: false, toast: null, paused: false, dragging: false, dragDeg: 0, scrolled: false, catHover: -1, sprayed: false, detail: null, detailQty: 1, infoOpen: false, formNombre: '', formApellido: '', formTelefono: '', formDireccion: '', formEmail: '', formZona: '', formErr: false, products: [] };
 
-  FULL = [
-    { id: '9-am-dive', name: '9 AM Dive', price: 6900, img: 'assets/products/001-9-am-dive.jpg' },
-    { id: '9-am-rosa', name: '9 AM Rosa', price: 6400, img: 'assets/products/002-9-am-rosa.jpg' },
-    { id: '9-pm', name: '9 PM', price: 6100, img: 'assets/products/003-9-pm.jpg' },
-    { id: '9-pm-elixir', name: '9 PM Elixir', price: 7700, img: 'assets/products/004-9-pm-elixir.jpg' },
-    { id: '9-pm-night-out', name: '9 PM Night Out', price: 8900, img: 'assets/products/005-9-pm-night-out.jpg' },
-    { id: '9-pm-rebel', name: '9 PM Rebel', price: 8800, img: 'assets/products/006-9-pm-rebel.jpg' },
-    { id: 'supremacy-colector-edition', name: 'Supremacy Colector Edition', price: 12100, img: 'assets/products/007-supremacy-colector-edition.jpg' },
-    { id: 'turathi-blue', name: 'Turathi Blue', price: 6800, img: 'assets/products/008-turathi-blue.jpg' },
-    { id: 'aqua-dubai', name: 'Aqua Dubai', price: 9000, img: 'assets/products/009-aqua-dubai.jpg' },
-    { id: 'dubai-night', name: 'Dubai Night', price: 9600, img: 'assets/products/010-dubai-night.jpg' },
-    { id: 'gold-edition-120ml', name: 'Gold Edition 120ml', price: 8200, img: 'assets/products/011-gold-edition-120ml.jpg' },
-    { id: 'al-wataniah-sabah-al-ward', name: 'Al Wataniah Sabah Al Ward', price: 4800, img: 'assets/products/012-al-wataniah-sabah-al-ward.jpg' },
-    { id: 'club-de-nuit-bling', name: 'Club de Nuit Bling', price: 9100, img: 'assets/products/013-club-de-nuit-bling.jpg' },
-    { id: 'club-de-nuit-iconic', name: 'Club de Nuit Iconic', price: 7200, img: 'assets/products/014-club-de-nuit-iconic.jpg' },
-    { id: 'club-de-nuit-intense-man-edt', name: 'Club de Nuit Intense Man EDT', price: 6500, img: 'assets/products/015-club-de-nuit-intense-man-edt.jpg' },
-    { id: 'club-de-nuit-maleka', name: 'Club de Nuit Maleka', price: 6800, img: 'assets/products/016-club-de-nuit-maleka.jpg' },
-    { id: 'club-de-nuit-precieux', name: 'Club de Nuit Precieux', price: 14700, img: 'assets/products/017-club-de-nuit-precieux.jpg' },
-    { id: 'club-de-nuit-sillage', name: 'Club de Nuit Sillage', price: 6700, img: 'assets/products/018-club-de-nuit-sillage.jpg' },
-    { id: 'club-de-nuit-untold', name: 'Club de Nuit Untold', price: 7300, img: 'assets/products/019-club-de-nuit-untold.jpg' },
-    { id: 'club-de-nuit-urban-man-elixir', name: 'Club de Nuit Urban Man Elixir', price: 7100, img: 'assets/products/020-club-de-nuit-urban-man-elixir.jpg' },
-    { id: 'club-de-nuit-woman', name: 'Club de Nuit Woman', price: 6800, img: 'assets/products/021-club-de-nuit-woman.jpg' },
-    { id: 'dunescape-dubai', name: 'Dunescape Dubai', price: 8100, img: 'assets/products/022-dunescape-dubai.jpg' },
-    { id: 'mandarin-sky', name: 'Mandarin Sky', price: 5900, img: 'assets/products/023-mandarin-sky.jpg' },
-    { id: 'mandarin-sky-elixir', name: 'Mandarin Sky Elixir', price: 7100, img: 'assets/products/024-mandarin-sky-elixir.jpg' },
-    { id: 'odyssey-aqua', name: 'Odyssey Aqua', price: 5900, img: 'assets/products/025-odyssey-aqua.jpg' },
-    { id: 'odyssey-candy', name: 'Odyssey Candy', price: 5000, img: 'assets/products/026-odyssey-candy.jpg' },
-    { id: 'odyssey-homme-blanco', name: 'Odyssey Homme Blanco', price: 6200, img: 'assets/products/027-odyssey-homme-blanco.jpg' },
-    { id: 'odyssey-homme-negro', name: 'Odyssey Homme Negro', price: 5400, img: 'assets/products/028-odyssey-homme-negro.jpg' },
-    { id: 'odyssey-mega', name: 'Odyssey Mega', price: 5600, img: 'assets/products/029-odyssey-mega.jpg' },
-    { id: 'yum-yum', name: 'Yum Yum', price: 7200, img: 'assets/products/030-yum-yum.jpg' },
-    { id: 'bharara-king-100ml', name: 'Bharara King 100ml', price: 9800, img: 'assets/products/031-bharara-king-100ml.jpg' },
-    { id: 'rome-extradose', name: 'Rome Extradose', price: 6900, img: 'assets/products/032-rome-extradose.jpg' },
-    { id: 'rome-extradose-fem', name: 'Rome Extradose Fem', price: 6900, img: 'assets/products/033-rome-extradose-fem.jpg' },
-    { id: 'erba-pura-100ml', name: 'Erba Pura 100ml', price: 26000, img: 'assets/products/034-erba-pura-100ml.jpg' },
-    { id: 'stallion-53', name: 'Stallion 53', price: 6100, img: 'assets/products/035-stallion-53.jpg' },
-    { id: 'uomo-intense', name: 'Uomo Intense', price: 5100, img: 'assets/products/036-uomo-intense.jpg' },
-    { id: 'aether', name: 'Aether', price: 7300, img: 'assets/products/037-aether.jpg' },
-    { id: 'atlantis-extrait', name: 'Atlantis Extrait', price: 7400, img: 'assets/products/038-atlantis-extrait.jpg' },
-    { id: 'liquid-brun', name: 'Liquid Brun', price: 8000, img: 'assets/products/039-liquid-brun.jpg' },
-    { id: 'liquid-brun-limited-edition-150ml', name: 'Liquid Brun Limited Edition 150ml', price: 8400, img: 'assets/products/040-liquid-brun-limited-edition-150ml.jpg' },
-    { id: 'spectre-ghost', name: 'Spectre Ghost', price: 8900, img: 'assets/products/041-spectre-ghost.jpg' },
-    { id: 'veneno', name: 'Veneno', price: 8700, img: 'assets/products/042-veneno.jpg' },
-    { id: 'vulcan-feu', name: 'Vulcan Feu', price: 7800, img: 'assets/products/043-vulcan-feu.jpg' },
-    { id: 'ajwad', name: 'Ajwad', price: 6400, img: 'assets/products/044-ajwad.jpg' },
-    { id: 'angham', name: 'Angham', price: 5900, img: 'assets/products/045-angham.jpg' },
-    { id: 'art-of-universe', name: 'Art of Universe', price: 8200, img: 'assets/products/046-art-of-universe.jpg' },
-    { id: 'asad', name: 'Asad', price: 6200, img: 'assets/products/047-asad.jpg' },
-    { id: 'asad-bourbon', name: 'Asad Bourbon', price: 7800, img: 'assets/products/048-asad-bourbon.jpg' },
-    { id: 'asad-elixir', name: 'Asad Elixir', price: 6700, img: 'assets/products/049-asad-elixir.jpg' },
-    { id: 'asad-zanzibar', name: 'Asad Zanzibar', price: 5100, img: 'assets/products/050-asad-zanzibar.jpg' },
-    { id: 'atlas', name: 'Atlas', price: 9300, img: 'assets/products/051-atlas.jpg' },
-    { id: 'badee-al-oud-amethyst', name: 'Badee Al Oud Amethyst', price: 4700, img: 'assets/products/052-badee-al-oud-amethyst.jpg' },
-    { id: 'badee-al-oud-for-glory', name: 'Badee Al Oud For Glory', price: 5000, img: 'assets/products/053-badee-al-oud-for-glory.jpg' },
-    { id: 'badee-al-oud-noble-blush', name: 'Badee Al Oud Noble Blush', price: 5400, img: 'assets/products/054-badee-al-oud-noble-blush.jpg' },
-    { id: 'badee-al-oud-sublime', name: 'Badee Al Oud Sublime', price: 5900, img: 'assets/products/055-badee-al-oud-sublime.jpg' },
-    { id: 'badee-honor-and-glory', name: 'Badee Honor and Glory', price: 5100, img: 'assets/products/056-badee-honor-and-glory.jpg' },
-    { id: 'confidential-gold', name: 'Confidential Gold', price: 5100, img: 'assets/products/057-confidential-gold.jpg' },
-    { id: 'delilah', name: 'Delilah', price: 6400, img: 'assets/products/058-delilah.jpg' },
-    { id: 'eclaire', name: 'Eclaire', price: 7800, img: 'assets/products/059-eclaire.jpg' },
-    { id: 'emaan', name: 'Emaan', price: 5100, img: 'assets/products/060-emaan.jpg' },
-    { id: 'fakhar-black', name: 'Fakhar Black', price: 5800, img: 'assets/products/061-fakhar-black.jpg' },
-    { id: 'fakhar-gold', name: 'Fakhar Gold', price: 5300, img: 'assets/products/062-fakhar-gold.jpg' },
-    { id: 'fakhar-rosa', name: 'Fakhar Rosa', price: 6300, img: 'assets/products/063-fakhar-rosa.jpg' },
-    { id: 'fakhar-silver', name: 'Fakhar Silver', price: 5400, img: 'assets/products/064-fakhar-silver.jpg' },
-    { id: 'habik-for-men', name: 'Habik for Men', price: 5200, img: 'assets/products/065-habik-for-men.jpg' },
-    { id: 'haya', name: 'Haya', price: 6000, img: 'assets/products/066-haya.jpg' },
-    { id: 'hayaati-al-maleki', name: 'Hayaati Al Maleki', price: 4600, img: 'assets/products/067-hayaati-al-maleki.jpg' },
-    { id: 'hayaati-gold-elixir', name: 'Hayaati Gold Elixir', price: 4000, img: 'assets/products/068-hayaati-gold-elixir.jpg' },
-    { id: 'hayaati-masc', name: 'Hayaati Masc', price: 4500, img: 'assets/products/069-hayaati-masc.jpg' },
-    { id: 'hayaati-rosa', name: 'Hayaati Rosa', price: 5300, img: 'assets/products/070-hayaati-rosa.jpg' },
-    { id: 'her-confession', name: 'Her Confession', price: 7100, img: 'assets/products/071-her-confession.jpg' },
-    { id: 'his-confession', name: 'His Confession', price: 6500, img: 'assets/products/072-his-confession.jpg' },
-    { id: 'khamrah', name: 'Khamrah', price: 6700, img: 'assets/products/073-khamrah.jpg' },
-    { id: 'khamrah-dukhan', name: 'Khamrah Dukhan', price: 5100, img: 'assets/products/074-khamrah-dukhan.jpg' },
-    { id: 'khamrah-qahwa', name: 'Khamrah Qahwa', price: 5300, img: 'assets/products/075-khamrah-qahwa.jpg' },
-    { id: 'khamrah-waha', name: 'Khamrah Waha', price: 10100, img: 'assets/products/076-khamrah-waha.jpg' },
-    { id: 'khanjar', name: 'Khanjar', price: 8800, img: 'assets/products/077-khanjar.jpg' },
-    { id: 'mayar', name: 'Mayar', price: 5000, img: 'assets/products/078-mayar.jpg' },
-    { id: 'mayar-cherry-intense', name: 'Mayar Cherry Intense', price: 4900, img: 'assets/products/079-mayar-cherry-intense.jpg' },
-    { id: 'mayar-natural-intense', name: 'Mayar Natural Intense', price: 5100, img: 'assets/products/080-mayar-natural-intense.jpg' },
-    { id: 'musaman-black', name: 'Musaman Black', price: 7500, img: 'assets/products/081-musaman-black.jpg' },
-    { id: 'musaman-white', name: 'Musaman White', price: 8200, img: 'assets/products/082-musaman-white.jpg' },
-    { id: 'nebras-pride', name: 'Nebras Pride', price: 6600, img: 'assets/products/083-nebras-pride.jpg' },
-    { id: 'opulent-dubai', name: 'Opulent Dubai', price: 5000, img: 'assets/products/084-opulent-dubai.jpg' },
-    { id: 'pisa', name: 'Pisa', price: 7600, img: 'assets/products/085-pisa.jpg' },
-    { id: 'qaed-al-fursan', name: 'Qaed Al Fursan', price: 5200, img: 'assets/products/086-qaed-al-fursan.jpg' },
-    { id: 'qaed-unlimited', name: 'Qaed Unlimited', price: 3900, img: 'assets/products/087-qaed-unlimited.jpg' },
-    { id: 'qaed-untamed', name: 'Qaed Untamed', price: 4400, img: 'assets/products/088-qaed-untamed.jpg' },
-    { id: 'teriaq-intense', name: 'Teriaq Intense', price: 6800, img: 'assets/products/089-teriaq-intense.jpg' },
-    { id: 'the-kingdom', name: 'The Kingdom', price: 6200, img: 'assets/products/090-the-kingdom.jpg' },
-    { id: 'the-kingdom-fem', name: 'The Kingdom Fem', price: 5900, img: 'assets/products/091-the-kingdom-fem.jpg' },
-    { id: 'victoria', name: 'Victoria', price: 6100, img: 'assets/products/092-victoria.jpg' },
-    { id: 'vintage-radio', name: 'Vintage Radio', price: 6400, img: 'assets/products/093-vintage-radio.jpg' },
-    { id: 'yara-candy', name: 'Yara Candy', price: 5900, img: 'assets/products/094-yara-candy.jpg' },
-    { id: 'yara-elixir', name: 'Yara Elixir', price: 6300, img: 'assets/products/095-yara-elixir.jpg' },
-    { id: 'yara-moi', name: 'Yara Moi', price: 5400, img: 'assets/products/096-yara-moi.jpg' },
-    { id: 'yara-rosa', name: 'Yara Rosa', price: 6600, img: 'assets/products/097-yara-rosa.jpg' },
-    { id: 'yara-tous', name: 'Yara Tous', price: 5100, img: 'assets/products/098-yara-tous.jpg' },
-    { id: 'baroque-extreme', name: 'Baroque Extreme', price: 4500, img: 'assets/products/099-baroque-extreme.jpg' },
-    { id: 'baroque-rouge', name: 'Baroque Rouge', price: 4300, img: 'assets/products/100-baroque-rouge.jpg' },
-    { id: 'glacier-bella', name: 'Glacier Bella', price: 4600, img: 'assets/products/101-glacier-bella.jpg' },
-    { id: 'glacier-bold', name: 'Glacier Bold', price: 4300, img: 'assets/products/102-glacier-bold.jpg' },
-    { id: 'intrude', name: 'Intrude', price: 4500, img: 'assets/products/103-intrude.jpg' },
-    { id: 'jean-lowe-inmortal', name: 'Jean Lowe Inmortal', price: 5200, img: 'assets/products/104-jean-lowe-inmortal.jpg' },
-    { id: 'jean-lowe-noir', name: 'Jean Lowe Noir', price: 5100, img: 'assets/products/105-jean-lowe-noir.jpg' },
-    { id: 'jean-lowe-vibe', name: 'Jean Lowe Vibe', price: 5600, img: 'assets/products/106-jean-lowe-vibe.jpg' },
-    { id: 'la-vivacite-edp', name: 'La Vivacite EDP', price: 5300, img: 'assets/products/107-la-vivacite-edp.jpg' },
-    { id: 'la-voie', name: 'La Voie', price: 5400, img: 'assets/products/108-la-voie.jpg' },
-    { id: 'papillon-door-fem', name: 'Papillon Door Fem', price: 6700, img: 'assets/products/109-papillon-door-fem.jpg' },
-    { id: 'philos-pura', name: 'Philos Pura', price: 4500, img: 'assets/products/110-philos-pura.jpg' },
-    { id: 'rose-seduction-vip', name: 'Rose Seduction VIP', price: 5900, img: 'assets/products/111-rose-seduction-vip.jpg' },
-    { id: 'salvo-edp', name: 'Salvo EDP', price: 5700, img: 'assets/products/112-salvo-edp.jpg' },
-    { id: 'salvo-elixir', name: 'Salvo Elixir', price: 7500, img: 'assets/products/113-salvo-elixir.jpg' },
-    { id: 'spectre-malachite', name: 'Spectre Malachite', price: 5400, img: 'assets/products/114-spectre-malachite.jpg' },
-    { id: 'yeah-man-edp', name: 'Yeah Man EDP', price: 5100, img: 'assets/products/115-yeah-man-edp.jpg' },
-    { id: 'yeah-man-parfum', name: 'Yeah Man Parfum', price: 4700, img: 'assets/products/116-yeah-man-parfum.jpg' },
-    { id: 'your-touch-amber', name: 'Your Touch Amber', price: 4000, img: 'assets/products/117-your-touch-amber.jpg' },
-    { id: 'your-touch-intense', name: 'Your Touch Intense', price: 5500, img: 'assets/products/118-your-touch-intense.jpg' },
-    { id: 'hawas', name: 'Hawas', price: 5800, img: 'assets/products/119-hawas.jpg' },
-    { id: 'hawas-black', name: 'Hawas Black', price: 8500, img: 'assets/products/120-hawas-black.jpg' },
-    { id: 'hawas-chrome', name: 'Hawas Chrome', price: 8700, img: 'assets/products/121-hawas-chrome.jpg' },
-    { id: 'hawas-diva', name: 'Hawas Diva', price: 8300, img: 'assets/products/122-hawas-diva.jpg' },
-    { id: 'hawas-fire', name: 'Hawas Fire', price: 7100, img: 'assets/products/123-hawas-fire.jpg' },
-    { id: 'hawas-ice', name: 'Hawas Ice', price: 7000, img: 'assets/products/124-hawas-ice.jpg' },
-    { id: 'hawas-kobra', name: 'Hawas Kobra', price: 6600, img: 'assets/products/125-hawas-kobra.jpg' },
-    { id: 'hawas-malibu', name: 'Hawas Malibu', price: 6400, img: 'assets/products/126-hawas-malibu.jpg' },
-    { id: 'hawas-tropical', name: 'Hawas Tropical', price: 6500, img: 'assets/products/127-hawas-tropical.jpg' },
-    { id: 'hawas-verde', name: 'Hawas Verde', price: 8000, img: 'assets/products/128-hawas-verde.jpg' },
-    { id: 'rayhaan-aquatica', name: 'Rayhaan Aquatica', price: 6800, img: 'assets/products/129-rayhaan-aquatica.jpg' },
-    { id: 'rayhaan-elixir', name: 'Rayhaan Elixir', price: 6500, img: 'assets/products/130-rayhaan-elixir.jpg' },
-    { id: 'rayhaan-italia', name: 'Rayhaan Italia', price: 9200, img: 'assets/products/131-rayhaan-italia.jpg' },
-    { id: 'rayhaan-kiss', name: 'Rayhaan Kiss', price: 6700, img: 'assets/products/132-rayhaan-kiss.jpg' },
-    { id: 'rayhaan-obsidian', name: 'Rayhaan Obsidian', price: 7400, img: 'assets/products/133-rayhaan-obsidian.jpg' },
-    { id: 'rayhaan-pacific-aura', name: 'Rayhaan Pacific Aura', price: 6800, img: 'assets/products/134-rayhaan-pacific-aura.jpg' },
-    { id: 'rayhaan-wolf', name: 'Rayhaan Wolf', price: 7300, img: 'assets/products/135-rayhaan-wolf.jpg' },
-    { id: 'tropical-vibes', name: 'Tropical Vibes', price: 6200, img: 'assets/products/136-tropical-vibes.jpg' },
-    { id: 'freeze-in-flames', name: 'Freeze in Flames', price: 9800, img: 'assets/products/137-freeze-in-flames.jpg' },
-    { id: 'riiffs-momento', name: 'Riiffs Momento', price: 8000, img: 'assets/products/138-riiffs-momento.jpg' },
-    { id: 'ameerat-al-arab', name: 'Ameerat Al Arab', price: 4300, img: 'assets/products/139-ameerat-al-arab.jpg' },
-    { id: 'ameerat-al-arab-prive-rose', name: 'Ameerat Al Arab Prive Rose', price: 5000, img: 'assets/products/140-ameerat-al-arab-prive-rose.jpg' },
-    { id: 'fatima-rosa', name: 'Fatima Rosa', price: 5100, img: 'assets/products/141-fatima-rosa.jpg' },
-    { id: 'mykonos-reflection-100ml', name: 'Mykonos Reflection 100ml', price: 7300, img: 'assets/products/142-mykonos-reflection-100ml.jpg' },
-    { id: 'nitro-red-edp', name: 'Nitro Red EDP', price: 7100, img: 'assets/products/143-nitro-red-edp.jpg' }
-  ];
+  SUPABASE_URL = 'https://eismbrnbuhqmrpvkamxj.supabase.co';
+  SUPABASE_KEY = 'sb_publishable_vezM1qG5XGm3wVJgdHx0ig_ujua9Oab';
+
   FEATURED_IDS = ["khamrah", "club-de-nuit-intense-man-edt", "hawas", "badee-al-oud-sublime", "asad-bourbon", "turathi-blue", "club-de-nuit-precieux", "rayhaan-italia", "erba-pura-100ml", "9-pm-elixir"];
   KIT = { id: 'kit', name: 'Kit Descubrimiento', price: 28900, img: 'assets/products/073-khamrah.jpg' };
   KIT_IMAGES = [
@@ -699,151 +558,6 @@ class Component extends DCLogic {
     { id: 'frutales', emoji: '🍍', title: 'Frutales', subtitle: 'Ananá, manzana, frutas tropicales.', notes: 'Ananá · Manzana · Tropical', tint: 'oklch(0.92 0.06 100)', sample: 'qaed-al-fursan', bg: 'assets/categories/frutales-bg.png' },
     { id: 'florales', emoji: '🌹', title: 'Florales', subtitle: 'Rosa, flores blancas.', notes: 'Rosa · Flores blancas', tint: 'oklch(0.92 0.04 340)', sample: 'delilah', bg: 'assets/categories/florales-bg.png' }
   ];
-  CAT_MAP = {
-    '9-pm': 'dulces',
-    '9-pm-elixir': 'dulces',
-    '9-pm-night-out': 'dulces',
-    '9-pm-rebel': 'dulces',
-    'mandarin-sky': 'dulces',
-    'mandarin-sky-elixir': 'dulces',
-    'odyssey-candy': 'dulces',
-    'yum-yum': 'dulces',
-    'bharara-king-100ml': 'dulces',
-    'rome-extradose': 'dulces',
-    'rome-extradose-fem': 'dulces',
-    'ajwad': 'dulces',
-    'angham': 'dulces',
-    'badee-honor-and-glory': 'dulces',
-    'badee-al-oud-noble-blush': 'dulces',
-    'eclaire': 'dulces',
-    'haya': 'dulces',
-    'hayaati-gold-elixir': 'dulces',
-    'khamrah-qahwa': 'dulces',
-    'mayar-cherry-intense': 'dulces',
-    'nebras-pride': 'dulces',
-    'teriaq-intense': 'dulces',
-    'the-kingdom': 'dulces',
-    'the-kingdom-fem': 'dulces',
-    'yara-rosa': 'dulces',
-    'yara-candy': 'dulces',
-    'yara-elixir': 'dulces',
-    'yara-moi': 'dulces',
-    'la-vivacite-edp': 'dulces',
-    'nitro-red-edp': 'dulces',
-    'ameerat-al-arab': 'dulces',
-    'club-de-nuit-bling': 'dulces',
-    'fakhar-gold': 'dulces',
-    'rayhaan-kiss': 'dulces',
-    'rayhaan-elixir': 'dulces',
-    'victoria': 'dulces',
-    'jean-lowe-inmortal': 'dulces',
-    'khamrah': 'calidos',
-    'khamrah-waha': 'calidos',
-    'asad': 'calidos',
-    'asad-bourbon': 'calidos',
-    'asad-elixir': 'calidos',
-    'her-confession': 'calidos',
-    'his-confession': 'calidos',
-    'liquid-brun': 'calidos',
-    'liquid-brun-limited-edition-150ml': 'calidos',
-    'club-de-nuit-untold': 'calidos',
-    'baroque-extreme': 'calidos',
-    'baroque-rouge': 'calidos',
-    'your-touch-amber': 'calidos',
-    'your-touch-intense': 'calidos',
-    'opulent-dubai': 'calidos',
-    'dubai-night': 'calidos',
-    'gold-edition-120ml': 'calidos',
-    'confidential-gold': 'calidos',
-    'hawas-fire': 'calidos',
-    'hawas-black': 'calidos',
-    'stallion-53': 'calidos',
-    'rayhaan-obsidian': 'calidos',
-    'khanjar': 'calidos',
-    'freeze-in-flames': 'calidos',
-    'vulcan-feu': 'calidos',
-    'khamrah-dukhan': 'secos',
-    'vintage-radio': 'secos',
-    'badee-al-oud-for-glory': 'secos',
-    'badee-al-oud-amethyst': 'secos',
-    'jean-lowe-noir': 'secos',
-    'musaman-black': 'secos',
-    'odyssey-homme-negro': 'secos',
-    'rayhaan-wolf': 'secos',
-    'spectre-ghost': 'secos',
-    'spectre-malachite': 'secos',
-    'veneno': 'secos',
-    'habik-for-men': 'secos',
-    '9-am-dive': 'frescos',
-    'turathi-blue': 'frescos',
-    'club-de-nuit-iconic': 'frescos',
-    'club-de-nuit-sillage': 'frescos',
-    'club-de-nuit-urban-man-elixir': 'frescos',
-    'odyssey-aqua': 'frescos',
-    'odyssey-homme-blanco': 'frescos',
-    'asad-zanzibar': 'frescos',
-    'atlas': 'frescos',
-    'fakhar-black': 'frescos',
-    'fakhar-silver': 'frescos',
-    'salvo-edp': 'frescos',
-    'salvo-elixir': 'frescos',
-    'yeah-man-edp': 'frescos',
-    'yeah-man-parfum': 'frescos',
-    'glacier-bold': 'frescos',
-    'glacier-bella': 'frescos',
-    'hawas': 'frescos',
-    'hawas-ice': 'frescos',
-    'hawas-chrome': 'frescos',
-    'hawas-verde': 'frescos',
-    'hawas-malibu': 'frescos',
-    'rayhaan-aquatica': 'frescos',
-    'rayhaan-pacific-aura': 'frescos',
-    'rayhaan-italia': 'frescos',
-    'mykonos-reflection-100ml': 'frescos',
-    'aqua-dubai': 'frescos',
-    'aether': 'frescos',
-    'atlantis-extrait': 'frescos',
-    'uomo-intense': 'frescos',
-    'la-voie': 'frescos',
-    'intrude': 'frescos',
-    'jean-lowe-vibe': 'frescos',
-    'musaman-white': 'frescos',
-    'qaed-unlimited': 'frescos',
-    'hayaati-masc': 'frescos',
-    'dunescape-dubai': 'frescos',
-    'supremacy-colector-edition': 'frutales',
-    'club-de-nuit-intense-man-edt': 'frutales',
-    'club-de-nuit-precieux': 'frutales',
-    'erba-pura-100ml': 'frutales',
-    'philos-pura': 'frutales',
-    'art-of-universe': 'frutales',
-    'badee-al-oud-sublime': 'frutales',
-    'qaed-al-fursan': 'frutales',
-    'qaed-untamed': 'frutales',
-    'yara-tous': 'frutales',
-    'tropical-vibes': 'frutales',
-    'hawas-tropical': 'frutales',
-    'hawas-kobra': 'frutales',
-    'odyssey-mega': 'frutales',
-    'hayaati-al-maleki': 'frutales',
-    'riiffs-momento': 'frutales',
-    'pisa': 'frutales',
-    'al-wataniah-sabah-al-ward': 'florales',
-    'club-de-nuit-woman': 'florales',
-    'club-de-nuit-maleka': 'florales',
-    'delilah': 'florales',
-    'emaan': 'florales',
-    'fakhar-rosa': 'florales',
-    'hayaati-rosa': 'florales',
-    'mayar': 'florales',
-    'mayar-natural-intense': 'florales',
-    'rose-seduction-vip': 'florales',
-    'ameerat-al-arab-prive-rose': 'florales',
-    'fatima-rosa': 'florales',
-    '9-am-rosa': 'florales',
-    'papillon-door-fem': 'florales',
-    'hawas-diva': 'florales',
-  };
 
   componentDidMount() {
     this.t1 = setInterval(() => this.setState({ now: Date.now() }), 1000);
@@ -856,6 +570,30 @@ class Component extends DCLogic {
     setTimeout(() => this.setupHeaderScroll(), 50);
     this.onResize = () => this.setState({ w: window.innerWidth });
     window.addEventListener('resize', this.onResize);
+    this.loadProducts();
+  }
+  async loadProducts() {
+    try {
+      this.db = this.db || window.supabase.createClient(this.SUPABASE_URL, this.SUPABASE_KEY);
+      const { data, error } = await this.db.from('products').select('*').order('name');
+      if (error) throw error;
+      const products = (data || []).filter(p => p.active !== false).map(p => ({ ...p, img: p.image }));
+      this.setState({ products });
+    } catch (e) {
+      console.error('No se pudo cargar el catálogo desde Supabase', e);
+    }
+  }
+  async bumpStock(id, deltaMl) {
+    try {
+      this.db = this.db || window.supabase.createClient(this.SUPABASE_URL, this.SUPABASE_KEY);
+      const p = this.state.products.find(x => x.id === id);
+      if (!p) return;
+      const next = Math.max(0, (p.stock_ml || 0) + deltaMl);
+      await this.db.from('products').update({ stock_ml: next }).eq('id', id);
+      this.setState(s => ({ products: s.products.map(x => x.id === id ? { ...x, stock_ml: next } : x) }));
+    } catch (e) {
+      console.error('No se pudo actualizar el stock', e);
+    }
   }
   setupHeaderScroll() {
     let ticking = false;
@@ -984,7 +722,7 @@ class Component extends DCLogic {
     frutales: ['es frutal y jugoso, con ananá, manzana y frutas tropicales.', 'tiene un perfil frutal y vibrante, con notas tropicales.', 'es frutal intenso, con un corazón jugoso y dulce.'],
     florales: ['es floral, con rosa y flores blancas en el centro.', 'tiene un perfil floral delicado, con rosa y flores blancas.', 'es floral y elegante, con rosa como protagonista.']
   };
-  catOf(id) { const catId = this.CAT_MAP[id]; return this.CATS.find(c => c.id === catId) || null; }
+  catOf(id) { const p = this.state.products.find(x => x.id === id); return p ? (this.CATS.find(c => c.id === p.category) || null) : null; }
   describe(p) {
     const cat = this.catOf(p.id);
     if (!cat) return `${p.name}. Decant de 5 ml de frasco original, con atomizador de vidrio recargable.`;
@@ -992,7 +730,7 @@ class Component extends DCLogic {
     const v = variants.length ? variants[p.id.length % variants.length] : '';
     return `${p.name} ${v} Pertenece a la familia ${cat.title} (${cat.notes}). Decant de 5 ml de frasco original, con atomizador de vidrio recargable.`;
   }
-  fmt(n) { return '$' + n.toLocaleString('es-AR'); }
+  fmt(n) { return '$' + Math.round(Number(n) || 0).toLocaleString('es-AR'); }
   letterStyle(i) {
     if (!this.state.sprayed) return 'display:inline-block;opacity:0';
     return `display:inline-block;opacity:0;animation:letterIn .5s cubic-bezier(.2,.8,.2,1) ${i * 26}ms forwards`;
@@ -1003,7 +741,7 @@ class Component extends DCLogic {
   }
   wa() { return this.props.whatsapp || '5493510000000'; }
   waLink(msg) { return `https://wa.me/${this.wa()}?text=${encodeURIComponent(msg)}`; }
-  find(id) { return id === 'kit' ? this.KIT : this.FULL.find(p => p.id === id); }
+  find(id) { return id === 'kit' ? this.KIT : this.state.products.find(p => p.id === id); }
 
   add(id, qty = 1) {
     this.setState(s => {
@@ -1044,9 +782,9 @@ class Component extends DCLogic {
     const paraStyle = this.blockStyle(headlineMs + 550);
     const btnsStyle = this.blockStyle(headlineMs + 800);
     const bulletsStyle = this.blockStyle(headlineMs + 1000);
-    const P = this.FEATURED_IDS.map(id => this.FULL.find(p => p.id === id)).filter(Boolean);
+    const P = this.FEATURED_IDS.map(id => this.state.products.find(p => p.id === id)).filter(p => p && p.stock_ml > 0);
     const N = P.length;
-    const ring = []; while (ring.length < 6 || ring.length < N) ring.push(...P);
+    const ring = []; if (N > 0) while (ring.length < 6 || ring.length < N) ring.push(...P);
     const L = ring.length, a = 360 / L, r = Math.round(145 / Math.tan(Math.PI / L) + 60);
     const mod = (n, m) => ((n % m) + m) % m;
     const act = mod(s.idx, L);
@@ -1074,7 +812,7 @@ class Component extends DCLogic {
     const detailCatObj = detailP ? this.catOf(detailP.id) : null;
     const qNorm = s.q.trim().toLowerCase();
     const activeCat = s.cat || 'todos';
-    const byCat = activeCat === 'todos' ? this.FULL : this.FULL.filter(p => this.CAT_MAP[p.id] === activeCat);
+    const byCat = (activeCat === 'todos' ? this.state.products : this.state.products.filter(p => p.category === activeCat)).filter(p => p.stock_ml > 0);
     const gridList = qNorm ? byCat.filter(p => p.name.toLowerCase().includes(qNorm)) : byCat;
     const gridItems = gridList.map(p => {
       const cat = this.catOf(p.id);
@@ -1087,7 +825,7 @@ class Component extends DCLogic {
     });
     const activeCatObj = this.CATS.find(c => c.id === activeCat);
     const catCards = this.CATS.map((c, i) => {
-      const sample = this.FULL.find(p => p.id === c.sample);
+      const sample = this.state.products.find(p => p.id === c.sample);
       const hovered = s.catHover === i;
       const hasBg = !!c.bg;
       return {
@@ -1114,7 +852,7 @@ class Component extends DCLogic {
       border: activeCat === c.id ? '#16140F' : 'rgba(22,20,15,.25)',
       select: () => this.setState({ cat: c.id, q: '' })
     }));
-    const catSubtitle = activeCatObj ? `${activeCatObj.title} — ${activeCatObj.subtitle} · ${byCat.length} perfumes` : `${this.FULL.length} perfumes disponibles en decants de 5 ml.`;
+    const catSubtitle = activeCatObj ? `${activeCatObj.title} — ${activeCatObj.subtitle} · ${byCat.length} perfumes` : `${this.state.products.length} perfumes disponibles en decants de 5 ml.`;
     const showResetCat = activeCat !== 'todos';
     const isHome = s.view !== 'catalog', isCatalog = s.view === 'catalog';
     const headerVisible = s.scrolled || isCatalog;
@@ -1184,6 +922,7 @@ class Component extends DCLogic {
           const infoMsg = `¡Hola Graciano! Quiero coordinar la entrega en Córdoba Capital:\n${cartItems.map(i => `• ${i.qty}× ${i.name}`).join('\n')}\nTotal: ${this.fmt(subtotal)}\n\nDatos:\n${s.formNombre} ${s.formApellido}\nTel: ${s.formTelefono}\nZona: ${s.formZona}`;
           window.open(this.waLink(infoMsg), '_blank');
         }
+        s.cart.forEach(it => { if (it.id !== 'kit') this.bumpStock(it.id, -5 * it.qty); });
         this.setState({ done: true, cart: [], cp: '', infoOpen: false, formNombre: '', formApellido: '', formTelefono: '', formDireccion: '', formEmail: '', formZona: '', formErr: false });
       },
       q: s.q, onQ: e => this.setState({ q: e.target.value }),
@@ -1194,7 +933,7 @@ class Component extends DCLogic {
       goCategoriasSection: () => this.goHomeSection('categorias'),
       goOfertaSection: () => this.goHomeSection('oferta'),
       goNosotrosSection: () => this.goHomeSection('nosotros'),
-      fullTotal: this.FULL.length, headerTransform, catLeave,
+      fullTotal: this.state.products.length, headerTransform, catLeave,
       detailOpen: !!s.detail,
       detailImg: detailP ? detailP.img : '',
       detailName: detailP ? detailP.name : '',

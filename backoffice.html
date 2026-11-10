@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Backoffice — Decants Córdoba</title>
 <meta name="robots" content="noindex, nofollow">
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -159,28 +160,41 @@ input,select{font-family:inherit;color:#16140F}
           </div>
           <button onClick="{{ addProduct }}" style="background:#16140F;color:#FFFCF2;border:none;border-radius:999px;padding:12px 20px;font-weight:600;font-size:14px;box-shadow:0 4px 0 #FFD400">+ Nuevo perfume</button>
         </div>
-        <p style="margin:0;font-size:14px;color:#4A4538;max-width:640px">El stock se cuenta en mililitros del frasco original. Cada decant descuenta 5 ml; cuando quedan menos de 3 decants la barra se pone roja.</p>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:14px">
+        <p style="margin:0;font-size:14px;color:#4A4538;max-width:640px">El stock se cuenta en mililitros del frasco original. Cada decant vendido descuenta 5 ml automáticamente; cuando quedan menos de 3 decants la barra se pone roja. Los cambios se guardan solos y se reflejan en la tienda al instante.</p>
+        <div style="display:flex;flex-direction:column;gap:14px">
           <sc-for list="{{ prodRows }}" as="p" hint-placeholder-count="6">
             <div style="background:#FFFFFF;border:1.5px solid #16140F;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:14px;opacity:{{ p.op }}">
-              <div style="display:flex;gap:14px;align-items:flex-start">
-                <div style="width:54px;height:78px;border-radius:14px;background:{{ p.tint }};display:grid;place-items:center;flex-shrink:0">
-                  <span style="width:16px;height:52px;border-radius:4px 4px 6px 6px;border:1.5px solid rgba(22,20,15,.35);background:{{ p.color }}"></span>
+              <div style="display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap">
+                <div style="position:relative;width:64px;height:64px;border-radius:14px;overflow:hidden;background:#F3EEDD;flex-shrink:0">
+                  <img src="{{ p.img }}" alt="{{ p.name }}" style="width:100%;height:100%;object-fit:contain"></img>
+                  <label style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(22,20,15,.55);color:#FFFCF2;font-size:10px;font-weight:600;cursor:pointer;opacity:0" style-hover="opacity:1">
+                    Cambiar
+                    <input type="file" accept="image/*" onChange="{{ p.onImage }}" style="display:none"></input>
+                  </label>
                 </div>
-                <div style="display:flex;flex-direction:column;gap:2px;flex:1;min-width:0">
-                  <input value="{{ p.house }}" onChange="{{ p.onHouse }}" style="border:none;background:transparent;padding:0;font-family:var(--font-sans);font-weight:600;letter-spacing:.02em;font-size:11px;color:#5E584B;text-transform:uppercase;outline:none;width:100%"></input>
+                <div style="display:flex;flex-direction:column;gap:2px;flex:1;min-width:160px">
+                  <input value="{{ p.house }}" onChange="{{ p.onHouse }}" placeholder="Marca / casa" style="border:none;background:transparent;padding:0;font-family:var(--font-sans);font-weight:600;letter-spacing:.02em;font-size:11px;color:#5E584B;text-transform:uppercase;outline:none;width:100%"></input>
                   <input value="{{ p.name }}" onChange="{{ p.onName }}" style="border:none;background:transparent;padding:0;font-family:var(--font-sans);font-weight:700;font-size:20px;letter-spacing:-.02em;outline:none;width:100%"></input>
-                  <span style="font-size:12px;font-weight:700;align-self:flex-start;margin-top:4px;padding:3px 8px;border-radius:999px;background:#16140F;color:#FFD400">{{ p.cat }}</span>
+                  <select value="{{ p.category }}" onChange="{{ p.onCategory }}" style="align-self:flex-start;margin-top:4px;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:#16140F;color:#FFD400;border:none">
+                    <option value="dulces">Dulces</option>
+                    <option value="calidos">Cálidos</option>
+                    <option value="secos">Amaderados</option>
+                    <option value="frescos">Frescos</option>
+                    <option value="frutales">Frutales</option>
+                    <option value="florales">Florales</option>
+                  </select>
                 </div>
                 <button onClick="{{ p.toggle }}" title="Visible en la tienda" style="width:46px;height:26px;border-radius:999px;border:1.5px solid #16140F;background:{{ p.tgBg }};padding:2px;display:flex;justify-content:{{ p.tgJ }};flex-shrink:0">
                   <span style="width:19px;height:19px;border-radius:50%;background:{{ p.tgDot }}"></span>
                 </button>
+                <button onClick="{{ p.remove }}" title="Eliminar" style="width:36px;height:36px;border-radius:50%;border:1.5px solid #16140F;background:transparent;flex-shrink:0">✕</button>
               </div>
+              <textarea value="{{ p.description }}" onChange="{{ p.onDescription }}" placeholder="Descripción del perfume (notas, olor, ocasión de uso)" rows="2" style="border:1px solid rgba(22,20,15,.2);border-radius:12px;padding:10px 12px;font-family:var(--font-sans);font-size:13px;color:#2E2920;outline:none;resize:vertical;width:100%"></textarea>
               <div style="display:flex;flex-direction:column;gap:6px">
                 <div style="display:flex;justify-content:space-between;font-family:var(--font-sans);font-size:11px;color:#5E584B"><span>{{ p.mlTxt }}</span><span style="color:{{ p.leftColor }};font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums">{{ p.leftTxt }}</span></div>
                 <div style="height:10px;border-radius:10px;background:#F3EEDD;overflow:hidden;border:1px solid rgba(22,20,15,.15)"><div style="height:100%;width:{{ p.pct }}%;background:{{ p.barColor }};transition:width .4s"></div></div>
               </div>
-              <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding-top:12px;border-top:1px solid rgba(22,20,15,.1)">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding-top:12px;border-top:1px solid rgba(22,20,15,.1)">
                 <div style="display:flex;align-items:center;gap:4px;border:1.5px solid #16140F;border-radius:12px;padding:6px 10px;background:#FFFCF2">
                   <span style="font-weight:700">$</span>
                   <input value="{{ p.price }}" onChange="{{ p.onPrice }}" inputmode="numeric" style="border:none;background:transparent;width:70px;font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:17px;outline:none"></input>
@@ -192,6 +206,9 @@ input,select{font-family:inherit;color:#16140F}
               </div>
             </div>
           </sc-for>
+          <sc-if value="{{ noProducts }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:40px;text-align:center;color:#5E584B">Cargando productos…</div>
+          </sc-if>
         </div>
       </sc-if>
 
@@ -349,18 +366,7 @@ class Component extends DCLogic {
   state = {
     w: typeof window !== 'undefined' ? window.innerWidth : 1280,
     view: 'resumen', sf: 'Todos', mf: 'todos', q: '', cf: 'Todos', sel: null, trkErr: false, toast: null, saved: true,
-    products: [
-      { id: 'sauvage', house: 'Dior', name: 'Sauvage EDP', cat: 'Diseñador', price: 9500, color: '#4A7FB8', ml: 62, on: true },
-      { id: 'khamrah', house: 'Lattafa', name: 'Khamrah', cat: 'Árabes', price: 7500, color: '#B5651D', ml: 12, on: true },
-      { id: 'br540', house: 'Maison F. Kurkdjian', name: 'Baccarat Rouge 540', cat: 'Nicho', price: 18900, color: '#C0392B', ml: 24, on: true },
-      { id: 'bleu', house: 'Chanel', name: 'Bleu de Chanel', cat: 'Diseñador', price: 10500, color: '#1F3A5F', ml: 81, on: true },
-      { id: 'cdni', house: 'Armaf', name: 'Club de Nuit Intense', cat: 'Árabes', price: 7500, color: '#2B2B2B', ml: 8, on: true },
-      { id: 'layton', house: 'Parfums de Marly', name: 'Layton', cat: 'Nicho', price: 16500, color: '#6B4E9B', ml: 47, on: true },
-      { id: 'goodgirl', house: 'Carolina Herrera', name: 'Good Girl', cat: 'Diseñador', price: 9000, color: '#7A1E3A', ml: 70, on: true },
-      { id: 'hawas', house: 'Rasasi', name: 'Hawas for Him', cat: 'Árabes', price: 8000, color: '#3FA7C9', ml: 33, on: true },
-      { id: 'erba', house: 'Xerjoff', name: 'Erba Pura', cat: 'Nicho', price: 17500, color: '#E8A93A', ml: 18, on: false },
-      { id: 'libre', house: 'Yves Saint Laurent', name: 'Libre', cat: 'Diseñador', price: 9500, color: '#F2C200', ml: 55, on: true }
-    ],
+    products: [],
     orders: [
       { id: '#1062', cliente: 'Martina López', fecha: '09/11 · 10:42', m: 'andreani', items: [['br540', 1], ['libre', 2]], estado: 'Pendiente', dir: 'Av. Pellegrini 1450, Rosario · CP 2000', tel: 'martina.lopez@gmail.com · 341 555-2190', tracking: '' },
       { id: '#1061', cliente: 'Facundo Ríos', fecha: '09/11 · 09:15', m: 'cba', items: [['khamrah', 2], ['cdni', 1]], estado: 'Pendiente', dir: 'Nueva Córdoba · a coordinar', tel: '351 612-3344', tracking: '' },
@@ -374,14 +380,59 @@ class Component extends DCLogic {
     offer: { name: 'Kit Descubrimiento', desc: 'Elegí 4 decants de 5 ml de cualquier categoría. Ideal para encontrar tu perfume firma o para regalar.', price: 28900, before: 36000, on: true, end: 'dom' }
   };
   KIT = { id: 'kit', house: '4 decants a elección', name: 'Kit Descubrimiento', price: 28900, color: '#FFD400', units: 4 };
+  SUPABASE_URL = 'https://eismbrnbuhqmrpvkamxj.supabase.co';
+  SUPABASE_KEY = 'sb_publishable_vezM1qG5XGm3wVJgdHx0ig_ujua9Oab';
+  CAT_TINT = { dulces: '#FFF1B8', calidos: '#FDE3C2', secos: '#E7E0D5', frescos: '#DCE9F2', frutales: '#FBE8C9', florales: '#F3E3EE' };
 
   componentDidMount() {
     this.onResize = () => this.setState({ w: window.innerWidth });
     window.addEventListener('resize', this.onResize);
+    this.loadProducts();
   }
   componentWillUnmount() { window.removeEventListener('resize', this.onResize); clearTimeout(this.tt); }
 
-  fmt(n) { return '$' + Math.round(n).toLocaleString('es-AR'); }
+  db() { return this._db || (this._db = window.supabase.createClient(this.SUPABASE_URL, this.SUPABASE_KEY)); }
+  async loadProducts() {
+    try {
+      const { data, error } = await this.db().from('products').select('*').order('name');
+      if (error) throw error;
+      this.setState({ products: (data || []).map(p => ({ ...p, img: p.image })) });
+    } catch (e) {
+      console.error('No se pudo cargar productos', e);
+      this.flash('Error cargando productos desde Supabase');
+    }
+  }
+  async persist(id, patch) {
+    try {
+      const dbPatch = { ...patch };
+      if ('img' in dbPatch) { dbPatch.image = dbPatch.img; delete dbPatch.img; }
+      await this.db().from('products').update(dbPatch).eq('id', id);
+    } catch (e) {
+      console.error('No se pudo guardar', e);
+      this.flash('Error guardando el cambio');
+    }
+  }
+  async uploadImage(id, file) {
+    try {
+      const path = `${id}-${Date.now()}.${(file.name.split('.').pop() || 'jpg')}`;
+      const { error: upErr } = await this.db().storage.from('products').upload(path, file, { upsert: true });
+      if (upErr) throw upErr;
+      const { data } = this.db().storage.from('products').getPublicUrl(path);
+      this.updProd(id, { img: data.publicUrl });
+      this.persist(id, { img: data.publicUrl });
+      this.flash('Imagen actualizada');
+    } catch (e) {
+      console.error('No se pudo subir la imagen', e);
+      this.flash('Error subiendo la imagen (¿creaste el bucket "products"?)');
+    }
+  }
+  removeProduct(id) {
+    if (!window.confirm('¿Eliminar este perfume de la tienda?')) return;
+    this.setState(s => ({ products: s.products.filter(p => p.id !== id) }));
+    this.db().from('products').delete().eq('id', id).then(() => this.flash('Perfume eliminado'));
+  }
+
+  fmt(n) { return '$' + Math.round(Number(n) || 0).toLocaleString('es-AR'); }
   prod(id) { return id === 'kit' ? { ...this.KIT, price: this.state.offer.price } : this.state.products.find(p => p.id === id) || { name: '—', house: '', price: 0, color: '#ccc' }; }
   total(o) { return o.items.reduce((t, [id, q]) => t + this.prod(id).price * q, 0); }
   units(o) { return o.items.reduce((t, [id, q]) => t + (id === 'kit' ? 4 : 1) * q, 0); }
@@ -391,7 +442,10 @@ class Component extends DCLogic {
   }
   flash(t) { this.setState({ toast: t }); clearTimeout(this.tt); this.tt = setTimeout(() => this.setState({ toast: null }), 1900); }
   updOrder(id, f) { this.setState(s => ({ orders: s.orders.map(o => o.id === id ? { ...o, ...f(o) } : o) })); }
-  updProd(id, patch) { this.setState(s => ({ products: s.products.map(p => p.id === id ? { ...p, ...patch } : p) })); }
+  updProd(id, patch, save) {
+    this.setState(s => ({ products: s.products.map(p => p.id === id ? { ...p, ...patch } : p) }));
+    if (save !== false) this.persist(id, patch);
+  }
   setView(v) { this.setState({ view: v }); window.scrollTo({ top: 0 }); }
   orderVM(o) {
     const [sBg, sFg] = this.sColors(o.estado);
@@ -417,10 +471,10 @@ class Component extends DCLogic {
 
     const sales = s.orders.reduce((t, o) => t + this.total(o), 0) + 412300;
     const unitsAll = s.orders.reduce((t, o) => t + this.units(o), 0) + 61;
-    const tints = { 'Diseñador': '#F3EEDD', 'Nicho': '#EDE7F5', 'Árabes': '#FFF1B8' };
+    const CAT_LABEL = { dulces: 'Dulces', calidos: 'Cálidos', secos: 'Amaderados', frescos: 'Frescos', frutales: 'Frutales', florales: 'Florales' };
     const stockVM = p => {
-      const left = Math.floor(p.ml / 5), low = left < 3;
-      return { ...p, left, pct: Math.min(100, p.ml), barColor: low ? '#C0392B' : left < 6 ? '#E8A93A' : '#16140F', leftColor: low ? '#8A2A1A' : '#16140F' };
+      const ml = p.stock_ml || 0, left = Math.floor(ml / 5), low = left < 3;
+      return { ...p, left, pct: Math.min(100, ml), barColor: low ? '#C0392B' : left < 6 ? '#E8A93A' : '#16140F', leftColor: low ? '#8A2A1A' : '#16140F' };
     };
 
     const sel = s.orders.find(o => o.id === s.sel);
@@ -439,7 +493,7 @@ class Component extends DCLogic {
 
     const off = s.offer;
     const pct = off.before > 0 ? Math.round((1 - off.price / off.before) * 100) : 0;
-    const prods = s.cf === 'Todos' ? s.products : s.products.filter(p => p.cat === s.cf);
+    const prods = s.cf === 'Todos' ? s.products : s.products.filter(p => p.category === s.cf);
 
     return {
       desktop: !mobile, mobile, mainPadB: mobile ? 90 : 0, nav,
@@ -475,26 +529,36 @@ class Component extends DCLogic {
       },
       stepBack: () => sel && this.updOrder(sel.id, () => ({ estado: fl[si - 1] })),
 
-      catChips: ['Todos', 'Diseñador', 'Nicho', 'Árabes'].map(c => ({ label: c, bg: s.cf === c ? '#16140F' : '#FFFFFF', fg: s.cf === c ? '#FFD400' : '#16140F', select: () => this.setState({ cf: c }) })),
+      noProducts: !s.products.length,
+      catChips: ['Todos', 'dulces', 'calidos', 'secos', 'frescos', 'frutales', 'florales'].map(c => ({
+        label: c === 'Todos' ? 'Todos' : CAT_LABEL[c],
+        bg: s.cf === c ? '#16140F' : '#FFFFFF', fg: s.cf === c ? '#FFD400' : '#16140F', select: () => this.setState({ cf: c })
+      })),
       prodRows: prods.map(p => {
         const v = stockVM(p);
         return {
-          ...v, tint: tints[p.cat], op: p.on ? 1 : .55,
-          mlTxt: `${p.ml} ml en el frasco`, leftTxt: `${v.left} decants`,
-          tgBg: p.on ? '#FFD400' : '#EDE9DD', tgJ: p.on ? 'flex-end' : 'flex-start', tgDot: p.on ? '#16140F' : '#8C8576',
-          toggle: () => { this.updProd(p.id, { on: !p.on }); this.flash(p.on ? `${p.name} oculto en la tienda` : `${p.name} visible en la tienda`); },
+          ...v, tint: this.CAT_TINT[p.category] || '#F3EEDD', op: p.active === false ? .55 : 1,
+          mlTxt: `${v.stock_ml || 0} ml en el frasco`, leftTxt: `${v.left} decants`,
+          tgBg: p.active === false ? '#EDE9DD' : '#FFD400', tgJ: p.active === false ? 'flex-start' : 'flex-end', tgDot: p.active === false ? '#8C8576' : '#16140F',
+          toggle: () => { this.updProd(p.id, { active: !(p.active !== false) }); this.flash(p.active === false ? `${p.name} visible en la tienda` : `${p.name} oculto en la tienda`); },
           onName: e => this.updProd(p.id, { name: e.target.value }),
           onHouse: e => this.updProd(p.id, { house: e.target.value }),
+          onDescription: e => this.updProd(p.id, { description: e.target.value }),
+          onCategory: e => this.updProd(p.id, { category: e.target.value }),
           onPrice: e => this.updProd(p.id, { price: +e.target.value.replace(/\D/g, '') || 0 }),
-          minus: () => this.updProd(p.id, { ml: Math.max(0, p.ml - 5) }),
-          refill: () => { this.updProd(p.id, { ml: Math.min(100, p.ml + 100) }); this.flash(`Frasco nuevo de ${p.name} cargado`); }
+          onImage: e => { const f = e.target.files && e.target.files[0]; if (f) this.uploadImage(p.id, f); },
+          minus: () => this.updProd(p.id, { stock_ml: Math.max(0, (p.stock_ml || 0) - 5) }),
+          refill: () => { this.updProd(p.id, { stock_ml: 100 }); this.flash(`Frasco nuevo de ${p.name} cargado`); },
+          remove: () => this.removeProduct(p.id)
         };
       }),
       addProduct: () => {
         const id = 'n' + Date.now();
-        const cat = s.cf === 'Todos' ? 'Diseñador' : s.cf;
-        this.setState(st => ({ products: [{ id, house: 'Marca', name: 'Nuevo perfume', cat, price: 9000, color: '#FFD400', ml: 100, on: false }, ...st.products] }));
-        this.flash('Perfume creado. Editá nombre y precio.');
+        const category = s.cf === 'Todos' ? 'dulces' : s.cf;
+        const row = { id, house: '', name: 'Nuevo perfume', category, price: 9000, image: '', description: '', stock_ml: 100, active: false };
+        this.setState(st => ({ products: [{ ...row, img: '' }, ...st.products] }));
+        this.db().from('products').insert(row).then(({ error }) => { if (error) { console.error(error); this.flash('Error creando el perfume'); } });
+        this.flash('Perfume creado. Editá nombre, precio y categoría.');
       },
 
       offer: off,
