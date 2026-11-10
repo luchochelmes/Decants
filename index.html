@@ -76,8 +76,9 @@
 <x-dc>
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500..700;1,500..700&family=Manrope:wght@400..800&display=swap" rel="stylesheet">
 <style>
+:root{--font-display:'Cormorant Garamond',serif;--font-sans:'Manrope',sans-serif}
 html{scroll-behavior:smooth}
 .cat-grid{display:grid;grid-template-columns:1fr;gap:18px}
 @media (min-width:640px){.cat-grid{grid-template-columns:repeat(2,1fr)}}
@@ -89,12 +90,12 @@ html{scroll-behavior:smooth}
   [data-hero-video],[data-hero-poster]{object-position:65% 50% !important}
   [data-hero-content]{margin-top:-60px !important}
   [data-hero-quote]{font-size:15px !important}
-  [data-hero-h1]{font-size:clamp(30px,10.5vw,42px) !important;font-weight:300 !important;letter-spacing:-.02em !important;transform:scaleX(.92);transform-origin:left}
+  [data-hero-h1]{font-size:clamp(34px,11.8vw,47px) !important;font-weight:700 !important}
   [data-hero-p]{font-size:14.5px !important}
   [data-hero-btns] a{padding:11px 16px !important;font-size:13px !important;gap:6px !important}
   [data-hero-bullets]{margin-top:28px !important}
 }
-body{margin:0;background:#FFFCF2;color:#16140F;font-family:'Instrument Sans',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{margin:0;background:#FFFCF2;color:#16140F;font-family:var(--font-sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 *{box-sizing:border-box}
 a{color:#16140F;text-decoration:none}
 a:hover{color:#000}
@@ -106,7 +107,7 @@ input{font-family:inherit}
 
   <div data-header-group="1" style="position:fixed;top:0;left:0;right:0;z-index:50;transform:{{ headerTransform }};transition:transform .4s cubic-bezier(.2,.8,.2,1)">
   <div style="background:#16140F;color:#FFD400;overflow:hidden;height:36px;display:flex;align-items:center">
-    <div data-marquee="1" style="display:flex;gap:48px;white-space:nowrap;font-family:'Instrument Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;will-change:transform">
+    <div data-marquee="1" style="display:flex;gap:48px;white-space:nowrap;font-family:var(--font-sans);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;will-change:transform">
       <span>Envíos a todo el país por Andreani</span><span>✦</span><span>Entregas en Córdoba Capital por WhatsApp</span><span>✦</span><span>Decants de 5 ml de frascos originales</span><span>✦</span><span>Atomizador de vidrio recargable</span><span>✦</span>
       <span>Envíos a todo el país por Andreani</span><span>✦</span><span>Entregas en Córdoba Capital por WhatsApp</span><span>✦</span><span>Decants de 5 ml de frascos originales</span><span>✦</span><span>Atomizador de vidrio recargable</span><span>✦</span>
     </div>
@@ -119,8 +120,8 @@ input{font-family:inherit}
           <img src="assets/logo.png" alt="Decants Córdoba" style="width:150%;height:150%;object-fit:cover;object-position:50% 46%"></img>
         </div>
         <div style="display:flex;flex-direction:column;line-height:1.05">
-          <span style="font-family:'Newsreader',serif;font-weight:800;font-size:18px;letter-spacing:-.02em">Decants Córdoba</span>
-          <span style="font-family:'Instrument Sans',sans-serif;font-size:11px;color:#5E584B">— Graciano</span>
+          <span style="font-family:var(--font-display);font-weight:600;font-size:20px;letter-spacing:-.02em">Decants Córdoba</span>
+          <span style="font-family:var(--font-sans);font-size:11px;color:#5E584B">— Graciano</span>
         </div>
       </a>
       <div style="display:flex;align-items:center;gap:28px;font-size:15px;font-weight:500">
@@ -134,7 +135,7 @@ input{font-family:inherit}
         </sc-if>
         <button onClick="{{ openCart }}" style="display:flex;align-items:center;gap:10px;background:#16140F;color:#FFFCF2;border:none;border-radius:999px;padding:10px 16px 10px 18px;font-size:14px;font-weight:600">
           <span>Carrito</span>
-          <span style="background:#FFD400;color:#16140F;border-radius:999px;min-width:24px;height:24px;display:grid;place-items:center;font-size:12px;font-family:'Instrument Sans',sans-serif">{{ cartCount }}</span>
+          <span style="background:#FFD400;color:#16140F;border-radius:999px;min-width:24px;height:24px;display:grid;place-items:center;font-size:12px;font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums">{{ cartCount }}</span>
         </button>
       </div>
     </div>
@@ -150,16 +151,16 @@ input{font-family:inherit}
 
     <div style="position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:clamp(40px,6vw,80px) clamp(16px,4vw,40px);width:100%">
       <div data-hero-content="1" style="display:flex;flex-direction:column;gap:28px;max-width:640px">
-        <span data-hero-quote="1" style="font-family:'Newsreader',serif;font-style:italic;font-weight:600;font-size:clamp(20px,2vw,26px);letter-spacing:0;color:#D9D3C3;{{ quoteStyle }}">“Oler bien no debería ser una apuesta.”</span>
-        <h1 data-hero-h1="1" style="margin:0;font-family:'Newsreader',serif;font-weight:800;font-size:clamp(44px,6.4vw,92px);line-height:.92;letter-spacing:-.015em;text-wrap:balance;color:#FFFCF2">
+        <span data-hero-quote="1" style="font-family:var(--font-sans);font-style:italic;font-weight:600;font-size:clamp(20px,2vw,26px);letter-spacing:0;color:#D9D3C3;{{ quoteStyle }}">“Oler bien no debería ser una apuesta.”</span>
+        <h1 data-hero-h1="1" style="margin:0;font-family:var(--font-display);font-weight:700;font-size:clamp(49px,7.2vw,103px);line-height:.92;letter-spacing:-.015em;text-wrap:balance;color:#FFFCF2">
           <sc-for list="{{ headlineWords }}" as="w" hint-placeholder-count="7"><span style="display:inline-block"><sc-for list="{{ w.letters }}" as="l" hint-placeholder-count="8"><span style="{{ l.style }}">{{ l.ch }}</span></sc-for></span> </sc-for><span style="position:relative;display:inline-block;z-index:0"><sc-for list="{{ headlineWord }}" as="l" hint-placeholder-count="6"><span style="{{ l.style }}">{{ l.ch }}</span></sc-for><span style="position:absolute;left:-4%;right:-4%;bottom:6%;height:42%;background:#FFD400;z-index:-1;border-radius:6px;opacity:0;{{ highlightStyle }}"></span></span><sc-for list="{{ headlineEnd }}" as="l" hint-placeholder-count="2"><span style="{{ l.style }}">{{ l.ch }}</span></sc-for>
         </h1>
         <p data-hero-p="1" style="margin:0;font-size:clamp(17px,1.5vw,20px);line-height:1.55;color:#D9D3C3;max-width:480px;text-wrap:pretty;{{ paraStyle }}">Decants de 5 ml de perfumes<br>árabes 100% originales.</p>
         <div data-hero-btns="1" style="display:flex;gap:12px;flex-wrap:wrap;{{ btnsStyle }}">
-          <a href="#categorias" style="display:inline-flex;align-items:center;gap:10px;background:#FFFCF2;color:#16140F;padding:16px 26px;border-radius:9px;font-weight:600;font-size:15px;transition:transform .2s, box-shadow .2s" style-hover="transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.25);color:#16140F">Ver catálogo <span>→</span></a>
-          <a href="{{ waHref }}" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:transparent;color:#FFFCF2;padding:16px 24px;border-radius:9px;font-weight:600;font-size:15px;border:1px solid rgba(255,252,242,.55);transition:background .2s" style-hover="background:rgba(255,252,242,.12);border-color:#FFFCF2">Pedir por WhatsApp</a>
+          <a href="#categorias" style="display:inline-flex;align-items:center;gap:10px;background:#FFFCF2;color:#16140F;padding:16px 26px;border-radius:9px;font-weight:600;font-size:15px;white-space:nowrap;transition:transform .2s, box-shadow .2s" style-hover="transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.25);color:#16140F">Ver catálogo <span>→</span></a>
+          <a href="{{ waHref }}" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:transparent;color:#FFFCF2;padding:16px 24px;border-radius:9px;font-weight:600;font-size:15px;white-space:nowrap;border:1px solid rgba(255,252,242,.55);transition:background .2s" style-hover="background:rgba(255,252,242,.12);border-color:#FFFCF2">Pedir por WhatsApp</a>
         </div>
-        <div data-hero-bullets="1" style="display:flex;gap:24px;flex-wrap:wrap;padding-top:8px;font-family:'Instrument Sans',sans-serif;font-size:12px;color:#BDB6A5;{{ bulletsStyle }}">
+        <div data-hero-bullets="1" style="display:flex;gap:24px;flex-wrap:wrap;padding-top:8px;font-family:var(--font-sans);font-size:12px;color:#BDB6A5;{{ bulletsStyle }}">
           <span>✦ Andreani a todo el país</span>
           <span>✦ Entrega en Córdoba Capital</span>
           <span>✦ Frascos 100% originales</span>
@@ -171,8 +172,8 @@ input{font-family:inherit}
   <section id="catalogo" style="padding:clamp(60px,8vw,110px) 0 clamp(50px,6vw,80px);background:rgba(255,212,0,.16);color:#16140F;overflow:hidden">
     <div style="max-width:1280px;margin:0 auto;padding:0 clamp(16px,4vw,40px)">
       <div data-reveal="0" style="display:flex;flex-direction:column;gap:14px">
-        <span style="font-family:'Instrument Sans',sans-serif;font-size:12px;font-weight:600;color:#8A6A00;letter-spacing:.1em">01 — CATÁLOGO</span>
-        <h2 style="margin:0;font-family:'Newsreader',serif;font-weight:800;font-size:clamp(40px,5.5vw,76px);line-height:.95;letter-spacing:-.015em;color:#16140F">Los más pedidos</h2>
+        <span style="font-family:var(--font-sans);font-size:12px;font-weight:600;color:#8A6A00;letter-spacing:.12em">01 — CATÁLOGO</span>
+        <h2 style="margin:0;font-family:var(--font-display);font-weight:600;font-size:clamp(45px,6.16vw,85px);line-height:.95;letter-spacing:-.015em;color:#16140F">Los más pedidos</h2>
       </div>
     </div>
 
@@ -182,11 +183,11 @@ input{font-family:inherit}
           <div onClick="{{ p.go }}" style="position:absolute;inset:0;transform:{{ p.transform }};opacity:{{ p.opacity }};transition:opacity .6s;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#FFFCF2;color:#16140F;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:10px;cursor:pointer;border:3px solid {{ p.border }};box-shadow:0 30px 60px rgba(0,0,0,.35)">
             <div style="position:relative;height:216px;border-radius:16px;background:#F3EEDD;overflow:hidden">
               <img src="{{ p.img }}" alt="{{ p.name }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;object-position:center"></img>
-              <span style="position:absolute;top:10px;left:10px;font-family:'Instrument Sans',sans-serif;font-size:11px;background:#16140F;color:#FFD400;padding:4px 8px;border-radius:999px">5 ML</span>
+              <span style="position:absolute;top:10px;left:10px;font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;font-size:11px;background:#16140F;color:#FFD400;padding:4px 8px;border-radius:999px">5 ML</span>
             </div>
-            <span style="font-family:'Newsreader',serif;font-weight:800;font-size:21px;line-height:1.1;letter-spacing:-.02em">{{ p.name }}</span>
+            <span style="font-family:var(--font-sans);font-weight:700;font-size:21px;line-height:1.1;letter-spacing:-.02em">{{ p.name }}</span>
             <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between">
-              <span style="font-family:'Newsreader',serif;font-weight:800;font-size:22px">{{ p.priceTxt }}</span>
+              <span style="font-family:var(--font-sans);font-weight:700;font-size:22px;letter-spacing:-.02em;font-variant-numeric:tabular-nums">{{ p.priceTxt }}</span>
               <button onClick="{{ p.add }}" style="background:#16140F;border:none;border-radius:8px;padding:10px 16px;font-weight:600;font-size:13px;color:#FFFCF2" style-hover="background:#33301f">Agregar +</button>
             </div>
           </div>
@@ -196,7 +197,7 @@ input{font-family:inherit}
 
     <div style="display:flex;justify-content:center;align-items:center;gap:20px">
       <button onClick="{{ prev }}" style="width:52px;height:52px;border-radius:50%;border:1px solid rgba(22,20,15,.3);background:transparent;color:#16140F;font-size:18px" style-hover="border-color:#16140F;background:#16140F;color:#FFD400">←</button>
-      <span style="font-family:'Instrument Sans',sans-serif;font-size:13px;min-width:80px;text-align:center;color:#16140F">{{ counter }}</span>
+      <span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:13px;min-width:80px;text-align:center;color:#16140F">{{ counter }}</span>
       <button onClick="{{ next }}" style="width:52px;height:52px;border-radius:50%;border:1px solid rgba(22,20,15,.3);background:transparent;color:#16140F;font-size:18px" style-hover="border-color:#16140F;background:#16140F;color:#FFD400">→</button>
     </div>
   </section>
@@ -204,8 +205,8 @@ input{font-family:inherit}
   <section id="categorias" style="max-width:1280px;margin:0 auto;padding:clamp(70px,9vw,120px) clamp(16px,4vw,40px)">
     <div data-reveal="0" style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:28px">
       <div style="display:flex;flex-direction:column;gap:14px">
-        <span style="font-family:'Instrument Sans',sans-serif;font-size:12px;font-weight:600;color:#5E584B;letter-spacing:.1em">02 — CATEGORÍAS</span>
-        <h2 style="margin:0;font-family:'Newsreader',serif;font-weight:700;font-size:clamp(40px,5.5vw,76px);line-height:.95;letter-spacing:-.02em;max-width:700px">Elegí por aroma</h2>
+        <span style="font-family:var(--font-sans);font-size:12px;font-weight:600;color:#5E584B;letter-spacing:.12em">02 — CATEGORÍAS</span>
+        <h2 style="margin:0;font-family:var(--font-display);font-weight:600;font-size:clamp(45px,6.16vw,85px);line-height:.95;letter-spacing:-.02em;max-width:700px">Elegí por aroma</h2>
       </div>
       <p style="margin:0;max-width:320px;color:#4A4538;line-height:1.5">Tocá una categoría o mirá el catálogo completo con los {{ fullTotal }} perfumes.</p>
     </div>
@@ -218,7 +219,7 @@ input{font-family:inherit}
           </sc-if>
           <div style="position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
             <div style="display:flex;flex-direction:column;gap:8px">
-              <span style="font-family:'Newsreader',serif;font-weight:700;font-size:42px;line-height:1;letter-spacing:-.01em;color:{{ c.titleColor }}">{{ c.title }}</span>
+              <span style="font-family:var(--font-display);font-weight:700;font-size:47px;line-height:1;letter-spacing:-.01em;color:{{ c.titleColor }}">{{ c.title }}</span>
               <span style="font-size:15px;color:{{ c.notesColor }}">{{ c.notes }}</span>
             </div>
             <span style="flex-shrink:0;width:48px;height:48px;border-radius:50%;background:{{ c.arrowBg }};color:{{ c.arrowColor }};display:flex;align-items:center;justify-content:center;font-size:19px;transition:transform .35s;transform:{{ c.rot }}">→</span>
@@ -231,34 +232,34 @@ input{font-family:inherit}
     </div>
 
     <div data-reveal="80" style="display:flex;justify-content:center">
-      <button onClick="{{ openCatalog }}" style="background:#16140F;color:#FFFCF2;border:none;border-radius:9px;padding:16px 28px;font-weight:600;font-size:15px" style-hover="background:#33301f">Ver catálogo completo ({{ fullTotal }}) →</button>
+      <button onClick="{{ openCatalog }}" style="background:#16140F;color:#FFFCF2;border:none;border-radius:9px;padding:16px 28px;font-weight:600;font-size:15px;white-space:nowrap" style-hover="background:#33301f">Ver catálogo completo ({{ fullTotal }}) →</button>
     </div>
   </section>
 
   <section id="oferta" style="background:rgba(255,212,0,.14);border-top:1px solid rgba(22,20,15,.12);border-bottom:1px solid rgba(22,20,15,.12);overflow:hidden">
     <div style="max-width:1280px;margin:0 auto;padding:clamp(60px,8vw,110px) clamp(16px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:40px;align-items:center">
       <div style="display:flex;flex-direction:column;gap:22px">
-        <span data-reveal="0" style="font-family:'Instrument Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em">03 — OFERTA DE LA SEMANA</span>
-        <h2 data-reveal="80" style="margin:0;font-family:'Newsreader',serif;font-weight:800;font-size:clamp(52px,7vw,100px);line-height:.88;letter-spacing:-.015em">Kit Descu&shy;brimiento</h2>
+        <span data-reveal="0" style="font-family:var(--font-sans);font-size:12px;font-weight:600;letter-spacing:.12em">03 — OFERTA DE LA SEMANA</span>
+        <h2 data-reveal="80" style="margin:0;font-family:var(--font-display);font-weight:600;font-size:clamp(58px,7.84vw,112px);line-height:.88;letter-spacing:-.015em">Kit Descu&shy;brimiento</h2>
         <p data-reveal="160" style="margin:0;font-size:19px;line-height:1.5;max-width:460px;color:#2E2920">Elegí 4 decants de 5 ml de cualquier categoría. Ideal para encontrar tu perfume firma o para regalar.</p>
         <div data-reveal="240" style="display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap">
-          <span style="font-family:'Newsreader',serif;font-weight:800;font-size:clamp(48px,5vw,68px);letter-spacing:-.015em;line-height:1">$28.900</span>
+          <span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:clamp(48px,5vw,68px);line-height:1">$28.900</span>
           <span style="font-size:22px;text-decoration:line-through;color:#5A4A00;padding-bottom:8px">$36.000</span>
-          <span style="background:#16140F;color:#FFD400;font-family:'Instrument Sans',sans-serif;font-size:13px;padding:6px 12px;border-radius:999px;margin-bottom:10px;transform:rotate(-4deg)">−20%</span>
+          <span style="background:#16140F;color:#FFD400;font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:13px;padding:6px 12px;border-radius:999px;margin-bottom:10px;transform:rotate(-4deg)">−20%</span>
         </div>
         <div data-reveal="320" style="display:flex;flex-direction:column;gap:10px">
-          <span style="font-family:'Instrument Sans',sans-serif;font-size:12px">TERMINA EN</span>
+          <span style="font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;font-size:12px">TERMINA EN</span>
           <div style="display:flex;gap:10px;flex-wrap:wrap">
             <sc-for list="{{ countdown }}" as="u" hint-placeholder-count="4">
               <div style="background:#16140F;color:#FFFCF2;border-radius:14px;width:76px;padding:12px 0;display:flex;flex-direction:column;align-items:center;gap:2px">
-                <span style="font-family:'Newsreader',serif;font-weight:800;font-size:30px;font-variant-numeric:tabular-nums">{{ u.v }}</span>
-                <span style="font-family:'Instrument Sans',sans-serif;font-size:11px;color:#FFD400">{{ u.l }}</span>
+                <span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-size:30px;font-variant-numeric:tabular-nums">{{ u.v }}</span>
+                <span style="font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;font-size:11px;color:#FFD400">{{ u.l }}</span>
               </div>
             </sc-for>
           </div>
         </div>
         <div data-reveal="400" style="display:flex;gap:12px;flex-wrap:wrap;padding-top:6px">
-          <button onClick="{{ addKit }}" style="background:#16140F;color:#FFFCF2;border:none;border-radius:9px;padding:16px 26px;font-weight:600;font-size:15px;transition:transform .2s, box-shadow .2s" style-hover="transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.25)">Sumar kit al carrito →</button>
+          <button onClick="{{ addKit }}" style="background:#16140F;color:#FFFCF2;border:none;border-radius:9px;padding:16px 26px;font-weight:600;font-size:15px;white-space:nowrap;transition:transform .2s, box-shadow .2s" style-hover="transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.25)">Sumar kit al carrito →</button>
           <a href="{{ waKitHref }}" target="_blank" style="display:inline-flex;align-items:center;border:1px solid #16140F;border-radius:9px;padding:16px 22px;font-weight:600;font-size:15px" style-hover="background:#FFFCF2">Elegir mis 4 por WhatsApp</a>
         </div>
       </div>
@@ -272,8 +273,8 @@ input{font-family:inherit}
           </sc-for>
         </div>
         <div data-float="1.2" style="position:absolute;top:6%;right:6%;background:#FFFCF2;border:1px solid #16140F;border-radius:12px;padding:12px 16px;box-shadow:0 8px 20px rgba(0,0,0,.12);transform:rotate(4deg);display:flex;flex-direction:column;gap:2px">
-          <span style="font-family:'Newsreader',serif;font-weight:800;font-size:26px">4 × 5 ml</span>
-          <span style="font-family:'Instrument Sans',sans-serif;font-size:11px">20 ml en total</span>
+          <span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:26px">4 × 5 ml</span>
+          <span style="font-family:var(--font-sans);font-size:11px">20 ml en total</span>
         </div>
       </div>
     </div>
@@ -282,26 +283,26 @@ input{font-family:inherit}
   <section id="nosotros" style="max-width:1280px;margin:0 auto;padding:clamp(70px,9vw,130px) clamp(16px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(40px,6vw,80px);align-items:center">
     <div data-reveal="0" style="position:relative">
       <div data-tilt="1" style="aspect-ratio:4/5;border-radius:28px;border:1.5px solid #16140F;background:repeating-linear-gradient(135deg,#F3EEDD 0 12px,#FFFCF2 12px 24px);display:grid;place-items:center;transition:transform .2s ease-out">
-        <span style="font-family:'Instrument Sans',sans-serif;font-size:13px;color:#5E584B;background:#FFFCF2;padding:8px 12px;border-radius:8px;border:1px solid rgba(22,20,15,.15)">foto: Graciano fraccionando</span>
+        <span style="font-family:var(--font-sans);font-size:13px;color:#5E584B;background:#FFFCF2;padding:8px 12px;border-radius:8px;border:1px solid rgba(22,20,15,.15)">foto: Graciano fraccionando</span>
       </div>
-      <div data-float="3" style="position:absolute;right:-12px;bottom:40px;background:#16140F;color:#FFFCF2;border:none;border-radius:999px;padding:13px 20px;font-family:'Newsreader',serif;font-weight:700;font-size:17px;box-shadow:0 10px 24px rgba(0,0,0,.25);transform:rotate(-3deg)">Hecho en Córdoba</div>
+      <div data-float="3" style="position:absolute;right:-12px;bottom:40px;background:#16140F;color:#FFFCF2;border:none;border-radius:999px;padding:13px 20px;font-family:var(--font-sans);font-weight:700;font-size:17px;box-shadow:0 10px 24px rgba(0,0,0,.25);transform:rotate(-3deg)">Hecho en Córdoba</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:24px">
-      <span data-reveal="0" style="font-family:'Instrument Sans',sans-serif;font-size:12px;font-weight:600;color:#5E584B;letter-spacing:.1em">04 — QUIÉNES SOMOS</span>
-      <h2 data-reveal="80" style="margin:0;font-family:'Newsreader',serif;font-weight:800;font-size:clamp(44px,5.5vw,80px);line-height:.92;letter-spacing:-.015em">Hola, soy Graciano.</h2>
+      <span data-reveal="0" style="font-family:var(--font-sans);font-size:12px;font-weight:600;color:#5E584B;letter-spacing:.12em">04 — QUIÉNES SOMOS</span>
+      <h2 data-reveal="80" style="margin:0;font-family:var(--font-display);font-weight:600;font-size:clamp(49px,6.16vw,90px);line-height:.92;letter-spacing:-.015em">Hola, soy Graciano.</h2>
       <p data-reveal="160" style="margin:0;font-size:18px;line-height:1.6;color:#3A3428;max-width:540px;text-wrap:pretty">Empecé comprando perfumes que no me terminaban de convencer. Hoy fracciono frascos originales para que puedas usar una fragancia varios días antes de invertir en el frasco completo.</p>
       <p data-reveal="220" style="margin:0;font-size:18px;line-height:1.6;color:#3A3428;max-width:540px;text-wrap:pretty">Cada decant se prepara a mano, se etiqueta y se envía desde Córdoba.</p>
       <div style="display:flex;flex-direction:column;border-top:1.5px solid #16140F;margin-top:8px">
         <div data-reveal="0" style="display:grid;grid-template-columns:56px 1fr;gap:16px;padding:20px 0;border-bottom:1px solid rgba(22,20,15,.15)">
-          <span style="font-family:'Instrument Sans',sans-serif;font-size:13px">01</span>
+          <span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:13px">01</span>
           <div style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600;font-size:18px">Frascos originales</span><span style="color:#5E584B;font-size:15px">Comprados a distribuidores oficiales. Sin réplicas.</span></div>
         </div>
         <div data-reveal="80" style="display:grid;grid-template-columns:56px 1fr;gap:16px;padding:20px 0;border-bottom:1px solid rgba(22,20,15,.15)">
-          <span style="font-family:'Instrument Sans',sans-serif;font-size:13px">02</span>
+          <span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:13px">02</span>
           <div style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600;font-size:18px">Atomizador de vidrio</span><span style="color:#5E584B;font-size:15px">Conserva la fragancia y se puede llevar en el bolsillo.</span></div>
         </div>
         <div data-reveal="160" style="display:grid;grid-template-columns:56px 1fr;gap:16px;padding:20px 0;border-bottom:1px solid rgba(22,20,15,.15)">
-          <span style="font-family:'Instrument Sans',sans-serif;font-size:13px">03</span>
+          <span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:13px">03</span>
           <div style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:600;font-size:18px">Envío o entrega en mano</span><span style="color:#5E584B;font-size:15px">Andreani a todo el país, o coordinamos en Córdoba Capital.</span></div>
         </div>
       </div>
@@ -310,19 +311,19 @@ input{font-family:inherit}
 
   <section style="background:rgba(255,212,0,.16);color:#16140F;overflow:hidden">
     <div style="max-width:1280px;margin:0 auto;padding:clamp(70px,9vw,130px) clamp(16px,4vw,40px) 40px;display:flex;flex-direction:column;gap:50px">
-      <h2 data-reveal="0" style="margin:0;font-family:'Newsreader',serif;font-weight:800;font-size:clamp(54px,9vw,148px);line-height:.88;letter-spacing:-.02em;text-wrap:balance;color:#16140F">Tu próximo perfume empieza con <span style="color:#8A6A00">5 ml.</span></h2>
+      <h2 data-reveal="0" style="margin:0;font-family:var(--font-display);font-weight:600;font-size:clamp(60px,10.08vw,166px);line-height:.88;letter-spacing:-.02em;text-wrap:balance;color:#16140F">Tu próximo perfume empieza con <span style="color:#8A6A00">5 ml.</span></h2>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:18px">
         <a data-reveal="0" href="#categorias" style="display:flex;flex-direction:column;gap:14px;background:#16140F;color:#FFFCF2;border-radius:28px;padding:30px;min-height:220px;justify-content:space-between;transition:transform .25s" style-hover="transform:translateY(-4px);color:#FFFCF2">
-          <span style="font-family:'Instrument Sans',sans-serif;font-size:12px;color:#FFD400">ENVÍO A TODO EL PAÍS</span>
+          <span style="font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;font-size:12px;color:#FFD400">ENVÍO A TODO EL PAÍS</span>
           <div style="display:flex;flex-direction:column;gap:8px">
-            <span style="font-family:'Newsreader',serif;font-weight:800;font-size:34px;letter-spacing:-.01em;line-height:1">Comprar online →</span>
+            <span style="font-family:var(--font-sans);font-weight:700;font-size:34px;letter-spacing:-.01em;line-height:1">Comprar online →</span>
             <span style="font-size:15px;color:#D9D3C3">Pagás en la web y te llega por Andreani, a domicilio o a sucursal.</span>
           </div>
         </a>
         <a data-reveal="120" href="{{ waHref }}" target="_blank" style="display:flex;flex-direction:column;gap:14px;background:transparent;color:#16140F;border:1.5px solid #16140F;border-radius:28px;padding:30px;min-height:220px;justify-content:space-between;transition:transform .25s" style-hover="transform:translateY(-4px);background:#16140F;color:#FFFCF2">
-          <span style="font-family:'Instrument Sans',sans-serif;font-size:12px;color:#8A6A00">CÓRDOBA CAPITAL</span>
+          <span style="font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;font-size:12px;color:#8A6A00">CÓRDOBA CAPITAL</span>
           <div style="display:flex;flex-direction:column;gap:8px">
-            <span style="font-family:'Newsreader',serif;font-weight:800;font-size:34px;letter-spacing:-.01em;line-height:1">Coordinar por WhatsApp →</span>
+            <span style="font-family:var(--font-sans);font-weight:700;font-size:34px;letter-spacing:-.01em;line-height:1">Coordinar por WhatsApp →</span>
             <span style="font-size:15px;color:#3A3428">Escribime y arreglamos día, horario y punto de entrega.</span>
           </div>
         </a>
@@ -350,7 +351,7 @@ input{font-family:inherit}
 
     <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:28px">
       <div style="display:flex;flex-direction:column;gap:10px">
-        <h1 style="margin:0;font-family:'Newsreader',serif;font-weight:700;font-size:clamp(40px,5.5vw,72px);line-height:.95;letter-spacing:-.02em;max-width:700px">Catálogo completo</h1>
+        <h1 style="margin:0;font-family:var(--font-display);font-weight:600;font-size:clamp(45px,6.16vw,81px);line-height:.95;letter-spacing:-.02em;max-width:700px">Catálogo completo</h1>
         <span style="font-size:16px;color:#5E584B">Todos nuestros perfumes árabes, en decants de 5 ml.</span>
       </div>
     </div>
@@ -367,9 +368,9 @@ input{font-family:inherit}
       </div>
 
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
-        <span style="font-family:'Instrument Sans',sans-serif;font-size:12px;color:#5E584B;letter-spacing:.06em">{{ catSubtitle }}</span>
+        <span style="font-family:var(--font-sans);font-size:12px;color:#5E584B">{{ catSubtitle }}</span>
         <sc-if value="{{ showResetCat }}" hint-placeholder-val="{{ false }}">
-          <button onClick="{{ resetCat }}" style="background:transparent;border:none;font-size:13px;font-weight:600;text-decoration:underline;text-underline-offset:3px;color:#16140F">Ver todos los perfumes</button>
+          <button onClick="{{ resetCat }}" style="background:transparent;border:none;font-size:13px;font-weight:600;text-decoration:underline;text-underline-offset:3px;color:#16140F;white-space:nowrap">Ver todos los perfumes</button>
         </sc-if>
       </div>
     </div>
@@ -382,12 +383,12 @@ input{font-family:inherit}
           </div>
           <div style="display:flex;flex-direction:column;gap:2px">
             <span style="font-weight:600;font-size:14.5px;line-height:1.25">{{ p.name }}</span>
-            <span style="font-family:'Instrument Sans',sans-serif;font-size:11px;color:#5E584B">{{ p.catTitle }}</span>
+            <span style="font-family:var(--font-sans);font-size:11px;color:#5E584B">{{ p.catTitle }}</span>
           </div>
           <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px">
             <div style="display:flex;flex-direction:column">
-              <span style="font-family:'Newsreader',serif;font-weight:700;font-size:19px">{{ p.priceTxt }}</span>
-              <span style="font-family:'Instrument Sans',sans-serif;font-size:11px;color:#5E584B">5 ML</span>
+              <span style="font-family:var(--font-sans);font-weight:700;font-size:19px;letter-spacing:-.02em;font-variant-numeric:tabular-nums">{{ p.priceTxt }}</span>
+              <span style="font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;font-size:11px;color:#5E584B">5 ML</span>
             </div>
             <button onClick="{{ p.add }}" style="background:#16140F;border:none;border-radius:8px;padding:8px 14px;font-weight:600;font-size:13px;color:#FFFCF2" style-hover="background:#33301f">+</button>
           </div>
@@ -414,14 +415,14 @@ input{font-family:inherit}
       <div onClick="{{ closeCart }}" style="position:absolute;inset:0;background:rgba(22,20,15,.5);backdrop-filter:blur(3px)"></div>
       <div style="position:relative;width:min(100%,440px);height:100%;background:#FFFCF2;display:flex;flex-direction:column;border-left:2px solid #16140F">
         <div style="display:flex;justify-content:space-between;align-items:center;padding:22px 24px;border-bottom:1.5px solid #16140F">
-          <span style="font-family:'Newsreader',serif;font-weight:800;font-size:28px;letter-spacing:-.01em">Tu carrito</span>
+          <span style="font-family:var(--font-sans);font-weight:700;font-size:28px;letter-spacing:-.01em">Tu carrito</span>
           <button onClick="{{ closeCart }}" style="width:40px;height:40px;border-radius:50%;border:1px solid #16140F;background:transparent;font-size:16px">✕</button>
         </div>
 
         <sc-if value="{{ done }}" hint-placeholder-val="{{ false }}">
           <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:16px;padding:32px">
             <div style="width:64px;height:64px;border-radius:50%;background:#FFD400;border:2px solid #16140F;display:grid;place-items:center;font-size:28px">✓</div>
-            <span style="font-family:'Newsreader',serif;font-weight:800;font-size:32px;letter-spacing:-.01em;line-height:1">¡Pedido recibido!</span>
+            <span style="font-family:var(--font-sans);font-weight:700;font-size:32px;letter-spacing:-.01em;line-height:1">¡Pedido recibido!</span>
             <span style="color:#4A4538;line-height:1.5">{{ doneMsg }}</span>
             <button onClick="{{ resetCart }}" style="align-self:flex-start;background:#16140F;color:#FFFCF2;border:none;border-radius:999px;padding:14px 22px;font-weight:600">Seguir mirando</button>
           </div>
@@ -429,9 +430,9 @@ input{font-family:inherit}
 
         <sc-if value="{{ showEmpty }}" hint-placeholder-val="{{ false }}">
           <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:14px;padding:32px">
-            <span style="font-family:'Newsreader',serif;font-weight:800;font-size:28px;letter-spacing:-.01em">Todavía está vacío.</span>
+            <span style="font-family:var(--font-sans);font-weight:700;font-size:28px;letter-spacing:-.01em">Todavía está vacío.</span>
             <span style="color:#4A4538">Sumá un decant desde el catálogo.</span>
-            <button onClick="{{ goCatalog }}" style="background:#16140F;color:#FFFCF2;border:none;border-radius:9px;padding:12px 20px;font-weight:600">Ver catálogo →</button>
+            <button onClick="{{ goCatalog }}" style="background:#16140F;color:#FFFCF2;border:none;border-radius:9px;padding:12px 20px;font-weight:600;white-space:nowrap">Ver catálogo →</button>
           </div>
         </sc-if>
 
@@ -446,14 +447,14 @@ input{font-family:inherit}
                 </div>
                 <div style="display:flex;align-items:center;gap:6px">
                   <button onClick="{{ it.dec }}" style="width:28px;height:28px;border-radius:50%;border:1px solid #16140F;background:transparent">−</button>
-                  <span style="font-family:'Instrument Sans',sans-serif;min-width:18px;text-align:center">{{ it.qty }}</span>
+                  <span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;min-width:18px;text-align:center">{{ it.qty }}</span>
                   <button onClick="{{ it.inc }}" style="width:28px;height:28px;border-radius:50%;border:none;background:#16140F;color:#FFFCF2">+</button>
                 </div>
               </div>
             </sc-for>
           </div>
           <div style="padding:20px 24px 24px;border-top:1.5px solid #16140F;display:flex;flex-direction:column;gap:14px;background:#FFFFFF">
-            <span style="font-family:'Instrument Sans',sans-serif;font-size:11px;font-weight:600;color:#5E584B;letter-spacing:.08em">¿CÓMO LO RECIBÍS?</span>
+            <span style="font-family:var(--font-sans);font-size:11px;font-weight:600;color:#5E584B;letter-spacing:.12em">¿CÓMO LO RECIBÍS?</span>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
               <button onClick="{{ setAndreani }}" style="text-align:left;border:1px solid #16140F;border-radius:10px;padding:12px;background:{{ andBg }};display:flex;flex-direction:column;gap:2px">
                 <span style="font-weight:600;font-size:15px">Envío Andreani</span>
@@ -466,16 +467,16 @@ input{font-family:inherit}
             </div>
             <div style="display:flex;justify-content:space-between;align-items:baseline">
               <span style="font-weight:600">Subtotal</span>
-              <span style="font-family:'Newsreader',serif;font-weight:800;font-size:28px">{{ subtotalTxt }}</span>
+              <span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:28px">{{ subtotalTxt }}</span>
             </div>
-            <button onClick="{{ checkout }}" style="background:#16140F;color:#FFFCF2;border:none;border-radius:9px;padding:17px;font-weight:600;font-size:15px">{{ checkoutLabel }}</button>
+            <button onClick="{{ checkout }}" style="background:#16140F;color:#FFFCF2;border:none;border-radius:9px;padding:17px;font-weight:600;font-size:15px;white-space:nowrap">{{ checkoutLabel }}</button>
           </div>
         </sc-if>
 
         <sc-if value="{{ showInfo }}" hint-placeholder-val="{{ false }}">
           <div style="flex:1;overflow:auto;padding:20px 24px;display:flex;flex-direction:column;gap:16px">
             <button onClick="{{ backToCart }}" style="align-self:flex-start;background:transparent;border:none;padding:0;font-size:13px;font-weight:600;text-decoration:underline;text-underline-offset:3px;color:#16140F">← Volver al carrito</button>
-            <span style="font-family:'Instrument Sans',sans-serif;font-size:11px;font-weight:600;color:#5E584B;letter-spacing:.08em">{{ infoTitle }}</span>
+            <span style="font-family:var(--font-sans);font-size:11px;font-weight:600;color:#5E584B;letter-spacing:.12em">{{ infoTitle }}</span>
             <input value="{{ formNombre }}" onChange="{{ onFormNombre }}" placeholder="Nombre" style="width:100%;border:1.5px solid #16140F;border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
             <input value="{{ formApellido }}" onChange="{{ onFormApellido }}" placeholder="Apellido" style="width:100%;border:1.5px solid #16140F;border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
             <input value="{{ formTelefono }}" onChange="{{ onFormTelefono }}" placeholder="Teléfono" inputmode="tel" style="border:1.5px solid #16140F;border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
@@ -497,9 +498,9 @@ input{font-family:inherit}
           <div style="padding:20px 24px 24px;border-top:1.5px solid #16140F;display:flex;flex-direction:column;gap:14px;background:#FFFFFF">
             <div style="display:flex;justify-content:space-between;align-items:baseline">
               <span style="font-weight:600">Subtotal</span>
-              <span style="font-family:'Newsreader',serif;font-weight:800;font-size:28px">{{ subtotalTxt }}</span>
+              <span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:28px">{{ subtotalTxt }}</span>
             </div>
-            <button onClick="{{ confirmOrder }}" style="background:#16140F;color:#FFFCF2;border:none;border-radius:9px;padding:17px;font-weight:600;font-size:15px">Confirmar pedido →</button>
+            <button onClick="{{ confirmOrder }}" style="background:#16140F;color:#FFFCF2;border:none;border-radius:9px;padding:17px;font-weight:600;font-size:15px;white-space:nowrap">Confirmar pedido →</button>
           </div>
         </sc-if>
       </div>
@@ -516,15 +517,15 @@ input{font-family:inherit}
             <img src="{{ detailImg }}" alt="{{ detailName }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;object-position:center"></img>
           </div>
           <div style="display:flex;flex-direction:column;gap:6px">
-            <span style="font-family:'Newsreader',serif;font-weight:800;font-size:24px;line-height:1.1">{{ detailName }}</span>
+            <span style="font-family:var(--font-sans);font-weight:700;font-size:24px;line-height:1.1">{{ detailName }}</span>
             <span style="display:inline-flex;align-self:flex-start;background:{{ detailTint }};color:#16140F;font-size:12px;font-weight:600;padding:5px 10px;border-radius:999px">{{ detailCat }}</span>
-            <span style="font-family:'Newsreader',serif;font-weight:800;font-size:22px">{{ detailPrice }}</span>
+            <span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:22px">{{ detailPrice }}</span>
           </div>
         </div>
         <p style="margin:0;font-size:15.5px;line-height:1.6;color:#3A3428">{{ detailDesc }}</p>
         <div style="display:flex;align-items:center;justify-content:center;gap:4px;border:1.5px solid #16140F;border-radius:9px;align-self:flex-start;overflow:hidden">
           <button onClick="{{ detailDec }}" style="width:44px;height:44px;border:none;background:transparent;font-size:18px;font-weight:600">−</button>
-          <span style="min-width:32px;text-align:center;font-family:'Newsreader',serif;font-weight:800;font-size:17px">{{ detailQty }}</span>
+          <span style="min-width:32px;text-align:center;font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:17px">{{ detailQty }}</span>
           <button onClick="{{ detailInc }}" style="width:44px;height:44px;border:none;background:transparent;font-size:18px;font-weight:600">+</button>
         </div>
         <button onClick="{{ detailAdd }}" style="background:#16140F;color:#FFFCF2;border:none;border-radius:9px;padding:15px 22px;font-weight:600;font-size:15px" style-hover="background:#33301f">{{ detailAddTxt }}</button>

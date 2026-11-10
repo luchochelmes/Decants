@@ -11,9 +11,10 @@
 <x-dc>
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500..700;1,500..700&family=Manrope:wght@400..800&display=swap" rel="stylesheet">
 <style>
-body{margin:0;background:#FFFCF2;color:#16140F;font-family:'Instrument Sans',sans-serif;-webkit-font-smoothing:antialiased}
+:root{--font-display:'Cormorant Garamond',serif;--font-sans:'Manrope',sans-serif}
+body{margin:0;background:#FFFCF2;color:#16140F;font-family:var(--font-sans);-webkit-font-smoothing:antialiased}
 *{box-sizing:border-box}
 a{color:#16140F;text-decoration:none}
 a:hover{color:#000}
@@ -30,22 +31,22 @@ input,select{font-family:inherit;color:#16140F}
           <img src="assets/logo.png" alt="Decants Córdoba" style="width:150%;height:150%;object-fit:cover;object-position:50% 46%"></img>
         </div>
         <div style="display:flex;flex-direction:column;line-height:1.1">
-          <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:16px;letter-spacing:-.02em">Decants Córdoba</span>
-          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#FFD400;letter-spacing:.08em">BACKOFFICE</span>
+          <span style="font-family:var(--font-display);font-weight:600;font-size:18px;letter-spacing:-.02em">Decants Córdoba</span>
+          <span style="font-family:var(--font-sans);font-weight:600;font-size:11px;color:#FFD400;letter-spacing:.12em">BACKOFFICE</span>
         </div>
       </div>
       <nav style="display:flex;flex-direction:column;gap:4px">
         <sc-for list="{{ nav }}" as="n" hint-placeholder-count="4">
           <button onClick="{{ n.go }}" style="display:flex;align-items:center;justify-content:space-between;gap:10px;border:none;border-radius:14px;padding:12px 14px;font-size:15px;font-weight:600;text-align:left;background:{{ n.bg }};color:{{ n.fg }}">
-            <span style="display:flex;align-items:center;gap:12px"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;opacity:.7">{{ n.num }}</span><span>{{ n.label }}</span></span>
-            <sc-if value="{{ n.badge }}" hint-placeholder-val="{{ false }}"><span style="background:#FFD400;color:#16140F;border-radius:999px;min-width:22px;height:22px;padding:0 6px;display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-size:11px">{{ n.badge }}</span></sc-if>
+            <span style="display:flex;align-items:center;gap:12px"><span style="font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;font-size:11px;opacity:.7">{{ n.num }}</span><span>{{ n.label }}</span></span>
+            <sc-if value="{{ n.badge }}" hint-placeholder-val="{{ false }}"><span style="background:#FFD400;color:#16140F;border-radius:999px;min-width:22px;height:22px;padding:0 6px;display:grid;place-items:center;font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:11px">{{ n.badge }}</span></sc-if>
           </button>
         </sc-for>
       </nav>
       <div style="margin-top:auto;display:flex;flex-direction:column;gap:12px;padding:0 8px">
         <a href="index.html" style="display:flex;justify-content:space-between;align-items:center;border:1.5px solid #FFD400;color:#FFD400;border-radius:999px;padding:11px 16px;font-weight:600;font-size:14px" style-hover="background:#FFD400;color:#16140F">Ver tienda <span>↗</span></a>
         <div style="display:flex;align-items:center;gap:10px;padding-top:10px;border-top:1px solid rgba(255,252,242,.12)">
-          <div style="width:34px;height:34px;border-radius:50%;background:#FFD400;color:#16140F;display:grid;place-items:center;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:14px">G</div>
+          <div style="width:34px;height:34px;border-radius:50%;background:#FFD400;color:#16140F;display:grid;place-items:center;font-family:var(--font-sans);font-weight:700;font-size:14px">G</div>
           <div style="display:flex;flex-direction:column;line-height:1.2"><span style="font-size:14px;font-weight:600">Graciano</span><span style="font-size:12px;color:#BDB6A5">Administrador</span></div>
         </div>
       </div>
@@ -62,11 +63,11 @@ input,select{font-family:inherit;color:#16140F}
             </div>
           </sc-if>
           <div style="display:flex;flex-direction:column;gap:2px">
-            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E584B;letter-spacing:.08em">{{ crumb }}</span>
-            <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(26px,3vw,34px);letter-spacing:-.035em;line-height:1;white-space:nowrap">{{ title }}</span>
+            <span style="font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;font-size:11px;color:#5E584B">{{ crumb }}</span>
+            <span style="font-family:var(--font-display);font-weight:600;font-size:clamp(29px,3.36vw,38px);letter-spacing:-.035em;line-height:1;white-space:nowrap">{{ title }}</span>
           </div>
         </div>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#5E584B">{{ today }}</span>
+        <span style="font-family:var(--font-sans);font-size:12px;color:#5E584B">{{ today }}</span>
       </div>
     </header>
 
@@ -75,35 +76,35 @@ input,select{font-family:inherit;color:#16140F}
       <sc-if value="{{ vResumen }}" hint-placeholder-val="{{ true }}">
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:14px">
           <div style="background:#FFD400;border:1.5px solid #16140F;border-radius:24px;padding:20px;display:flex;flex-direction:column;gap:18px">
-            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em">VENTAS · NOVIEMBRE</span>
-            <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:38px;letter-spacing:-.04em;line-height:1">{{ kSales }}</span>
+            <span style="font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;font-size:11px">VENTAS · NOVIEMBRE</span>
+            <span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:38px;line-height:1">{{ kSales }}</span>
           </div>
           <div style="background:#16140F;color:#FFFCF2;border-radius:24px;padding:20px;display:flex;flex-direction:column;gap:18px">
-            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;color:#FFD400">PARA PREPARAR</span>
-            <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:38px;letter-spacing:-.04em;line-height:1">{{ kPending }}</span>
+            <span style="font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;color:#FFD400;font-size:11px">PARA PREPARAR</span>
+            <span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:38px;line-height:1">{{ kPending }}</span>
           </div>
           <div style="background:#FFFFFF;border:1.5px solid #16140F;border-radius:24px;padding:20px;display:flex;flex-direction:column;gap:18px">
-            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;color:#5E584B">DECANTS VENDIDOS</span>
-            <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:38px;letter-spacing:-.04em;line-height:1">{{ kUnits }}</span>
+            <span style="font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;color:#5E584B;font-size:11px">DECANTS VENDIDOS</span>
+            <span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:38px;line-height:1">{{ kUnits }}</span>
           </div>
           <div style="background:#FFFFFF;border:1.5px solid #16140F;border-radius:24px;padding:20px;display:flex;flex-direction:column;gap:18px">
-            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;color:#5E584B">TICKET PROMEDIO</span>
-            <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:38px;letter-spacing:-.04em;line-height:1">{{ kAvg }}</span>
+            <span style="font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;color:#5E584B;font-size:11px">TICKET PROMEDIO</span>
+            <span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:38px;line-height:1">{{ kAvg }}</span>
           </div>
         </div>
 
 
         <div style="background:#FFFFFF;border:1.5px solid #16140F;border-radius:24px;padding:22px;display:flex;flex-direction:column;gap:6px">
           <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px">
-            <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.02em">Pedidos para preparar</span>
-            <button onClick="{{ goPedidos }}" style="border:none;background:none;font-weight:600;font-size:14px">Ver todos →</button>
+            <span style="font-family:var(--font-sans);font-weight:700;font-size:22px;letter-spacing:-.02em">Pedidos para preparar</span>
+            <button onClick="{{ goPedidos }}" style="border:none;background:none;font-weight:600;font-size:14px;white-space:nowrap">Ver todos →</button>
           </div>
           <sc-for list="{{ toPrepare }}" as="o" hint-placeholder-count="3">
             <div onClick="{{ o.open }}" style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding:14px 0;border-bottom:1px solid rgba(22,20,15,.1);cursor:pointer" style-hover="background:#FFFCF2">
-              <span style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;min-width:64px">{{ o.id }}</span>
+              <span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:13px;min-width:64px">{{ o.id }}</span>
               <span style="font-weight:600;flex:1;min-width:140px">{{ o.cliente }}</span>
               <span style="font-size:13px;color:#4A4538;min-width:110px">{{ o.metodoTxt }}</span>
-              <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:17px;min-width:84px">{{ o.totalTxt }}</span>
+              <span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:17px;min-width:84px">{{ o.totalTxt }}</span>
               <span style="font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;border:1.5px solid #16140F;background:{{ o.sBg }};color:{{ o.sFg }}">{{ o.estado }}</span>
             </div>
           </sc-for>
@@ -114,7 +115,7 @@ input,select{font-family:inherit;color:#16140F}
         <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
           <div style="display:flex;gap:6px;flex-wrap:wrap">
             <sc-for list="{{ statusChips }}" as="c" hint-placeholder-count="5">
-              <button onClick="{{ c.select }}" style="display:flex;align-items:center;gap:6px;white-space:nowrap;border:1.5px solid #16140F;border-radius:999px;padding:8px 14px;font-size:13px;font-weight:600;background:{{ c.bg }};color:{{ c.fg }}"><span>{{ c.label }}</span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;opacity:.7">{{ c.count }}</span></button>
+              <button onClick="{{ c.select }}" style="display:flex;align-items:center;gap:6px;white-space:nowrap;border:1.5px solid #16140F;border-radius:999px;padding:8px 14px;font-size:13px;font-weight:600;background:{{ c.bg }};color:{{ c.fg }}"><span>{{ c.label }}</span><span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:11px;opacity:.7">{{ c.count }}</span></button>
             </sc-for>
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
@@ -129,17 +130,17 @@ input,select{font-family:inherit;color:#16140F}
 
         <div style="background:#FFFFFF;border:1.5px solid #16140F;border-radius:24px;overflow:hidden">
           <sc-if value="{{ wideTable }}" hint-placeholder-val="{{ true }}">
-            <div style="display:grid;grid-template-columns:80px minmax(0,1.6fr) minmax(0,1.1fr) 70px 100px 120px;gap:14px;padding:14px 20px;background:#16140F;color:#FFD400;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em">
+            <div style="display:grid;grid-template-columns:80px minmax(0,1.6fr) minmax(0,1.1fr) 70px 100px 120px;gap:14px;padding:14px 20px;background:#16140F;color:#FFD400;font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;font-size:11px">
               <span>N°</span><span>CLIENTE</span><span>ENTREGA</span><span>DECANTS</span><span>TOTAL</span><span>ESTADO</span>
             </div>
           </sc-if>
           <sc-for list="{{ orderRows }}" as="o" hint-placeholder-count="6">
             <div onClick="{{ o.open }}" style="display:grid;grid-template-columns:{{ rowCols }};gap:8px 14px;padding:16px 20px;border-bottom:1px solid rgba(22,20,15,.1);align-items:center;cursor:pointer;background:{{ o.rowBg }}" style-hover="background:#FFF8D6">
-              <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600">{{ o.id }}</span><span style="font-size:12px;color:#5E584B">{{ o.fecha }}</span></div>
+              <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:13px">{{ o.id }}</span><span style="font-size:12px;color:#5E584B">{{ o.fecha }}</span></div>
               <div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-weight:600">{{ o.cliente }}</span><span style="font-size:13px;color:#5E584B;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ o.resumen }}</span></div>
               <div style="display:flex;align-items:center;gap:8px;min-width:0"><span style="width:8px;height:8px;border-radius:50%;flex-shrink:0;background:{{ o.mDot }};border:1.5px solid #16140F"></span><span style="font-size:14px">{{ o.metodoTxt }}</span></div>
-              <span style="font-family:'JetBrains Mono',monospace;font-size:13px;white-space:nowrap">{{ o.units }} dec.</span>
-              <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:17px">{{ o.totalTxt }}</span>
+              <span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:13px;white-space:nowrap">{{ o.units }} dec.</span>
+              <span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:17px">{{ o.totalTxt }}</span>
               <span style="justify-self:start;font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;border:1.5px solid #16140F;background:{{ o.sBg }};color:{{ o.sFg }}">{{ o.estado }}</span>
             </div>
           </sc-for>
@@ -167,8 +168,8 @@ input,select{font-family:inherit;color:#16140F}
                   <span style="width:16px;height:52px;border-radius:4px 4px 6px 6px;border:1.5px solid rgba(22,20,15,.35);background:{{ p.color }}"></span>
                 </div>
                 <div style="display:flex;flex-direction:column;gap:2px;flex:1;min-width:0">
-                  <input value="{{ p.house }}" onChange="{{ p.onHouse }}" style="border:none;background:transparent;padding:0;font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E584B;text-transform:uppercase;outline:none;width:100%"></input>
-                  <input value="{{ p.name }}" onChange="{{ p.onName }}" style="border:none;background:transparent;padding:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:20px;letter-spacing:-.02em;outline:none;width:100%"></input>
+                  <input value="{{ p.house }}" onChange="{{ p.onHouse }}" style="border:none;background:transparent;padding:0;font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;font-size:11px;color:#5E584B;text-transform:uppercase;outline:none;width:100%"></input>
+                  <input value="{{ p.name }}" onChange="{{ p.onName }}" style="border:none;background:transparent;padding:0;font-family:var(--font-sans);font-weight:700;font-size:20px;letter-spacing:-.02em;outline:none;width:100%"></input>
                   <span style="font-size:12px;font-weight:700;align-self:flex-start;margin-top:4px;padding:3px 8px;border-radius:999px;background:#16140F;color:#FFD400">{{ p.cat }}</span>
                 </div>
                 <button onClick="{{ p.toggle }}" title="Visible en la tienda" style="width:46px;height:26px;border-radius:999px;border:1.5px solid #16140F;background:{{ p.tgBg }};padding:2px;display:flex;justify-content:{{ p.tgJ }};flex-shrink:0">
@@ -176,13 +177,13 @@ input,select{font-family:inherit;color:#16140F}
                 </button>
               </div>
               <div style="display:flex;flex-direction:column;gap:6px">
-                <div style="display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E584B"><span>{{ p.mlTxt }}</span><span style="color:{{ p.leftColor }};font-weight:600">{{ p.leftTxt }}</span></div>
+                <div style="display:flex;justify-content:space-between;font-family:var(--font-sans);font-size:11px;color:#5E584B"><span>{{ p.mlTxt }}</span><span style="color:{{ p.leftColor }};font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums">{{ p.leftTxt }}</span></div>
                 <div style="height:10px;border-radius:10px;background:#F3EEDD;overflow:hidden;border:1px solid rgba(22,20,15,.15)"><div style="height:100%;width:{{ p.pct }}%;background:{{ p.barColor }};transition:width .4s"></div></div>
               </div>
               <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding-top:12px;border-top:1px solid rgba(22,20,15,.1)">
                 <div style="display:flex;align-items:center;gap:4px;border:1.5px solid #16140F;border-radius:12px;padding:6px 10px;background:#FFFCF2">
                   <span style="font-weight:700">$</span>
-                  <input value="{{ p.price }}" onChange="{{ p.onPrice }}" inputmode="numeric" style="border:none;background:transparent;width:70px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:17px;outline:none"></input>
+                  <input value="{{ p.price }}" onChange="{{ p.onPrice }}" inputmode="numeric" style="border:none;background:transparent;width:70px;font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:17px;outline:none"></input>
                 </div>
                 <div style="display:flex;gap:6px">
                   <button onClick="{{ p.minus }}" style="border:1.5px solid #16140F;border-radius:999px;background:transparent;padding:7px 11px;font-size:13px;font-weight:600;white-space:nowrap">−5 ml</button>
@@ -198,31 +199,31 @@ input,select{font-family:inherit;color:#16140F}
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:18px;align-items:start">
           <div style="background:#FFFFFF;border:1.5px solid #16140F;border-radius:24px;padding:24px;display:flex;flex-direction:column;gap:18px">
             <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
-              <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.02em">Oferta de la semana</span>
+              <span style="font-family:var(--font-sans);font-weight:700;font-size:22px;letter-spacing:-.02em">Oferta de la semana</span>
               <button onClick="{{ toggleOffer }}" style="display:flex;align-items:center;gap:8px;border:1.5px solid #16140F;border-radius:999px;padding:6px 12px 6px 6px;background:{{ offBg }};font-size:13px;font-weight:700">
                 <span style="width:18px;height:18px;border-radius:50%;background:{{ offDot }}"></span>{{ offLabel }}
               </button>
             </div>
             <label style="display:flex;flex-direction:column;gap:6px">
-              <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E584B;letter-spacing:.06em">NOMBRE</span>
+              <span style="font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;color:#5E584B;font-size:11px">NOMBRE</span>
               <input value="{{ offer.name }}" onChange="{{ onOfferName }}" style="border:1.5px solid #16140F;border-radius:12px;padding:12px 14px;font-size:16px;background:#FFFCF2;outline:none"></input>
             </label>
             <label style="display:flex;flex-direction:column;gap:6px">
-              <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E584B;letter-spacing:.06em">DESCRIPCIÓN</span>
+              <span style="font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;color:#5E584B;font-size:11px">DESCRIPCIÓN</span>
               <input value="{{ offer.desc }}" onChange="{{ onOfferDesc }}" style="border:1.5px solid #16140F;border-radius:12px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
             </label>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
               <label style="display:flex;flex-direction:column;gap:6px">
-                <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E584B;letter-spacing:.06em">PRECIO OFERTA</span>
+                <span style="font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;color:#5E584B;font-size:11px">PRECIO OFERTA</span>
                 <input value="{{ offer.price }}" onChange="{{ onOfferPrice }}" inputmode="numeric" style="border:1.5px solid #16140F;border-radius:12px;padding:12px 14px;font-size:16px;font-weight:700;background:#FFFCF2;outline:none;width:100%"></input>
               </label>
               <label style="display:flex;flex-direction:column;gap:6px">
-                <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E584B;letter-spacing:.06em">PRECIO ANTERIOR</span>
+                <span style="font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;color:#5E584B;font-size:11px">PRECIO ANTERIOR</span>
                 <input value="{{ offer.before }}" onChange="{{ onOfferBefore }}" inputmode="numeric" style="border:1.5px solid #16140F;border-radius:12px;padding:12px 14px;font-size:16px;background:#FFFCF2;outline:none;width:100%"></input>
               </label>
             </div>
             <div style="display:flex;flex-direction:column;gap:6px">
-              <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E584B;letter-spacing:.06em">TERMINA</span>
+              <span style="font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;color:#5E584B;font-size:11px">TERMINA</span>
               <div style="display:flex;gap:6px;flex-wrap:wrap">
                 <sc-for list="{{ endChips }}" as="c" hint-placeholder-count="3">
                   <button onClick="{{ c.select }}" style="border:1.5px solid #16140F;border-radius:999px;padding:8px 14px;font-size:13px;font-weight:600;white-space:nowrap;background:{{ c.bg }}">{{ c.label }}</button>
@@ -233,17 +234,17 @@ input,select{font-family:inherit;color:#16140F}
           </div>
 
           <div style="display:flex;flex-direction:column;gap:10px">
-            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E584B;letter-spacing:.06em">ASÍ SE VE EN LA TIENDA</span>
+            <span style="font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;color:#5E584B;font-size:11px">ASÍ SE VE EN LA TIENDA</span>
             <div style="background:#FFD400;border:2px solid #16140F;border-radius:24px;padding:28px;display:flex;flex-direction:column;gap:14px;opacity:{{ offPrevOp }}">
-              <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em">03 — OFERTA DE LA SEMANA</span>
-              <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(36px,4vw,52px);line-height:.9;letter-spacing:-.045em">{{ offer.name }}</span>
+              <span style="font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;font-size:11px">03 — OFERTA DE LA SEMANA</span>
+              <span style="font-family:var(--font-display);font-weight:600;font-size:clamp(40px,4.48vw,58px);line-height:.9;letter-spacing:-.045em">{{ offer.name }}</span>
               <span style="font-size:15px;line-height:1.5;color:#2E2920">{{ offer.desc }}</span>
               <div style="display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap">
-                <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:42px;letter-spacing:-.04em;line-height:1">{{ offPriceTxt }}</span>
+                <span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:42px;line-height:1">{{ offPriceTxt }}</span>
                 <span style="font-size:18px;text-decoration:line-through;color:#5A4A00;padding-bottom:4px">{{ offBeforeTxt }}</span>
-                <span style="background:#16140F;color:#FFD400;font-family:'JetBrains Mono',monospace;font-size:12px;padding:5px 10px;border-radius:999px;margin-bottom:6px;transform:rotate(-4deg)">{{ offPct }}</span>
+                <span style="background:#16140F;color:#FFD400;font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:12px;padding:5px 10px;border-radius:999px;margin-bottom:6px;transform:rotate(-4deg)">{{ offPct }}</span>
               </div>
-              <span style="font-family:'JetBrains Mono',monospace;font-size:12px">{{ offEndTxt }}</span>
+              <span style="font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;font-size:12px">{{ offEndTxt }}</span>
             </div>
             <span style="font-size:13px;color:#5E584B">{{ offUnitsTxt }}</span>
           </div>
@@ -257,7 +258,7 @@ input,select{font-family:inherit;color:#16140F}
       <sc-for list="{{ nav }}" as="n" hint-placeholder-count="4">
         <button onClick="{{ n.go }}" style="position:relative;border:none;border-radius:16px;padding:10px 4px;font-size:12px;font-weight:700;min-height:48px;background:{{ n.bg }};color:{{ n.fg }}">
           {{ n.label }}
-          <sc-if value="{{ n.badge }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:4px;right:8px;background:#FFD400;color:#16140F;border:1.5px solid #16140F;border-radius:999px;min-width:18px;height:18px;font-size:11px;display:grid;place-items:center;font-family:'JetBrains Mono',monospace">{{ n.badge }}</span></sc-if>
+          <sc-if value="{{ n.badge }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:4px;right:8px;background:#FFD400;color:#16140F;border:1.5px solid #16140F;border-radius:999px;min-width:18px;height:18px;font-size:11px;display:grid;place-items:center;font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums">{{ n.badge }}</span></sc-if>
         </button>
       </sc-for>
     </nav>
@@ -269,8 +270,8 @@ input,select{font-family:inherit;color:#16140F}
       <div style="position:relative;width:min(100%,460px);height:100%;background:#FFFCF2;border-left:2px solid #16140F;display:flex;flex-direction:column;overflow:auto">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:22px 24px;border-bottom:1.5px solid #16140F;gap:12px">
           <div style="display:flex;flex-direction:column;gap:6px">
-            <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#5E584B">{{ sel.id }} · {{ sel.fecha }}</span>
-            <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:28px;letter-spacing:-.03em;line-height:1">{{ sel.cliente }}</span>
+            <span style="font-family:var(--font-sans);font-size:12px;color:#5E584B">{{ sel.id }} · {{ sel.fecha }}</span>
+            <span style="font-family:var(--font-sans);font-weight:700;font-size:28px;letter-spacing:-.03em;line-height:1">{{ sel.cliente }}</span>
             <span style="align-self:flex-start;font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;border:1.5px solid #16140F;background:{{ sel.sBg }};color:{{ sel.sFg }}">{{ sel.estado }}</span>
           </div>
           <button onClick="{{ closeOrder }}" style="width:40px;height:40px;border-radius:50%;border:1.5px solid #16140F;background:transparent;flex-shrink:0">✕</button>
@@ -278,7 +279,7 @@ input,select{font-family:inherit;color:#16140F}
 
         <div style="padding:20px 24px;display:flex;flex-direction:column;gap:22px;flex:1">
           <div style="display:flex;flex-direction:column;gap:4px">
-            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E584B;letter-spacing:.06em">PROGRESO</span>
+            <span style="font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;color:#5E584B;font-size:11px">PROGRESO</span>
             <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:6px">
               <sc-for list="{{ steps }}" as="st" hint-placeholder-count="4">
                 <div style="display:flex;flex-direction:column;gap:6px">
@@ -290,28 +291,28 @@ input,select{font-family:inherit;color:#16140F}
           </div>
 
           <div style="display:flex;flex-direction:column">
-            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E584B;letter-spacing:.06em;margin-bottom:6px">DECANTS</span>
+            <span style="font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;color:#5E584B;font-size:11px;margin-bottom:6px">DECANTS</span>
             <sc-for list="{{ sel.lines }}" as="l" hint-placeholder-count="2">
               <div style="display:grid;grid-template-columns:14px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(22,20,15,.1)">
                 <span style="width:14px;height:32px;border-radius:4px 4px 5px 5px;border:1.5px solid rgba(22,20,15,.35);background:{{ l.color }}"></span>
                 <div style="display:flex;flex-direction:column"><span style="font-weight:600">{{ l.qty }}× {{ l.name }}</span><span style="font-size:12px;color:#5E584B">{{ l.house }}</span></div>
-                <span style="font-family:'JetBrains Mono',monospace;font-size:13px">{{ l.sub }}</span>
+                <span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:13px">{{ l.sub }}</span>
               </div>
             </sc-for>
             <div style="display:flex;justify-content:space-between;align-items:baseline;padding-top:12px">
               <span style="font-weight:600">Total</span>
-              <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:26px">{{ sel.totalTxt }}</span>
+              <span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:26px">{{ sel.totalTxt }}</span>
             </div>
           </div>
 
           <div style="display:flex;flex-direction:column;gap:8px;background:#FFFFFF;border:1.5px solid #16140F;border-radius:18px;padding:16px">
-            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E584B;letter-spacing:.06em">ENTREGA · {{ sel.metodoTxt }}</span>
+            <span style="font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;color:#5E584B;font-size:11px">ENTREGA · {{ sel.metodoTxt }}</span>
             <span style="font-weight:600">{{ sel.direccion }}</span>
             <span style="font-size:14px;color:#4A4538">{{ sel.contacto }}</span>
             <sc-if value="{{ selAndreani }}" hint-placeholder-val="{{ false }}">
               <div style="display:flex;flex-direction:column;gap:6px;margin-top:6px">
-                <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5E584B">N° DE SEGUIMIENTO ANDREANI</span>
-                <input value="{{ sel.tracking }}" onChange="{{ onTracking }}" placeholder="Ej: 360002345678910" style="border:1.5px solid {{ trkBorder }};border-radius:12px;padding:11px 14px;font-family:'JetBrains Mono',monospace;font-size:14px;background:#FFFCF2;outline:none"></input>
+                <span style="font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;color:#5E584B;font-size:11px">N° DE SEGUIMIENTO ANDREANI</span>
+                <input value="{{ sel.tracking }}" onChange="{{ onTracking }}" placeholder="Ej: 360002345678910" style="border:1.5px solid {{ trkBorder }};border-radius:12px;padding:11px 14px;font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:14px;background:#FFFCF2;outline:none"></input>
                 <span style="font-size:12px;color:#8A2A1A">{{ trkErr }}</span>
               </div>
             </sc-if>
