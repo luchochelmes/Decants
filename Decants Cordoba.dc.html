@@ -852,7 +852,7 @@ class Component extends DCLogic {
     tryPlay();
     v.addEventListener('loadedmetadata', tryPlay);
     v.addEventListener('canplay', tryPlay);
-    setTimeout(() => { if (!started) v.style.display = 'none'; }, 1800);
+    setTimeout(() => { if (!started) v.style.display = 'none'; }, 4000);
     const reveal = () => { if (!this.state.sprayed) this.setState({ sprayed: true }); };
     v.addEventListener('timeupdate', () => { if (v.currentTime >= 0.75) reveal(); });
     this.sprayFallback = setTimeout(reveal, 2200);
