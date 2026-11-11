@@ -1063,7 +1063,8 @@ class Component extends DCLogic {
       : activeCatObj ? `${activeCatObj.title} — ${activeCatObj.subtitle} · ${byCat.length} perfumes` : `${this.state.products.length} perfumes disponibles en decants de 5 ml.`;
     const showResetCat = activeCat !== 'todos';
     const isHome = s.view !== 'catalog', isCatalog = s.view === 'catalog';
-    const headerTransform = 'translateY(0)';
+    const headerVisible = s.scrolled || isCatalog;
+    const headerTransform = headerVisible ? 'translateY(0)' : 'translateY(-100%)';
     const headerShadow = s.scrolled ? '0 4px 20px rgba(0,0,0,.12)' : 'none';
 
     const cartItems = s.cart.map(x => {
