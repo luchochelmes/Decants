@@ -1,5 +1,8 @@
 {
   "rewrites": [
-    { "source": "/administracion", "destination": "/backoffice.html" }
+    { "source": "/administracion", "destination": "/backoffice.html" },
+    { "source": "/catalogo", "destination": "/index.html" },
+    { "source": "/catalogo/:cat", "destination": "/index.html" },
+    { "source": "/perfume/:id", "destination": "/index.html" }
   ]
 }

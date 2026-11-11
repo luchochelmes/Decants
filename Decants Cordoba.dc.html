@@ -643,14 +643,15 @@ class Component extends DCLogic {
       if (Array.isArray(savedCart) && savedCart.length) this.setState({ cart: savedCart });
     } catch (e) {}
 
-    this.onPopState = () => { if (this.state.view === 'catalog') this.setState({ view: 'home' }); };
+    this.applyLocation();
+    this.onPopState = () => this.applyLocation();
     window.addEventListener('popstate', this.onPopState);
 
     this.onEscKey = e => {
       if (e.key !== 'Escape') return;
       const s = this.state;
       if (s.kitPicker) { this.setState({ kitPicker: false }); this.syncBodyScroll(); }
-      else if (s.detail) { this.setState({ detail: null }); this.syncBodyScroll(); }
+      else if (s.detail) this.closeDetailNav();
       else if (s.open) { this.setState({ open: false }); this.syncBodyScroll(); }
     };
     window.addEventListener('keydown', this.onEscKey);
@@ -658,14 +659,37 @@ class Component extends DCLogic {
   persistCart(cart) {
     try { localStorage.setItem('dc_cart', JSON.stringify(cart)); } catch (e) {}
   }
+  applyLocation() {
+    const path = location.pathname.replace(/\/+$/, '') || '/';
+    const prodM = path.match(/^\/perfume\/([a-z0-9-]+)$/);
+    const catM = path.match(/^\/catalogo(?:\/([a-z0-9-]+))?$/);
+    if (prodM) this.setState({ detail: prodM[1], detailQty: 1 });
+    else if (catM) this.setState({ view: 'catalog', cat: catM[1] || 'todos', detail: null });
+    else this.setState({ view: 'home', detail: null });
+    this.syncBodyScroll();
+    document.title = prodM ? 'Decants Córdoba' : 'Decants Córdoba — Decants de perfumes árabes en Córdoba';
+  }
+  navigateTo(path) {
+    path = path || '/';
+    if (location.pathname.replace(/\/+$/, '') !== path.replace(/\/+$/, '')) history.pushState({ dc: true }, '', path);
+    this.applyLocation();
+  }
+  smartBack(fallbackPath) {
+    if (history.state && history.state.dc) history.back();
+    else this.navigateTo(fallbackPath);
+  }
   openCatalogView(cat) {
-    this.setState({ view: 'catalog', cat: cat || 'todos', q: '' });
+    this.navigateTo('/catalogo' + (cat && cat !== 'todos' ? '/' + cat : ''));
+    this.setState({ q: '' });
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    history.pushState({ dcView: 'catalog' }, '', '#catalogo');
   }
   closeCatalogView() {
-    if (history.state && history.state.dcView === 'catalog') history.back();
-    else this.setState({ view: 'home' });
+    this.smartBack('/');
+  }
+  closeDetailNav() {
+    const s = this.state;
+    this.smartBack(s.view === 'catalog' ? '/catalogo' + (s.cat && s.cat !== 'todos' ? '/' + s.cat : '') : '/');
+    this.syncBodyScroll();
   }
   async loadProducts() {
     try {
@@ -875,8 +899,7 @@ class Component extends DCLogic {
     setTimeout(() => { const el = document.querySelector(selector); if (el) el.focus(); }, 60);
   }
   openDetail(id) {
-    this.setState({ detail: id, detailQty: 1 });
-    this.syncBodyScroll();
+    this.navigateTo('/perfume/' + id);
     this.focusModal('[data-detail-close]');
   }
   setQty(id, d) {
@@ -972,6 +995,7 @@ class Component extends DCLogic {
 
     const detailP = s.detail ? this.find(s.detail) : null;
     const detailCatObj = detailP ? this.catOf(detailP.id) : null;
+    if (detailP) document.title = `${detailP.name} — Decants Córdoba`;
     const norm = str => (str || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
     const qNorm = norm(s.q.trim());
     const qTokens = qNorm.split(/\s+/).filter(Boolean);
@@ -1161,7 +1185,7 @@ class Component extends DCLogic {
       goOfertaSection: () => this.goHomeSection('oferta'),
       goNosotrosSection: () => this.goHomeSection('nosotros'),
       fullTotal: this.state.products.length, headerTransform, headerShadow, catLeave,
-      detailOpen: !!s.detail,
+      detailOpen: !!s.detail && !!detailP,
       detailImg: detailP ? detailP.img : '',
       detailName: detailP ? detailP.name : '',
       detailPrice: detailP ? this.fmt(detailP.price) : '',
@@ -1172,7 +1196,7 @@ class Component extends DCLogic {
       detailDec: () => this.setState(st => ({ detailQty: Math.max(1, st.detailQty - 1) })),
       detailInc: () => this.setState(st => ({ detailQty: Math.min(20, st.detailQty + 1) })),
       detailAddTxt: `Agregar ${s.detailQty} al carrito — ${detailP ? this.fmt(detailP.price * s.detailQty) : ''}`,
-      closeDetail: () => { this.setState({ detail: null }); this.syncBodyScroll(); },
+      closeDetail: () => this.closeDetailNav(),
       detailAdd: () => { this.add(s.detail, s.detailQty); this.setState({ detail: null }); },
       headlineWords, headlineWord, headlineEnd, highlightStyle,
       quoteStyle, paraStyle, btnsStyle, bulletsStyle
