@@ -263,7 +263,6 @@ input{font-family:inherit}
         </div>
         <div data-reveal="400" style="display:flex;gap:12px;flex-wrap:wrap;padding-top:6px">
           <button onClick="{{ addKit }}" style="background:#16140F;color:#FFFCF2;border:none;border-radius:9px;padding:16px 26px;font-weight:600;font-size:15px;white-space:nowrap;transition:transform .2s, box-shadow .2s" style-hover="transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.25)">Sumar kit al carrito →</button>
-          <a href="{{ waKitHref }}" target="_blank" style="display:inline-flex;align-items:center;border:1px solid #16140F;border-radius:9px;padding:16px 22px;font-weight:600;font-size:15px" style-hover="background:#FFFCF2">Elegir mis 4 por WhatsApp</a>
         </div>
       </div>
       <div style="position:relative;height:clamp(420px,48vw,580px);perspective:1100px;display:grid;place-items:center">
@@ -460,7 +459,6 @@ input{font-family:inherit}
                   <span style="font-size:14px;color:#4A4538">{{ it.lineTxt }}</span>
                   <sc-if value="{{ it.isKit }}" hint-placeholder-val="{{ false }}">
                     <span style="font-size:12px;color:#5E584B">{{ it.picksTxt }}</span>
-                    <button onClick="{{ it.editPicks }}" style="align-self:flex-start;background:none;border:none;padding:0;font-size:12px;font-weight:600;text-decoration:underline;text-underline-offset:2px;color:#16140F">Editar elección</button>
                   </sc-if>
                 </div>
                 <div style="display:flex;align-items:center;gap:6px">
@@ -572,43 +570,11 @@ input{font-family:inherit}
     </div>
   </sc-if>
 
-  <sc-if value="{{ kitPickerOpen }}" hint-placeholder-val="{{ false }}">
-    <div style="position:fixed;inset:0;z-index:85;display:flex;align-items:center;justify-content:center;padding:20px">
-      <div onClick="{{ closeKitPicker }}" style="position:absolute;inset:0;background:rgba(22,20,15,.55);backdrop-filter:blur(3px)"></div>
-      <div role="dialog" aria-modal="true" aria-label="Elegí tus 4 perfumes" style="position:relative;width:min(100%,560px);max-height:88vh;overflow:hidden;background:#FFFCF2;border-radius:24px;border:1.5px solid #16140F;display:flex;flex-direction:column">
-        <div style="padding:24px 24px 16px;border-bottom:1px solid rgba(22,20,15,.12);display:flex;flex-direction:column;gap:10px">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
-            <div style="display:flex;flex-direction:column;gap:2px">
-              <span style="font-family:var(--font-sans);font-weight:700;font-size:22px;letter-spacing:-.01em">Elegí tus 4 perfumes</span>
-              <span style="font-size:13px;color:#5E584B">{{ kitCount }}/4 elegidos</span>
-            </div>
-            <button data-kit-close onClick="{{ closeKitPicker }}" aria-label="Cerrar" style="width:36px;height:36px;border-radius:50%;border:1px solid #16140F;background:#FFFFFF;font-size:14px;flex-shrink:0">✕</button>
-          </div>
-          <input value="{{ kitQ }}" onChange="{{ onKitQ }}" placeholder="Buscar perfume…" style="width:100%;border:1px solid #16140F;border-radius:10px;padding:11px 14px;font-size:15px;background:#FFFFFF;outline:none"></input>
-        </div>
-        <div style="flex:1;overflow:auto;padding:8px 24px">
-          <sc-for list="{{ kitList }}" as="p" hint-placeholder-count="0">
-            <div onClick="{{ p.toggle }}" style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid rgba(22,20,15,.1);cursor:pointer;opacity:{{ p.op }}">
-              <div style="width:40px;height:40px;border-radius:9px;background:#F3EEDD;overflow:hidden;flex-shrink:0"><img src="{{ p.img }}" alt="{{ p.name }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain"></img></div>
-              <span style="flex:1;font-weight:600;font-size:15px">{{ p.name }}</span>
-              <span style="width:26px;height:26px;border-radius:50%;border:1.5px solid #16140F;display:grid;place-items:center;background:{{ p.dotBg }};color:{{ p.dotFg }};font-size:13px;flex-shrink:0">{{ p.dotTxt }}</span>
-            </div>
-          </sc-for>
-          <sc-if value="{{ kitNoResults }}" hint-placeholder-val="{{ false }}">
-            <div style="text-align:center;padding:40px 0;color:#5E584B">Sin resultados para "{{ kitQ }}".</div>
-          </sc-if>
-        </div>
-        <div style="padding:16px 24px 24px;border-top:1px solid rgba(22,20,15,.12)">
-          <button onClick="{{ confirmKitPicks }}" style="width:100%;background:{{ kitConfirmBg }};color:{{ kitConfirmFg }};border:none;border-radius:9px;padding:15px;font-weight:700;font-size:15px;cursor:{{ kitConfirmCursor }}">{{ kitConfirmLabel }}</button>
-        </div>
-      </div>
-    </div>
-  </sc-if>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;whatsapp&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;5493468640713&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;autoRotate&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
 class Component extends DCLogic {
-  state = { w: typeof window !== 'undefined' ? window.innerWidth : 1280, idx: 0, q: '', cat: 'todos', view: 'home', cart: [], open: false, now: Date.now(), method: 'andreani', cp: '', cpErr: false, done: false, toast: null, paused: false, dragging: false, dragDeg: 0, scrolled: false, catHover: -1, sprayed: false, detail: null, detailQty: 1, infoOpen: false, formNombre: '', formApellido: '', formTelefono: '', formDireccion: '', formEmail: '', formZona: '', formErr: false, products: [], offer: null, kitPicker: false, kitPicks: [], kitQ: '', sortBy: 'pedidos', gracianoPhoto: '' };
+  state = { w: typeof window !== 'undefined' ? window.innerWidth : 1280, idx: 0, q: '', cat: 'todos', view: 'home', cart: [], open: false, now: Date.now(), method: 'andreani', cp: '', cpErr: false, done: false, toast: null, paused: false, dragging: false, dragDeg: 0, scrolled: false, catHover: -1, sprayed: false, detail: null, detailQty: 1, infoOpen: false, formNombre: '', formApellido: '', formTelefono: '', formDireccion: '', formEmail: '', formZona: '', formErr: false, products: [], offer: null, sortBy: 'pedidos', gracianoPhoto: '' };
 
   SUPABASE_URL = 'https://eismbrnbuhqmrpvkamxj.supabase.co';
   SUPABASE_KEY = 'sb_publishable_vezM1qG5XGm3wVJgdHx0ig_ujua9Oab';
@@ -656,8 +622,7 @@ class Component extends DCLogic {
     this.onEscKey = e => {
       if (e.key !== 'Escape') return;
       const s = this.state;
-      if (s.kitPicker) { this.setState({ kitPicker: false }); this.syncBodyScroll(); }
-      else if (s.detail) this.closeDetailNav();
+      if (s.detail) this.closeDetailNav();
       else if (s.open) { this.setState({ open: false }); this.syncBodyScroll(); }
     };
     window.addEventListener('keydown', this.onEscKey);
@@ -917,7 +882,7 @@ class Component extends DCLogic {
   }
   syncBodyScroll() {
     const s = this.state;
-    document.body.style.overflow = (s.open || s.detail || s.kitPicker) ? 'hidden' : '';
+    document.body.style.overflow = (s.open || s.detail) ? 'hidden' : '';
   }
   focusModal(selector) {
     setTimeout(() => { const el = document.querySelector(selector); if (el) el.focus(); }, 60);
@@ -933,30 +898,20 @@ class Component extends DCLogic {
       return { cart: c };
     });
   }
-  openKitPicker(preSelected) {
-    this.setState({ kitPicker: true, kitPicks: preSelected || [], kitQ: '' });
-    this.syncBodyScroll();
-    this.focusModal('[data-kit-close]');
+  kitComposition() {
+    const k = this.state.products.filter(p => p.kit);
+    return k.length === 4 ? k : null;
   }
-  toggleKitPick(id) {
-    this.setState(s => {
-      const has = s.kitPicks.includes(id);
-      if (!has && s.kitPicks.length >= 4) return {};
-      return { kitPicks: has ? s.kitPicks.filter(x => x !== id) : s.kitPicks.concat(id) };
-    });
-  }
-  confirmKitPicks() {
-    const s = this.state;
-    if (s.kitPicks.length !== 4) return;
-    const picks = s.kitPicks.map(id => { const p = s.products.find(x => x.id === id); return { id, name: p ? p.name : id }; });
+  addKit() {
+    const comp = this.kitComposition();
+    const picks = comp ? comp.map(p => ({ id: p.id, name: p.name })) : [];
     this.setState(st => {
       const c = st.cart.slice();
       const i = c.findIndex(x => x.id === 'kit');
-      if (i >= 0) c[i] = { ...c[i], picks }; else c.push({ id: 'kit', qty: 1, picks });
+      if (i >= 0) c[i] = { ...c[i], qty: c[i].qty + 1, picks }; else c.push({ id: 'kit', qty: 1, picks });
       this.persistCart(c);
-      return { cart: c, kitPicker: false, toast: 'Kit Descubrimiento', done: false };
+      return { cart: c, toast: 'Kit Descubrimiento', done: false };
     });
-    this.syncBodyScroll();
     clearTimeout(this.tt); this.tt = setTimeout(() => this.setState({ toast: null }), 1800);
   }
   scrollTo(id) {
@@ -1091,9 +1046,8 @@ class Component extends DCLogic {
       const isKit = x.id === 'kit';
       return {
         ...p, qty: x.qty, picks: x.picks, isKit,
-        picksTxt: isKit && x.picks ? x.picks.map(pk => pk.name).join(', ') : '',
+        picksTxt: isKit && x.picks && x.picks.length ? x.picks.map(pk => pk.name).join(', ') : '',
         lineTxt: `${this.fmt(p.price)} · ${isKit ? '4 × 5 ml' : '5 ml'}`,
-        editPicks: isKit ? () => this.openKitPicker((x.picks || []).map(pk => pk.id)) : null,
         inc: () => this.setQty(x.id, 1), dec: () => this.setQty(x.id, -1)
       };
     });
@@ -1112,31 +1066,12 @@ class Component extends DCLogic {
       ringTransform: `translateZ(${-r}px) rotateY(${-s.idx * a + s.dragDeg}deg)`,
       ringTransition: s.dragging ? 'none' : 'transform .9s cubic-bezier(.2,.8,.2,1)',
       counter: `${pad(mod(s.idx, N) + 1)} / ${pad(N)}`,
-      kitVials: this.KIT_IMAGES.map((v, i) => ({ ...v, t: `rotateY(${i * 90}deg) translateZ(145px)` })),
+      kitVials: (this.kitComposition() || this.KIT_IMAGES).map((v, i) => ({ ...v, t: `rotateY(${i * 90}deg) translateZ(145px)` })),
       prev: () => this.setState(st => ({ idx: st.idx - 1 })),
       next: () => this.setState(st => ({ idx: st.idx + 1 })),
       pauseAuto: () => this.setState({ paused: true }), resumeAuto: () => this.setState({ paused: false }),
-      addKit: () => { const existing = s.cart.find(x => x.id === 'kit'); this.openKitPicker(existing && existing.picks ? existing.picks.map(pk => pk.id) : []); },
-      kitPickerOpen: s.kitPicker, kitCount: s.kitPicks.length,
-      kitQ: s.kitQ, onKitQ: e => this.setState({ kitQ: e.target.value }),
-      kitList: s.products.filter(p => !s.kitQ || p.name.toLowerCase().includes(s.kitQ.toLowerCase())).map(p => {
-        const picked = s.kitPicks.includes(p.id);
-        const full = !picked && s.kitPicks.length >= 4;
-        return {
-          id: p.id, name: p.name, img: p.img, op: full ? .35 : 1,
-          dotBg: picked ? '#16140F' : '#FFFFFF', dotFg: picked ? '#FFD400' : '#16140F', dotTxt: picked ? '✓' : '',
-          toggle: () => this.toggleKitPick(p.id)
-        };
-      }),
-      kitNoResults: !!s.kitQ && !s.products.some(p => p.name.toLowerCase().includes(s.kitQ.toLowerCase())),
-      closeKitPicker: () => { this.setState({ kitPicker: false }); this.syncBodyScroll(); },
-      confirmKitPicks: () => this.confirmKitPicks(),
-      kitConfirmBg: s.kitPicks.length === 4 ? '#16140F' : '#EDE9DD',
-      kitConfirmFg: s.kitPicks.length === 4 ? '#FFFCF2' : '#8C8576',
-      kitConfirmCursor: s.kitPicks.length === 4 ? 'pointer' : 'default',
-      kitConfirmLabel: `Confirmar (${s.kitPicks.length}/4) →`,
+      addKit: () => this.addKit(),
       waHref: this.waLink('¡Hola Graciano! Quiero consultar por decants.'),
-      waKitHref: this.waLink('¡Hola Graciano! Quiero armar mi Kit Descubrimiento de 4 decants.'),
       showToast: !!s.toast && !s.open, toast: s.toast,
       cartOpen: s.open,
       openCart: () => { this.setState({ open: true }); this.syncBodyScroll(); this.focusModal('[data-cart-close]'); },
