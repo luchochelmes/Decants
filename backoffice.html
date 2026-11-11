@@ -423,19 +423,9 @@ class Component extends DCLogic {
     loginUser: '', loginPass: '', loginErr: '',
     acctUser: '', acctPass: '', acctPass2: '', acctErr: '',
     products: [],
-    orders: [
-      { id: '#1062', cliente: 'Martina López', fecha: '09/11 · 10:42', m: 'andreani', items: [['br540', 1], ['libre', 2]], estado: 'Pendiente', dir: 'Av. Pellegrini 1450, Rosario · CP 2000', tel: 'martina.lopez@gmail.com · 341 555-2190', tracking: '' },
-      { id: '#1061', cliente: 'Facundo Ríos', fecha: '09/11 · 09:15', m: 'cba', items: [['khamrah', 2], ['cdni', 1]], estado: 'Pendiente', dir: 'Nueva Córdoba · a coordinar', tel: '351 612-3344', tracking: '' },
-      { id: '#1060', cliente: 'Sofía Peralta', fecha: '08/11 · 21:03', m: 'andreani', items: [['kit', 1]], estado: 'Preparando', dir: 'Sucursal Andreani Mendoza Centro · CP 5500', tel: 'sofi.peralta@hotmail.com · 261 448-9021', tracking: '' },
-      { id: '#1059', cliente: 'Joaquín Méndez', fecha: '08/11 · 18:40', m: 'andreani', items: [['sauvage', 1], ['bleu', 1]], estado: 'Despachado', dir: 'Calle 12 n° 845, La Plata · CP 1900', tel: 'joaco.mendez@gmail.com · 221 503-7781', tracking: '360002345678910' },
-      { id: '#1058', cliente: 'Camila Ferreyra', fecha: '08/11 · 12:20', m: 'cba', items: [['goodgirl', 1], ['libre', 1]], estado: 'Coordinado', dir: 'Cerro de las Rosas · sábado 11 h', tel: '351 701-5520', tracking: '' },
-      { id: '#1057', cliente: 'Tomás Aguirre', fecha: '07/11 · 16:55', m: 'andreani', items: [['layton', 1], ['hawas', 2]], estado: 'Entregado', dir: 'San Martín 230, Neuquén · CP 8300', tel: 'tomas.aguirre@gmail.com · 299 422-1180', tracking: '360002345612003' },
-      { id: '#1056', cliente: 'Lucía Bustos', fecha: '07/11 · 11:08', m: 'cba', items: [['kit', 1]], estado: 'Entregado', dir: 'General Paz · retiro en centro', tel: '351 380-9912', tracking: '' },
-      { id: '#1055', cliente: 'Nicolás Vera', fecha: '06/11 · 20:31', m: 'andreani', items: [['khamrah', 1], ['cdni', 1], ['hawas', 1]], estado: 'Entregado', dir: 'Av. Colón 3020, Mar del Plata · CP 7600', tel: 'nico.vera@gmail.com · 223 591-4400', tracking: '360002345598812' }
-    ],
+    orders: [],
     offer: { name: 'Kit Descubrimiento', desc: 'Elegí 4 decants de 5 ml de cualquier categoría. Ideal para encontrar tu perfume firma o para regalar.', price: 28900, before: 36000, on: true, end: 'dom' }
   };
-  KIT = { id: 'kit', house: '4 decants a elección', name: 'Kit Descubrimiento', price: 28900, color: '#FFD400', units: 4 };
   SUPABASE_URL = 'https://eismbrnbuhqmrpvkamxj.supabase.co';
   SUPABASE_KEY = 'sb_publishable_vezM1qG5XGm3wVJgdHx0ig_ujua9Oab';
   CAT_TINT = { dulces: '#FFF1B8', calidos: '#FDE3C2', secos: '#E7E0D5', frescos: '#DCE9F2', frutales: '#FBE8C9', florales: '#F3E3EE' };
@@ -447,8 +437,11 @@ class Component extends DCLogic {
 
     const { data: { session } } = await this.db().auth.getSession();
     this.setState({ authed: !!session, acctUser: session ? session.user.email : '' });
+    if (session) this.loadOrders();
     this.authSub = this.db().auth.onAuthStateChange((_event, session) => {
+      const wasAuthed = this.state.authed;
       this.setState({ authed: !!session, acctUser: session ? session.user.email : this.state.acctUser });
+      if (session && !wasAuthed) this.loadOrders();
     });
   }
   componentWillUnmount() {
@@ -524,16 +517,49 @@ class Component extends DCLogic {
     this.db().from('products').delete().eq('id', id).then(() => this.flash('Perfume eliminado'));
   }
 
+  async loadOrders() {
+    try {
+      const { data, error } = await this.db().from('orders').select('*').order('created_at', { ascending: false });
+      if (error) throw error;
+      const orders = (data || []).map(row => ({
+        dbId: row.id, id: '#' + row.id,
+        cliente: `${row.nombre} ${row.apellido}`.trim() || 'Sin nombre',
+        fecha: new Date(row.created_at).toLocaleString('es-AR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(',', ' ·'),
+        m: row.method, items: row.items || [],
+        estado: row.estado,
+        dir: row.method === 'andreani' ? `${row.direccion}, CP ${row.cp}` : (row.zona || 'A coordinar'),
+        tel: row.method === 'andreani' ? `${row.email} · ${row.telefono}` : row.telefono,
+        tracking: row.tracking || ''
+      }));
+      this.setState({ orders });
+    } catch (e) {
+      console.error('No se pudo cargar los pedidos', e);
+      this.flash('Error cargando los pedidos');
+    }
+  }
+  async persistOrder(dbId, patch) {
+    try {
+      const { error } = await this.db().from('orders').update(patch).eq('id', dbId);
+      if (error) throw error;
+    } catch (e) {
+      console.error('No se pudo actualizar el pedido', e);
+      this.flash('Error guardando el pedido');
+    }
+  }
+
   fmt(n) { return '$' + Math.round(Number(n) || 0).toLocaleString('es-AR'); }
-  prod(id) { return id === 'kit' ? { ...this.KIT, price: this.state.offer.price } : this.state.products.find(p => p.id === id) || { name: '—', house: '', price: 0, color: '#ccc' }; }
-  total(o) { return o.items.reduce((t, [id, q]) => t + this.prod(id).price * q, 0); }
-  units(o) { return o.items.reduce((t, [id, q]) => t + (id === 'kit' ? 4 : 1) * q, 0); }
+  total(o) { return o.items.reduce((t, it) => t + it.price * it.qty, 0); }
+  units(o) { return o.items.reduce((t, it) => t + (it.id === 'kit' ? 4 : 1) * it.qty, 0); }
   flow(o) { return o.m === 'cba' ? this.FLOW_CBA : this.FLOW; }
   sColors(e) {
     return { Pendiente: ['#FFD400', '#16140F'], Preparando: ['#FFF1B8', '#16140F'], Despachado: ['#16140F', '#FFD400'], Coordinado: ['#16140F', '#FFD400'], Entregado: ['#EDE9DD', '#16140F'] }[e] || ['#fff', '#16140F'];
   }
   flash(t) { this.setState({ toast: t }); clearTimeout(this.tt); this.tt = setTimeout(() => this.setState({ toast: null }), 1900); }
-  updOrder(id, f) { this.setState(s => ({ orders: s.orders.map(o => o.id === id ? { ...o, ...f(o) } : o) })); }
+  updOrder(id, f, save) {
+    let dbId;
+    this.setState(s => ({ orders: s.orders.map(o => { if (o.id !== id) return o; dbId = o.dbId; return { ...o, ...f(o) }; }) }));
+    if (save !== false && dbId != null) this.persistOrder(dbId, f({}));
+  }
   updProd(id, patch, save) {
     this.setState(s => ({ products: s.products.map(p => p.id === id ? { ...p, ...patch } : p) }));
     if (save !== false) this.persist(id, patch);
@@ -545,7 +571,7 @@ class Component extends DCLogic {
       ...o, sBg, sFg, totalTxt: this.fmt(this.total(o)), units: this.units(o),
       metodoTxt: o.m === 'cba' ? 'Córdoba Capital' : 'Andreani',
       mDot: o.m === 'cba' ? '#FFD400' : '#16140F',
-      resumen: o.items.map(([id, q]) => `${q}× ${this.prod(id).name}`).join(', '),
+      resumen: o.items.map(it => `${it.qty}× ${it.name}`).join(', '),
       rowBg: o.estado === 'Pendiente' ? '#FFFCF2' : '#FFFFFF',
       open: () => this.setState({ sel: o.id, trkErr: false })
     };
@@ -561,8 +587,8 @@ class Component extends DCLogic {
       badge: k === 'pedidos' && pendingN ? pendingN : false
     }));
 
-    const sales = s.orders.reduce((t, o) => t + this.total(o), 0) + 412300;
-    const unitsAll = s.orders.reduce((t, o) => t + this.units(o), 0) + 61;
+    const sales = s.orders.reduce((t, o) => t + this.total(o), 0);
+    const unitsAll = s.orders.reduce((t, o) => t + this.units(o), 0);
     const CAT_LABEL = { dulces: 'Dulces', calidos: 'Cálidos', secos: 'Amaderados', frescos: 'Frescos', frutales: 'Frutales', florales: 'Florales' };
     const stockVM = p => {
       const ml = p.stock_ml || 0, left = Math.floor(ml / 5), low = left < 3;
@@ -572,7 +598,10 @@ class Component extends DCLogic {
     const sel = s.orders.find(o => o.id === s.sel);
     const selVM = sel ? {
       ...this.orderVM(sel), direccion: sel.dir, contacto: sel.tel,
-      lines: sel.items.map(([id, q]) => { const p = this.prod(id); return { ...p, qty: q, sub: this.fmt(p.price * q) }; })
+      lines: sel.items.map(it => {
+        const p = this.state.products.find(x => x.id === it.id);
+        return { name: it.name, house: p ? p.house : '', color: p ? (this.CAT_TINT[p.category] || '#ccc') : (it.id === 'kit' ? '#FFD400' : '#ccc'), qty: it.qty, sub: this.fmt(it.price * it.qty) };
+      })
     } : { lines: [] };
     const fl = sel ? this.flow(sel) : this.FLOW, si = sel ? fl.indexOf(sel.estado) : 0;
     const nextLbl = { 1: 'Marcar como preparando', 2: sel && sel.m === 'cba' ? 'Marcar entrega coordinada' : 'Marcar como despachado', 3: 'Marcar como entregado' };
@@ -604,7 +633,7 @@ class Component extends DCLogic {
       crumb: 'DECANTS CÓRDOBA · GRACIANO', title: titles[s.view],
       today: new Date().toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' }),
       vResumen: s.view === 'resumen', vPedidos: s.view === 'pedidos', vProductos: s.view === 'productos', vOferta: s.view === 'oferta', vCuenta: s.view === 'cuenta',
-      kSales: this.fmt(sales), kPending: pendingN, kUnits: unitsAll, kAvg: this.fmt(sales / (s.orders.length + 22)),
+      kSales: this.fmt(sales), kPending: pendingN, kUnits: unitsAll, kAvg: this.fmt(s.orders.length ? sales / s.orders.length : 0),
       toPrepare: s.orders.filter(o => o.estado === 'Pendiente' || o.estado === 'Preparando').map(o => this.orderVM(o)),
       goPedidos: () => this.setView('pedidos'), goProductos: () => this.setView('productos'),
 
@@ -677,7 +706,7 @@ class Component extends DCLogic {
       offPriceTxt: this.fmt(off.price), offBeforeTxt: this.fmt(off.before), offPct: `−${pct}%`,
       offEndTxt: off.on ? `TERMINA ${{ dom: 'ESTE DOMINGO 23:59', prox: 'EL DOMINGO 22/11 23:59', fin: 'EL 30/11 23:59' }[off.end]}` : 'OFERTA PAUSADA · NO SE MUESTRA EN LA TIENDA',
       offPrevOp: off.on ? 1 : .5,
-      offUnitsTxt: `${s.orders.filter(o => o.items.some(([id]) => id === 'kit')).length} kits vendidos esta semana.`,
+      offUnitsTxt: `${s.orders.filter(o => o.items.some(it => it.id === 'kit')).length} kits vendidos.`,
       saveLabel: s.saved ? 'Cambios guardados ✓' : 'Guardar y publicar →',
       saveOffer: () => { this.setState({ saved: true }); this.flash('Oferta publicada en la tienda'); },
 

@@ -423,7 +423,7 @@ input{font-family:inherit}
         <sc-if value="{{ done }}" hint-placeholder-val="{{ false }}">
           <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:16px;padding:32px">
             <div style="width:64px;height:64px;border-radius:50%;background:#FFD400;border:2px solid #16140F;display:grid;place-items:center;font-size:28px">✓</div>
-            <span style="font-family:var(--font-sans);font-weight:700;font-size:32px;letter-spacing:-.01em;line-height:1">¡Pedido recibido!</span>
+            <span style="font-family:var(--font-sans);font-weight:700;font-size:32px;letter-spacing:-.01em;line-height:1">¡Casi listo!</span>
             <span style="color:#4A4538;line-height:1.5">{{ doneMsg }}</span>
             <button onClick="{{ resetCart }}" style="align-self:flex-start;background:#16140F;color:#FFFCF2;border:none;border-radius:999px;padding:14px 22px;font-weight:600">Seguir mirando</button>
           </div>
@@ -582,6 +582,12 @@ class Component extends DCLogic {
     } catch (e) {
       console.error('No se pudo cargar el catálogo desde Supabase', e);
     }
+  }
+  saveOrder(payload) {
+    this.db = this.db || window.supabase.createClient(this.SUPABASE_URL, this.SUPABASE_KEY);
+    this.db.from('orders').insert(payload).then(({ error }) => {
+      if (error) console.error('No se pudo guardar el pedido', error);
+    });
   }
   async bumpStock(id, deltaMl) {
     try {
@@ -908,21 +914,28 @@ class Component extends DCLogic {
       formZona: s.formZona, onFormZona: e => this.setState({ formZona: e.target.value, formErr: false }),
       formErr: s.formErr,
       formErrMsg: isAndreani ? 'Completá todos los campos con un email válido.' : 'Completá nombre, apellido, teléfono y zona.',
-      doneMsg: isAndreani ? 'Te mandamos el código de seguimiento de Andreani por mail apenas despachamos el paquete.' : 'Te escribimos por WhatsApp para coordinar día y horario de entrega en Córdoba Capital.',
+      doneMsg: 'Te abrimos WhatsApp con el resumen de tu pedido: enviá el mensaje para confirmarlo con Graciano. Si no se abrió solo, escribinos directo.',
       backToCart: () => this.setState({ infoOpen: false }),
       confirmOrder: () => {
+        const items = cartItems.map(i => ({ id: i.id, name: i.name, qty: i.qty, price: i.price }));
+        let infoMsg;
         if (isAndreani) {
           if (s.cp.length !== 4) return this.setState({ cpErr: true, formErr: true });
           const valid = s.formNombre.trim() && s.formApellido.trim() && s.formTelefono.trim() && s.formDireccion.trim() && /\S+@\S+\.\S+/.test(s.formEmail);
           if (!valid) return this.setState({ formErr: true });
-          const infoMsg = `¡Hola Graciano! Confirmo mi pedido por Andreani:\n${cartItems.map(i => `• ${i.qty}× ${i.name}`).join('\n')}\nTotal: ${this.fmt(subtotal)}\n\nDatos de envío:\n${s.formNombre} ${s.formApellido}\nTel: ${s.formTelefono}\nDirección: ${s.formDireccion}, CP ${s.cp}\nEmail para seguimiento: ${s.formEmail}`;
-          window.open(this.waLink(infoMsg), '_blank');
+          infoMsg = `¡Hola Graciano! Confirmo mi pedido por Andreani:\n${cartItems.map(i => `• ${i.qty}× ${i.name}`).join('\n')}\nTotal: ${this.fmt(subtotal)}\n\nDatos de envío:\n${s.formNombre} ${s.formApellido}\nTel: ${s.formTelefono}\nDirección: ${s.formDireccion}, CP ${s.cp}\nEmail para seguimiento: ${s.formEmail}`;
         } else {
           const valid = s.formNombre.trim() && s.formApellido.trim() && s.formTelefono.trim() && s.formZona.trim();
           if (!valid) return this.setState({ formErr: true });
-          const infoMsg = `¡Hola Graciano! Quiero coordinar la entrega en Córdoba Capital:\n${cartItems.map(i => `• ${i.qty}× ${i.name}`).join('\n')}\nTotal: ${this.fmt(subtotal)}\n\nDatos:\n${s.formNombre} ${s.formApellido}\nTel: ${s.formTelefono}\nZona: ${s.formZona}`;
-          window.open(this.waLink(infoMsg), '_blank');
+          infoMsg = `¡Hola Graciano! Quiero coordinar la entrega en Córdoba Capital:\n${cartItems.map(i => `• ${i.qty}× ${i.name}`).join('\n')}\nTotal: ${this.fmt(subtotal)}\n\nDatos:\n${s.formNombre} ${s.formApellido}\nTel: ${s.formTelefono}\nZona: ${s.formZona}`;
         }
+        window.open(this.waLink(infoMsg), '_blank');
+        this.saveOrder({
+          method: s.method, items, subtotal,
+          nombre: s.formNombre.trim(), apellido: s.formApellido.trim(), telefono: s.formTelefono.trim(),
+          direccion: isAndreani ? s.formDireccion.trim() : '', email: isAndreani ? s.formEmail.trim() : '',
+          cp: isAndreani ? s.cp : '', zona: !isAndreani ? s.formZona.trim() : ''
+        });
         s.cart.forEach(it => { if (it.id !== 'kit') this.bumpStock(it.id, -5 * it.qty); });
         this.setState({ done: true, cart: [], cp: '', infoOpen: false, formNombre: '', formApellido: '', formTelefono: '', formDireccion: '', formEmail: '', formZona: '', formErr: false });
       },
