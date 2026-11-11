@@ -183,12 +183,12 @@ input,select{font-family:inherit;color:#16140F}
 
       <sc-if value="{{ vProductos }}" hint-placeholder-val="{{ false }}">
         <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
-          <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <div style="display:flex;gap:6px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px">
             <sc-for list="{{ catChips }}" as="c" hint-placeholder-count="4">
-              <button onClick="{{ c.select }}" style="border:1.5px solid #16140F;border-radius:999px;padding:8px 14px;font-size:13px;font-weight:600;background:{{ c.bg }};color:{{ c.fg }}">{{ c.label }}</button>
+              <button onClick="{{ c.select }}" style="white-space:nowrap;flex-shrink:0;border:1.5px solid #16140F;border-radius:999px;padding:8px 14px;font-size:13px;font-weight:600;background:{{ c.bg }};color:{{ c.fg }}">{{ c.label }}</button>
             </sc-for>
           </div>
-          <button onClick="{{ addProduct }}" style="background:#16140F;color:#FFFCF2;border:none;border-radius:999px;padding:12px 20px;font-weight:600;font-size:14px;box-shadow:0 4px 0 #FFD400">+ Nuevo perfume</button>
+          <button onClick="{{ addProduct }}" style="background:#16140F;color:#FFFCF2;border:none;border-radius:999px;padding:12px 20px;font-weight:600;font-size:14px;box-shadow:0 4px 0 #FFD400;flex-shrink:0">+ Nuevo perfume</button>
         </div>
         <p style="margin:0;font-size:14px;color:#4A4538;max-width:640px">El stock se cuenta en mililitros del frasco original. Cada decant vendido descuenta 5 ml automáticamente; cuando quedan menos de 3 decants la barra se pone roja. La estrella ★ marca los perfumes que aparecen en "Los más pedidos" del home. Los cambios se guardan solos y se reflejan en la tienda al instante.</p>
         <div style="display:flex;flex-direction:column;gap:14px">
