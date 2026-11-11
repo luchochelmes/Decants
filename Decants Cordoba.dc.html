@@ -840,15 +840,17 @@ class Component extends DCLogic {
     this.mm = e => { this.mx = e.clientX / window.innerWidth - .5; this.my = e.clientY / window.innerHeight - .5; };
     window.addEventListener('mousemove', this.mm);
 
-    const floats = [...document.querySelectorAll('[data-float]')].map(el => ({ el, ph: +el.dataset.float, base: el.style.transform || '' }));
-    const spin = document.querySelector('[data-spin]');
-    const mq = document.querySelector('[data-marquee]');
     let mqx = 0; const t0 = performance.now();
     const loop = now => {
       const t = (now - t0) / 1000;
       this.cx += (this.mx - this.cx) * .06; this.cy += (this.my - this.cy) * .06;
+      const spin = document.querySelector('[data-spin]');
       if (spin) spin.style.transform = `rotateX(-10deg) rotateY(${t * 32}deg)`;
-      floats.forEach(f => { f.el.style.transform = `${f.base} translateY(${Math.sin(t * 1.4 + f.ph) * 9}px)`; });
+      document.querySelectorAll('[data-float]').forEach(el => {
+        if (!el.dataset.floatBase) el.dataset.floatBase = el.style.transform || '';
+        el.style.transform = `${el.dataset.floatBase} translateY(${Math.sin(t * 1.4 + (+el.dataset.float)) * 9}px)`;
+      });
+      const mq = document.querySelector('[data-marquee]');
       if (mq) { mqx -= .5; const w = mq.scrollWidth / 2 + 24; if (-mqx >= w) mqx += w; mq.style.transform = `translateX(${mqx}px)`; }
       this.raf = requestAnimationFrame(loop);
     };
