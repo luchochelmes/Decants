@@ -287,7 +287,11 @@ input{font-family:inherit}
 
   <section id="nosotros" style="max-width:1280px;margin:0 auto;padding:clamp(70px,9vw,130px) clamp(16px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(40px,6vw,80px);align-items:center">
     <div data-reveal="0" style="position:relative">
-      <div data-tilt="1" style="aspect-ratio:4/5;border-radius:28px;border:1.5px solid #16140F;background:repeating-linear-gradient(135deg,#F3EEDD 0 12px,#FFFCF2 12px 24px);transition:transform .2s ease-out"></div>
+      <div data-tilt="1" style="aspect-ratio:4/5;border-radius:28px;border:1.5px solid #16140F;overflow:hidden;background:repeating-linear-gradient(135deg,#F3EEDD 0 12px,#FFFCF2 12px 24px);transition:transform .2s ease-out">
+        <sc-if value="{{ gracianoPhoto }}" hint-placeholder-val="{{ false }}">
+          <img src="{{ gracianoPhoto }}" alt="Graciano, de Decants Córdoba" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover"></img>
+        </sc-if>
+      </div>
       <div data-float="3" style="position:absolute;right:-12px;bottom:40px;background:#16140F;color:#FFFCF2;border:none;border-radius:999px;padding:13px 20px;font-family:var(--font-sans);font-weight:700;font-size:17px;box-shadow:0 10px 24px rgba(0,0,0,.25);transform:rotate(-3deg)">Hecho en Córdoba</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:24px">
@@ -605,12 +609,11 @@ input{font-family:inherit}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;whatsapp&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;5493516598378&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;autoRotate&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
 class Component extends DCLogic {
-  state = { w: typeof window !== 'undefined' ? window.innerWidth : 1280, idx: 0, q: '', cat: 'todos', view: 'home', cart: [], open: false, now: Date.now(), method: 'andreani', cp: '', cpErr: false, done: false, toast: null, paused: false, dragging: false, dragDeg: 0, scrolled: false, catHover: -1, sprayed: false, detail: null, detailQty: 1, infoOpen: false, formNombre: '', formApellido: '', formTelefono: '', formDireccion: '', formEmail: '', formZona: '', formErr: false, products: [], offer: null, kitPicker: false, kitPicks: [], kitQ: '', sortBy: 'pedidos' };
+  state = { w: typeof window !== 'undefined' ? window.innerWidth : 1280, idx: 0, q: '', cat: 'todos', view: 'home', cart: [], open: false, now: Date.now(), method: 'andreani', cp: '', cpErr: false, done: false, toast: null, paused: false, dragging: false, dragDeg: 0, scrolled: false, catHover: -1, sprayed: false, detail: null, detailQty: 1, infoOpen: false, formNombre: '', formApellido: '', formTelefono: '', formDireccion: '', formEmail: '', formZona: '', formErr: false, products: [], offer: null, kitPicker: false, kitPicks: [], kitQ: '', sortBy: 'pedidos', gracianoPhoto: '' };
 
   SUPABASE_URL = 'https://eismbrnbuhqmrpvkamxj.supabase.co';
   SUPABASE_KEY = 'sb_publishable_vezM1qG5XGm3wVJgdHx0ig_ujua9Oab';
 
-  FEATURED_IDS = ["khamrah", "club-de-nuit-intense-man-edt", "hawas", "badee-al-oud-sublime", "asad-bourbon", "turathi-blue", "club-de-nuit-precieux", "rayhaan-italia", "erba-pura-100ml", "9-pm-elixir"];
   KIT = { id: 'kit', name: 'Kit Descubrimiento', price: 28900, img: 'assets/products/073-khamrah.jpg' };
   KIT_IMAGES = [
     { img: 'assets/kit/2.webp', name: 'The Kingdom' },
@@ -631,7 +634,7 @@ class Component extends DCLogic {
     this.t1 = setInterval(() => this.setState({ now: Date.now() }), 1000);
     this.t2 = setInterval(() => {
       if (!this.state.paused && (this.props.autoRotate ?? true) && !this.state.open) this.setState(s => ({ idx: s.idx + 1 }));
-    }, 3800);
+    }, 2000);
     setTimeout(() => this.setupFx(), 50);
     setTimeout(() => this.startHeroVideo(), 50);
     setTimeout(() => this.setupDrag(), 50);
@@ -640,6 +643,7 @@ class Component extends DCLogic {
     window.addEventListener('resize', this.onResize);
     this.loadProducts();
     this.loadOffer();
+    this.loadSiteSettings();
 
     try {
       const savedCart = JSON.parse(localStorage.getItem('dc_cart') || '[]');
@@ -715,6 +719,16 @@ class Component extends DCLogic {
       console.error('No se pudo cargar la oferta', e);
     }
   }
+  async loadSiteSettings() {
+    try {
+      this.db = this.db || window.supabase.createClient(this.SUPABASE_URL, this.SUPABASE_KEY);
+      const { data, error } = await this.db.from('site_settings').select('*').eq('id', 'main').single();
+      if (error) throw error;
+      this.setState({ gracianoPhoto: data.graciano_photo || '' });
+    } catch (e) {
+      console.error('No se pudo cargar la configuración del sitio', e);
+    }
+  }
   saveOrder(payload) {
     this.db = this.db || window.supabase.createClient(this.SUPABASE_URL, this.SUPABASE_KEY);
     this.db.from('orders').insert(payload).then(({ error }) => {
@@ -766,8 +780,7 @@ class Component extends DCLogic {
   setupDrag() {
     const car = document.querySelector('[data-carousel]');
     if (!car) return;
-    const N = this.FEATURED_IDS.length;
-    const a = 360 / Math.max(6, N);
+    let a = 60;
     let active = false, startX = 0, moved = 0;
     const suppressClick = e => { e.stopPropagation(); e.preventDefault(); car.removeEventListener('click', suppressClick, true); };
     const onMove = e => {
@@ -793,6 +806,7 @@ class Component extends DCLogic {
     car.addEventListener('pointerdown', e => {
       if (e.pointerType === 'mouse' && e.button !== 0) return;
       active = true; moved = 0; startX = e.clientX;
+      a = 360 / Math.max(6, this.featuredProducts().length);
       this.setState({ dragging: true, paused: true, dragDeg: 0 });
       window.addEventListener('pointermove', onMove);
       window.addEventListener('pointerup', onUp);
@@ -885,6 +899,11 @@ class Component extends DCLogic {
   wa() { return this.props.whatsapp || '5493516598378'; }
   waLink(msg) { return `https://wa.me/${this.wa()}?text=${encodeURIComponent(msg)}`; }
   find(id) { return id === 'kit' ? { ...this.KIT, price: this.state.offer ? this.state.offer.price : this.KIT.price, name: this.state.offer ? this.state.offer.name : this.KIT.name } : this.state.products.find(p => p.id === id); }
+  featuredProducts() {
+    const featured = this.state.products.filter(p => p.featured && p.stock_ml > 0);
+    if (featured.length) return featured;
+    return this.state.products.filter(p => p.stock_ml > 0).slice(0, 10);
+  }
   keyActivate(fn) { return e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn(); } }; }
 
   add(id, qty = 1) {
@@ -967,7 +986,7 @@ class Component extends DCLogic {
     const paraStyle = this.blockStyle(headlineMs + 550);
     const btnsStyle = this.blockStyle(headlineMs + 800);
     const bulletsStyle = this.blockStyle(headlineMs + 1000);
-    const P = this.FEATURED_IDS.map(id => this.state.products.find(p => p.id === id)).filter(p => p && p.stock_ml > 0);
+    const P = this.featuredProducts();
     const N = P.length;
     const ring = []; if (N > 0) while (ring.length < 6 || ring.length < N) ring.push(...P);
     const L = ring.length, a = 360 / L, r = Math.round(145 / Math.tan(Math.PI / L) + 60);
@@ -1191,6 +1210,7 @@ class Component extends DCLogic {
       goOfertaSection: () => this.goHomeSection('oferta'),
       goNosotrosSection: () => this.goHomeSection('nosotros'),
       fullTotal: this.state.products.length, headerTransform, headerShadow, catLeave,
+      gracianoPhoto: s.gracianoPhoto,
       detailOpen: !!s.detail && !!detailP,
       detailImg: detailP ? detailP.img : '',
       detailName: detailP ? detailP.name : '',
