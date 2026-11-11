@@ -606,7 +606,7 @@ input{font-family:inherit}
   </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;whatsapp&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;5493516598378&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;autoRotate&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;whatsapp&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;5493468640713&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;autoRotate&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
 class Component extends DCLogic {
   state = { w: typeof window !== 'undefined' ? window.innerWidth : 1280, idx: 0, q: '', cat: 'todos', view: 'home', cart: [], open: false, now: Date.now(), method: 'andreani', cp: '', cpErr: false, done: false, toast: null, paused: false, dragging: false, dragDeg: 0, scrolled: false, catHover: -1, sprayed: false, detail: null, detailQty: 1, infoOpen: false, formNombre: '', formApellido: '', formTelefono: '', formDireccion: '', formEmail: '', formZona: '', formErr: false, products: [], offer: null, kitPicker: false, kitPicks: [], kitQ: '', sortBy: 'pedidos', gracianoPhoto: '' };
 
@@ -896,7 +896,7 @@ class Component extends DCLogic {
     if (!this.state.sprayed) return 'opacity:0;transform:translateY(16px)';
     return `opacity:0;transform:translateY(16px);animation:blockIn .7s cubic-bezier(.2,.8,.2,1) ${delayMs}ms forwards`;
   }
-  wa() { return this.props.whatsapp || '5493516598378'; }
+  wa() { return this.props.whatsapp || '5493468640713'; }
   waLink(msg) { return `https://wa.me/${this.wa()}?text=${encodeURIComponent(msg)}`; }
   find(id) { return id === 'kit' ? { ...this.KIT, price: this.state.offer ? this.state.offer.price : this.KIT.price, name: this.state.offer ? this.state.offer.name : this.KIT.name } : this.state.products.find(p => p.id === id); }
   featuredProducts() {
