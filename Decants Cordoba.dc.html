@@ -237,16 +237,17 @@ input{font-family:inherit}
     </div>
   </section>
 
+  <sc-if value="{{ showOffer }}" hint-placeholder-val="{{ true }}">
   <section id="oferta" style="background:rgba(255,212,0,.14);border-top:1px solid rgba(22,20,15,.12);border-bottom:1px solid rgba(22,20,15,.12);overflow:hidden">
     <div style="max-width:1280px;margin:0 auto;padding:clamp(60px,8vw,110px) clamp(16px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:40px;align-items:center">
       <div style="display:flex;flex-direction:column;gap:22px">
         <span data-reveal="0" style="font-family:var(--font-sans);font-size:12px;font-weight:600;letter-spacing:.12em">03 — OFERTA DE LA SEMANA</span>
-        <h2 data-reveal="80" style="margin:0;font-family:var(--font-display);font-weight:600;font-size:clamp(58px,7.84vw,112px);line-height:.88;letter-spacing:-.015em">Kit Descu&shy;brimiento</h2>
-        <p data-reveal="160" style="margin:0;font-size:19px;line-height:1.5;max-width:460px;color:#2E2920">Elegí 4 decants de 5 ml de cualquier categoría. Ideal para encontrar tu perfume firma o para regalar.</p>
+        <h2 data-reveal="80" style="margin:0;font-family:var(--font-display);font-weight:600;font-size:clamp(58px,7.84vw,112px);line-height:.88;letter-spacing:-.015em">{{ offerName }}</h2>
+        <p data-reveal="160" style="margin:0;font-size:19px;line-height:1.5;max-width:460px;color:#2E2920">{{ offerDesc }}</p>
         <div data-reveal="240" style="display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap">
-          <span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:clamp(48px,5vw,68px);line-height:1">$28.900</span>
-          <span style="font-size:22px;text-decoration:line-through;color:#5A4A00;padding-bottom:8px">$36.000</span>
-          <span style="background:#16140F;color:#FFD400;font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:13px;padding:6px 12px;border-radius:999px;margin-bottom:10px;transform:rotate(-4deg)">−20%</span>
+          <span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:clamp(48px,5vw,68px);line-height:1">{{ offerPriceTxt }}</span>
+          <span style="font-size:22px;text-decoration:line-through;color:#5A4A00;padding-bottom:8px">{{ offerBeforeTxt }}</span>
+          <span style="background:#16140F;color:#FFD400;font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:13px;padding:6px 12px;border-radius:999px;margin-bottom:10px;transform:rotate(-4deg)">{{ offerPct }}</span>
         </div>
         <div data-reveal="320" style="display:flex;flex-direction:column;gap:10px">
           <span style="font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;font-size:12px">TERMINA EN</span>
@@ -280,12 +281,11 @@ input{font-family:inherit}
       </div>
     </div>
   </section>
+  </sc-if>
 
   <section id="nosotros" style="max-width:1280px;margin:0 auto;padding:clamp(70px,9vw,130px) clamp(16px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(40px,6vw,80px);align-items:center">
     <div data-reveal="0" style="position:relative">
-      <div data-tilt="1" style="aspect-ratio:4/5;border-radius:28px;border:1.5px solid #16140F;background:repeating-linear-gradient(135deg,#F3EEDD 0 12px,#FFFCF2 12px 24px);display:grid;place-items:center;transition:transform .2s ease-out">
-        <span style="font-family:var(--font-sans);font-size:13px;color:#5E584B;background:#FFFCF2;padding:8px 12px;border-radius:8px;border:1px solid rgba(22,20,15,.15)">foto: Graciano fraccionando</span>
-      </div>
+      <div data-tilt="1" style="aspect-ratio:4/5;border-radius:28px;border:1.5px solid #16140F;background:repeating-linear-gradient(135deg,#F3EEDD 0 12px,#FFFCF2 12px 24px);transition:transform .2s ease-out"></div>
       <div data-float="3" style="position:absolute;right:-12px;bottom:40px;background:#16140F;color:#FFFCF2;border:none;border-radius:999px;padding:13px 20px;font-family:var(--font-sans);font-weight:700;font-size:17px;box-shadow:0 10px 24px rgba(0,0,0,.25);transform:rotate(-3deg)">Hecho en Córdoba</div>
     </div>
     <div style="display:flex;flex-direction:column;gap:24px">
@@ -318,7 +318,7 @@ input{font-family:inherit}
           <span style="font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;font-size:12px;color:#FFD400">ENVÍO A TODO EL PAÍS</span>
           <div style="display:flex;flex-direction:column;gap:8px">
             <span style="font-family:var(--font-sans);font-weight:700;font-size:34px;letter-spacing:-.01em;line-height:1">Comprar online →</span>
-            <span style="font-size:15px;color:#D9D3C3">Pagás en la web y te llega por Andreani, a domicilio o a sucursal.</span>
+            <span style="font-size:15px;color:#D9D3C3">Elegís online y coordinás el pago por WhatsApp. Te llega por Andreani, a domicilio o a sucursal.</span>
           </div>
         </a>
         <a data-reveal="120" href="{{ waHref }}" target="_blank" style="display:flex;flex-direction:column;gap:14px;background:transparent;color:#16140F;border:1.5px solid #16140F;border-radius:28px;padding:30px;min-height:220px;justify-content:space-between;transition:transform .25s" style-hover="transform:translateY(-4px);background:#16140F;color:#FFFCF2">
@@ -337,7 +337,7 @@ input{font-family:inherit}
           <span>Decants Córdoba — Graciano · Córdoba, Argentina</span>
         </div>
         <div style="display:flex;gap:22px">
-          <a href="#" style="color:#16140F">Instagram</a>
+          <a href="https://www.instagram.com/decantscordoba/" target="_blank" rel="noopener" style="color:#16140F">Instagram</a>
           <a href="{{ waHref }}" target="_blank" style="color:#16140F">WhatsApp</a>
           <a href="#categorias" style="color:#16140F">Catálogo</a>
         </div>
@@ -445,6 +445,10 @@ input{font-family:inherit}
                 <div style="display:flex;flex-direction:column;gap:2px">
                   <span style="font-weight:700">{{ it.name }}</span>
                   <span style="font-size:14px;color:#4A4538">{{ it.lineTxt }}</span>
+                  <sc-if value="{{ it.isKit }}" hint-placeholder-val="{{ false }}">
+                    <span style="font-size:12px;color:#5E584B">{{ it.picksTxt }}</span>
+                    <button onClick="{{ it.editPicks }}" style="align-self:flex-start;background:none;border:none;padding:0;font-size:12px;font-weight:600;text-decoration:underline;text-underline-offset:2px;color:#16140F">Editar elección</button>
+                  </sc-if>
                 </div>
                 <div style="display:flex;align-items:center;gap:6px">
                   <button onClick="{{ it.dec }}" style="width:28px;height:28px;border-radius:50%;border:1px solid #16140F;background:transparent">−</button>
@@ -533,11 +537,44 @@ input{font-family:inherit}
       </div>
     </div>
   </sc-if>
+
+  <sc-if value="{{ kitPickerOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:85;display:flex;align-items:center;justify-content:center;padding:20px">
+      <div onClick="{{ closeKitPicker }}" style="position:absolute;inset:0;background:rgba(22,20,15,.55);backdrop-filter:blur(3px)"></div>
+      <div style="position:relative;width:min(100%,560px);max-height:88vh;overflow:hidden;background:#FFFCF2;border-radius:24px;border:1.5px solid #16140F;display:flex;flex-direction:column">
+        <div style="padding:24px 24px 16px;border-bottom:1px solid rgba(22,20,15,.12);display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+            <div style="display:flex;flex-direction:column;gap:2px">
+              <span style="font-family:var(--font-sans);font-weight:700;font-size:22px;letter-spacing:-.01em">Elegí tus 4 perfumes</span>
+              <span style="font-size:13px;color:#5E584B">{{ kitCount }}/4 elegidos</span>
+            </div>
+            <button onClick="{{ closeKitPicker }}" style="width:36px;height:36px;border-radius:50%;border:1px solid #16140F;background:#FFFFFF;font-size:14px;flex-shrink:0">✕</button>
+          </div>
+          <input value="{{ kitQ }}" onChange="{{ onKitQ }}" placeholder="Buscar perfume…" style="width:100%;border:1px solid #16140F;border-radius:10px;padding:11px 14px;font-size:15px;background:#FFFFFF;outline:none"></input>
+        </div>
+        <div style="flex:1;overflow:auto;padding:8px 24px">
+          <sc-for list="{{ kitList }}" as="p" hint-placeholder-count="0">
+            <div onClick="{{ p.toggle }}" style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid rgba(22,20,15,.1);cursor:pointer;opacity:{{ p.op }}">
+              <div style="width:40px;height:40px;border-radius:9px;background:#F3EEDD;overflow:hidden;flex-shrink:0"><img src="{{ p.img }}" alt="{{ p.name }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain"></img></div>
+              <span style="flex:1;font-weight:600;font-size:15px">{{ p.name }}</span>
+              <span style="width:26px;height:26px;border-radius:50%;border:1.5px solid #16140F;display:grid;place-items:center;background:{{ p.dotBg }};color:{{ p.dotFg }};font-size:13px;flex-shrink:0">{{ p.dotTxt }}</span>
+            </div>
+          </sc-for>
+          <sc-if value="{{ kitNoResults }}" hint-placeholder-val="{{ false }}">
+            <div style="text-align:center;padding:40px 0;color:#5E584B">Sin resultados para "{{ kitQ }}".</div>
+          </sc-if>
+        </div>
+        <div style="padding:16px 24px 24px;border-top:1px solid rgba(22,20,15,.12)">
+          <button onClick="{{ confirmKitPicks }}" style="width:100%;background:{{ kitConfirmBg }};color:{{ kitConfirmFg }};border:none;border-radius:9px;padding:15px;font-weight:700;font-size:15px;cursor:{{ kitConfirmCursor }}">{{ kitConfirmLabel }}</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;whatsapp&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;5493516598378&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;autoRotate&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
 class Component extends DCLogic {
-  state = { w: typeof window !== 'undefined' ? window.innerWidth : 1280, idx: 0, q: '', cat: 'todos', view: 'home', cart: [], open: false, now: Date.now(), method: 'andreani', cp: '', cpErr: false, done: false, toast: null, paused: false, dragging: false, dragDeg: 0, scrolled: false, catHover: -1, sprayed: false, detail: null, detailQty: 1, infoOpen: false, formNombre: '', formApellido: '', formTelefono: '', formDireccion: '', formEmail: '', formZona: '', formErr: false, products: [] };
+  state = { w: typeof window !== 'undefined' ? window.innerWidth : 1280, idx: 0, q: '', cat: 'todos', view: 'home', cart: [], open: false, now: Date.now(), method: 'andreani', cp: '', cpErr: false, done: false, toast: null, paused: false, dragging: false, dragDeg: 0, scrolled: false, catHover: -1, sprayed: false, detail: null, detailQty: 1, infoOpen: false, formNombre: '', formApellido: '', formTelefono: '', formDireccion: '', formEmail: '', formZona: '', formErr: false, products: [], offer: null, kitPicker: false, kitPicks: [], kitQ: '' };
 
   SUPABASE_URL = 'https://eismbrnbuhqmrpvkamxj.supabase.co';
   SUPABASE_KEY = 'sb_publishable_vezM1qG5XGm3wVJgdHx0ig_ujua9Oab';
@@ -571,6 +608,27 @@ class Component extends DCLogic {
     this.onResize = () => this.setState({ w: window.innerWidth });
     window.addEventListener('resize', this.onResize);
     this.loadProducts();
+    this.loadOffer();
+
+    try {
+      const savedCart = JSON.parse(localStorage.getItem('dc_cart') || '[]');
+      if (Array.isArray(savedCart) && savedCart.length) this.setState({ cart: savedCart });
+    } catch (e) {}
+
+    this.onPopState = () => { if (this.state.view === 'catalog') this.setState({ view: 'home' }); };
+    window.addEventListener('popstate', this.onPopState);
+  }
+  persistCart(cart) {
+    try { localStorage.setItem('dc_cart', JSON.stringify(cart)); } catch (e) {}
+  }
+  openCatalogView(cat) {
+    this.setState({ view: 'catalog', cat: cat || 'todos', q: '' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    history.pushState({ dcView: 'catalog' }, '', '#catalogo');
+  }
+  closeCatalogView() {
+    if (history.state && history.state.dcView === 'catalog') history.back();
+    else this.setState({ view: 'home' });
   }
   async loadProducts() {
     try {
@@ -581,6 +639,16 @@ class Component extends DCLogic {
       this.setState({ products });
     } catch (e) {
       console.error('No se pudo cargar el catálogo desde Supabase', e);
+    }
+  }
+  async loadOffer() {
+    try {
+      this.db = this.db || window.supabase.createClient(this.SUPABASE_URL, this.SUPABASE_KEY);
+      const { data, error } = await this.db.from('offer').select('*').eq('id', 'main').single();
+      if (error) throw error;
+      this.setState({ offer: data });
+    } catch (e) {
+      console.error('No se pudo cargar la oferta', e);
     }
   }
   saveOrder(payload) {
@@ -674,6 +742,7 @@ class Component extends DCLogic {
     window.removeEventListener('scroll', this.onHeaderScroll);
     window.removeEventListener('mousemove', this.mm);
     window.removeEventListener('resize', this.onResize);
+    window.removeEventListener('popstate', this.onPopState);
   }
 
   setupFx() {
@@ -748,19 +817,47 @@ class Component extends DCLogic {
   }
   wa() { return this.props.whatsapp || '5493516598378'; }
   waLink(msg) { return `https://wa.me/${this.wa()}?text=${encodeURIComponent(msg)}`; }
-  find(id) { return id === 'kit' ? this.KIT : this.state.products.find(p => p.id === id); }
+  find(id) { return id === 'kit' ? { ...this.KIT, price: this.state.offer ? this.state.offer.price : this.KIT.price, name: this.state.offer ? this.state.offer.name : this.KIT.name } : this.state.products.find(p => p.id === id); }
 
   add(id, qty = 1) {
     this.setState(s => {
       const c = s.cart.slice(); const i = c.findIndex(x => x.id === id);
       if (i >= 0) c[i] = { ...c[i], qty: c[i].qty + qty }; else c.push({ id, qty });
+      this.persistCart(c);
       return { cart: c, toast: this.find(id).name, done: false };
     });
     clearTimeout(this.tt); this.tt = setTimeout(() => this.setState({ toast: null }), 1800);
   }
   openDetail(id) { this.setState({ detail: id, detailQty: 1 }); }
   setQty(id, d) {
-    this.setState(s => ({ cart: s.cart.map(x => x.id === id ? { ...x, qty: x.qty + d } : x).filter(x => x.qty > 0) }));
+    this.setState(s => {
+      const c = s.cart.map(x => x.id === id ? { ...x, qty: x.qty + d } : x).filter(x => x.qty > 0);
+      this.persistCart(c);
+      return { cart: c };
+    });
+  }
+  openKitPicker(preSelected) {
+    this.setState({ kitPicker: true, kitPicks: preSelected || [], kitQ: '' });
+  }
+  toggleKitPick(id) {
+    this.setState(s => {
+      const has = s.kitPicks.includes(id);
+      if (!has && s.kitPicks.length >= 4) return {};
+      return { kitPicks: has ? s.kitPicks.filter(x => x !== id) : s.kitPicks.concat(id) };
+    });
+  }
+  confirmKitPicks() {
+    const s = this.state;
+    if (s.kitPicks.length !== 4) return;
+    const picks = s.kitPicks.map(id => { const p = s.products.find(x => x.id === id); return { id, name: p ? p.name : id }; });
+    this.setState(st => {
+      const c = st.cart.slice();
+      const i = c.findIndex(x => x.id === 'kit');
+      if (i >= 0) c[i] = { ...c[i], picks }; else c.push({ id: 'kit', qty: 1, picks });
+      this.persistCart(c);
+      return { cart: c, kitPicker: false, toast: 'Kit Descubrimiento', done: false };
+    });
+    clearTimeout(this.tt); this.tt = setTimeout(() => this.setState({ toast: null }), 1800);
   }
   scrollTo(id) {
     const el = document.getElementById(id);
@@ -807,13 +904,17 @@ class Component extends DCLogic {
       };
     });
 
-    const end = new Date(s.now); end.setDate(end.getDate() + ((7 - end.getDay()) % 7)); end.setHours(23, 59, 59, 0);
-    let rem = Math.max(0, Math.floor((end - s.now) / 1000));
+    const offer = s.offer;
+    const offerEnd = offer && offer.end_at ? new Date(offer.end_at).getTime() : null;
+    const offerExpired = offerEnd != null && offerEnd <= s.now;
+    const showOffer = !!offer && offer.active !== false && !offerExpired;
+    let rem = offerEnd != null ? Math.max(0, Math.floor((offerEnd - s.now) / 1000)) : 0;
     const pad = n => String(n).padStart(2, '0');
     const countdown = [
       { v: pad(Math.floor(rem / 86400)), l: 'DÍAS' }, { v: pad(Math.floor(rem % 86400 / 3600)), l: 'HORAS' },
       { v: pad(Math.floor(rem % 3600 / 60)), l: 'MIN' }, { v: pad(rem % 60), l: 'SEG' }
     ];
+    const offerPct = offer && offer.before_price > 0 ? Math.round((1 - offer.price / offer.before_price) * 100) : 0;
 
     const detailP = s.detail ? this.find(s.detail) : null;
     const detailCatObj = detailP ? this.catOf(detailP.id) : null;
@@ -844,7 +945,7 @@ class Component extends DCLogic {
         notesColor: hasBg ? '#EDE7D6' : '#3c372a',
         arrowBg: hasBg ? '#FFFCF2' : '#16140F',
         arrowColor: hasBg ? '#16140F' : '#FFFCF2',
-        select: () => this.setState({ cat: c.id, q: '', view: 'catalog' }),
+        select: () => this.openCatalogView(c.id),
         enter: () => this.setState({ catHover: i }),
         rot: hovered ? 'rotate(-45deg)' : 'none',
         lift: hovered ? 'translate(-50%,-14px) rotate(-2deg) scale(1.05)' : 'translate(-50%,0)'
@@ -867,7 +968,14 @@ class Component extends DCLogic {
 
     const cartItems = s.cart.map(x => {
       const p = this.find(x.id);
-      return { ...p, qty: x.qty, lineTxt: `${this.fmt(p.price)} · ${x.id === 'kit' ? '4 × 5 ml' : '5 ml'}`, inc: () => this.setQty(x.id, 1), dec: () => this.setQty(x.id, -1) };
+      const isKit = x.id === 'kit';
+      return {
+        ...p, qty: x.qty, picks: x.picks, isKit,
+        picksTxt: isKit && x.picks ? x.picks.map(pk => pk.name).join(', ') : '',
+        lineTxt: `${this.fmt(p.price)} · ${isKit ? '4 × 5 ml' : '5 ml'}`,
+        editPicks: isKit ? () => this.openKitPicker((x.picks || []).map(pk => pk.id)) : null,
+        inc: () => this.setQty(x.id, 1), dec: () => this.setQty(x.id, -1)
+      };
     });
     const subtotal = cartItems.reduce((t, i) => t + i.price * i.qty, 0);
     const cartCount = s.cart.reduce((t, i) => t + i.qty, 0);
@@ -877,6 +985,8 @@ class Component extends DCLogic {
     return {
       desktop: !mobile, carScale: sc, carH: Math.round(470 * sc + 10), carTop: Math.round(40 / sc * sc),
       cartCount, ringItems, countdown,
+      showOffer, offerName: offer ? offer.name : '', offerDesc: offer ? offer.description : '',
+      offerPriceTxt: offer ? this.fmt(offer.price) : '', offerBeforeTxt: offer ? this.fmt(offer.before_price) : '', offerPct: `−${offerPct}%`,
       ringTransform: `translateZ(${-r}px) rotateY(${-s.idx * a + s.dragDeg}deg)`,
       ringTransition: s.dragging ? 'none' : 'transform .9s cubic-bezier(.2,.8,.2,1)',
       counter: `${pad(mod(s.idx, N) + 1)} / ${pad(N)}`,
@@ -884,7 +994,25 @@ class Component extends DCLogic {
       prev: () => this.setState(st => ({ idx: st.idx - 1 })),
       next: () => this.setState(st => ({ idx: st.idx + 1 })),
       pauseAuto: () => this.setState({ paused: true }), resumeAuto: () => this.setState({ paused: false }),
-      addKit: () => this.add('kit'),
+      addKit: () => { const existing = s.cart.find(x => x.id === 'kit'); this.openKitPicker(existing && existing.picks ? existing.picks.map(pk => pk.id) : []); },
+      kitPickerOpen: s.kitPicker, kitCount: s.kitPicks.length,
+      kitQ: s.kitQ, onKitQ: e => this.setState({ kitQ: e.target.value }),
+      kitList: s.products.filter(p => !s.kitQ || p.name.toLowerCase().includes(s.kitQ.toLowerCase())).map(p => {
+        const picked = s.kitPicks.includes(p.id);
+        const full = !picked && s.kitPicks.length >= 4;
+        return {
+          id: p.id, name: p.name, img: p.img, op: full ? .35 : 1,
+          dotBg: picked ? '#16140F' : '#FFFFFF', dotFg: picked ? '#FFD400' : '#16140F', dotTxt: picked ? '✓' : '',
+          toggle: () => this.toggleKitPick(p.id)
+        };
+      }),
+      kitNoResults: !!s.kitQ && !s.products.some(p => p.name.toLowerCase().includes(s.kitQ.toLowerCase())),
+      closeKitPicker: () => this.setState({ kitPicker: false }),
+      confirmKitPicks: () => this.confirmKitPicks(),
+      kitConfirmBg: s.kitPicks.length === 4 ? '#16140F' : '#EDE9DD',
+      kitConfirmFg: s.kitPicks.length === 4 ? '#FFFCF2' : '#8C8576',
+      kitConfirmCursor: s.kitPicks.length === 4 ? 'pointer' : 'default',
+      kitConfirmLabel: `Confirmar (${s.kitPicks.length}/4) →`,
       waHref: this.waLink('¡Hola Graciano! Quiero consultar por decants.'),
       waKitHref: this.waLink('¡Hola Graciano! Quiero armar mi Kit Descubrimiento de 4 decants.'),
       showToast: !!s.toast && !s.open, toast: s.toast,
@@ -901,7 +1029,7 @@ class Component extends DCLogic {
       setAndreani: () => this.setState({ method: 'andreani' }), setCba: () => this.setState({ method: 'cba' }),
       cp: s.cp, cpBorder: s.cpErr ? '#C0392B' : '#16140F',
       onCp: e => this.setState({ cp: e.target.value.replace(/\D/g, '').slice(0, 4), cpErr: false }),
-      shipNote: s.cpErr ? 'Ingresá un código postal válido (4 dígitos).' : s.cp.length === 4 ? `Envío a CP ${s.cp}: el costo de Andreani se calcula en el pago.` : 'Ingresá tu CP para calcular el envío a domicilio o sucursal.',
+      shipNote: s.cpErr ? 'Ingresá un código postal válido (4 dígitos).' : s.cp.length === 4 ? `Envío a CP ${s.cp} por Andreani: te confirmamos el costo por WhatsApp.` : 'Ingresá tu CP para el envío a domicilio o sucursal (el costo se coordina por WhatsApp).',
       checkoutLabel: 'Continuar →',
       checkout: () => this.setState({ infoOpen: true }),
       notAndreani: !isAndreani,
@@ -917,17 +1045,18 @@ class Component extends DCLogic {
       doneMsg: 'Te abrimos WhatsApp con el resumen de tu pedido: enviá el mensaje para confirmarlo con Graciano. Si no se abrió solo, escribinos directo.',
       backToCart: () => this.setState({ infoOpen: false }),
       confirmOrder: () => {
-        const items = cartItems.map(i => ({ id: i.id, name: i.name, qty: i.qty, price: i.price }));
+        const items = cartItems.map(i => ({ id: i.id, name: i.name, qty: i.qty, price: i.price, ...(i.isKit ? { picks: i.picks || [] } : {}) }));
+        const lineLabel = i => i.isKit && i.picksTxt ? `• ${i.qty}× ${i.name} (${i.picksTxt})` : `• ${i.qty}× ${i.name}`;
         let infoMsg;
         if (isAndreani) {
           if (s.cp.length !== 4) return this.setState({ cpErr: true, formErr: true });
           const valid = s.formNombre.trim() && s.formApellido.trim() && s.formTelefono.trim() && s.formDireccion.trim() && /\S+@\S+\.\S+/.test(s.formEmail);
           if (!valid) return this.setState({ formErr: true });
-          infoMsg = `¡Hola Graciano! Confirmo mi pedido por Andreani:\n${cartItems.map(i => `• ${i.qty}× ${i.name}`).join('\n')}\nTotal: ${this.fmt(subtotal)}\n\nDatos de envío:\n${s.formNombre} ${s.formApellido}\nTel: ${s.formTelefono}\nDirección: ${s.formDireccion}, CP ${s.cp}\nEmail para seguimiento: ${s.formEmail}`;
+          infoMsg = `¡Hola Graciano! Confirmo mi pedido por Andreani:\n${cartItems.map(lineLabel).join('\n')}\nTotal: ${this.fmt(subtotal)}\n\nDatos de envío:\n${s.formNombre} ${s.formApellido}\nTel: ${s.formTelefono}\nDirección: ${s.formDireccion}, CP ${s.cp}\nEmail para seguimiento: ${s.formEmail}`;
         } else {
           const valid = s.formNombre.trim() && s.formApellido.trim() && s.formTelefono.trim() && s.formZona.trim();
           if (!valid) return this.setState({ formErr: true });
-          infoMsg = `¡Hola Graciano! Quiero coordinar la entrega en Córdoba Capital:\n${cartItems.map(i => `• ${i.qty}× ${i.name}`).join('\n')}\nTotal: ${this.fmt(subtotal)}\n\nDatos:\n${s.formNombre} ${s.formApellido}\nTel: ${s.formTelefono}\nZona: ${s.formZona}`;
+          infoMsg = `¡Hola Graciano! Quiero coordinar la entrega en Córdoba Capital:\n${cartItems.map(lineLabel).join('\n')}\nTotal: ${this.fmt(subtotal)}\n\nDatos:\n${s.formNombre} ${s.formApellido}\nTel: ${s.formTelefono}\nZona: ${s.formZona}`;
         }
         window.open(this.waLink(infoMsg), '_blank');
         this.saveOrder({
@@ -936,14 +1065,18 @@ class Component extends DCLogic {
           direccion: isAndreani ? s.formDireccion.trim() : '', email: isAndreani ? s.formEmail.trim() : '',
           cp: isAndreani ? s.cp : '', zona: !isAndreani ? s.formZona.trim() : ''
         });
-        s.cart.forEach(it => { if (it.id !== 'kit') this.bumpStock(it.id, -5 * it.qty); });
+        s.cart.forEach(it => {
+          if (it.id === 'kit') (it.picks || []).forEach(pk => this.bumpStock(pk.id, -5 * it.qty));
+          else this.bumpStock(it.id, -5 * it.qty);
+        });
+        this.persistCart([]);
         this.setState({ done: true, cart: [], cp: '', infoOpen: false, formNombre: '', formApellido: '', formTelefono: '', formDireccion: '', formEmail: '', formZona: '', formErr: false });
       },
       q: s.q, onQ: e => this.setState({ q: e.target.value }),
       catCards, catChips, catSubtitle, showResetCat, resetCat: () => this.setState({ cat: 'todos', q: '' }), gridItems, noResults: gridItems.length === 0,
       isHome, isCatalog,
-      openCatalog: () => { this.setState({ view: 'catalog', cat: 'todos', q: '' }); window.scrollTo({ top: 0, behavior: 'smooth' }); },
-      closeCatalog: () => { this.setState({ view: 'home' }); setTimeout(() => this.scrollTo('categorias'), 60); },
+      openCatalog: () => this.openCatalogView('todos'),
+      closeCatalog: () => { this.closeCatalogView(); setTimeout(() => this.scrollTo('categorias'), 60); },
       goCategoriasSection: () => this.goHomeSection('categorias'),
       goOfertaSection: () => this.goHomeSection('oferta'),
       goNosotrosSection: () => this.goHomeSection('nosotros'),
