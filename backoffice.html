@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Backoffice — Decants Córdoba</title>
 <meta name="robots" content="noindex, nofollow">
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="https://unpkg.com/@supabase/supabase-js@2.119.0"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -647,7 +647,7 @@ class Component extends DCLogic {
     const cnt = f => s.orders.filter(f).length;
 
     const off = s.offer || { name: '', desc: '', price: 0, before: 0, on: true, endLocal: '' };
-    const pct = off.before > 0 ? Math.round((1 - off.price / off.before) * 100) : 0;
+    const pct = off.before > 0 ? Math.floor((1 - off.price / off.before) * 100) : 0;
     const prods = s.cf === 'Todos' ? s.products : s.products.filter(p => p.category === s.cf);
 
     return {

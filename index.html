@@ -70,7 +70,7 @@
 }
 </script>
 
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="https://unpkg.com/@supabase/supabase-js@2.119.0"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -146,7 +146,9 @@ input{font-family:inherit}
   <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
   <header id="top" style="position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;background:#16140F">
     <img data-hero-poster="1" src="assets/hero-poster.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 50%"></img>
-    <video data-hero-video="1" autoplay muted playsinline preload="auto" src="assets/hero-video.mp4" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 50%;pointer-events:none"></video>
+    <sc-if value="{{ showHeroVideo }}" hint-placeholder-val="{{ true }}">
+      <video data-hero-video="1" autoplay muted playsinline preload="none" src="assets/hero-video.mp4" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 50%;pointer-events:none"></video>
+    </sc-if>
     <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(22,20,15,.92) 0%,rgba(22,20,15,.78) 32%,rgba(22,20,15,.4) 60%,rgba(22,20,15,.15) 100%)"></div>
     <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(22,20,15,.55) 0%,rgba(22,20,15,0) 22%,rgba(22,20,15,0) 78%,rgba(22,20,15,.4) 100%)"></div>
 
@@ -340,6 +342,7 @@ input{font-family:inherit}
           <a href="https://www.instagram.com/decantscordoba/" target="_blank" rel="noopener" style="color:#16140F;display:inline-flex;align-items:center;padding:12px 0;margin:-12px 0">Instagram</a>
           <a href="{{ waHref }}" target="_blank" style="color:#16140F;display:inline-flex;align-items:center;padding:12px 0;margin:-12px 0">WhatsApp</a>
           <a href="#categorias" style="color:#16140F;display:inline-flex;align-items:center;padding:12px 0;margin:-12px 0">Catálogo</a>
+          <a href="terminos.html" style="color:#16140F;display:inline-flex;align-items:center;padding:12px 0;margin:-12px 0">Términos y cambios</a>
         </div>
       </div>
     </div>
@@ -415,7 +418,7 @@ input{font-family:inherit}
   </a>
 
   <sc-if value="{{ showToast }}" hint-placeholder-val="{{ false }}">
-    <div style="position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:60;background:#16140F;color:#FFFCF2;border:none;border-radius:10px;padding:13px 20px;font-weight:600;font-size:15px;box-shadow:0 10px 28px rgba(0,0,0,.3)">{{ toast }} agregado al carrito ✓</div>
+    <button onClick="{{ openCart }}" style="position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:60;background:#16140F;color:#FFFCF2;border:none;border-radius:10px;padding:13px 20px;font-weight:600;font-size:15px;box-shadow:0 10px 28px rgba(0,0,0,.3);cursor:pointer">{{ toast }} agregado al carrito ✓ — Ver carrito</button>
   </sc-if>
 
   <sc-if value="{{ cartOpen }}" hint-placeholder-val="{{ false }}">
@@ -991,7 +994,7 @@ class Component extends DCLogic {
       { v: pad(Math.floor(rem / 86400)), l: 'DÍAS' }, { v: pad(Math.floor(rem % 86400 / 3600)), l: 'HORAS' },
       { v: pad(Math.floor(rem % 3600 / 60)), l: 'MIN' }, { v: pad(rem % 60), l: 'SEG' }
     ];
-    const offerPct = offer && offer.before_price > 0 ? Math.round((1 - offer.price / offer.before_price) * 100) : 0;
+    const offerPct = offer && offer.before_price > 0 ? Math.floor((1 - offer.price / offer.before_price) * 100) : 0;
 
     const detailP = s.detail ? this.find(s.detail) : null;
     const detailCatObj = detailP ? this.catOf(detailP.id) : null;
@@ -1178,7 +1181,7 @@ class Component extends DCLogic {
       q: s.q, onQ: e => this.setState({ q: e.target.value }),
       sortBy: s.sortBy, onSortBy: e => this.setState({ sortBy: e.target.value }),
       catCards, catChips, catSubtitle, showResetCat, resetCat: () => this.setState({ cat: 'todos', q: '' }), gridItems, noResults: gridItems.length === 0,
-      isHome, isCatalog,
+      isHome, isCatalog, showHeroVideo: !mobile,
       openCatalog: () => this.openCatalogView('todos'),
       closeCatalog: () => { this.closeCatalogView(); setTimeout(() => this.scrollTo('categorias'), 60); },
       goCategoriasSection: () => this.goHomeSection('categorias'),
