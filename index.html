@@ -106,11 +106,11 @@ input{font-family:inherit}
 </helmet>
 <div style="min-height:100vh;background:#FFFCF2">
 
-  <div data-header-group="1" style="position:fixed;top:0;left:0;right:0;z-index:50;transform:{{ headerTransform }};transition:transform .4s cubic-bezier(.2,.8,.2,1)">
+  <div data-header-group="1" style="position:fixed;top:0;left:0;right:0;z-index:50;transform:{{ headerTransform }};box-shadow:{{ headerShadow }};transition:transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .3s">
   <div style="background:#16140F;color:#FFD400;overflow:hidden;height:36px;display:flex;align-items:center">
     <div data-marquee="1" style="display:flex;gap:48px;white-space:nowrap;font-family:var(--font-sans);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;will-change:transform">
       <span>Envíos a todo el país por Andreani</span><span>✦</span><span>Entregas en Córdoba Capital por WhatsApp</span><span>✦</span><span>Decants de 5 ml de frascos originales</span><span>✦</span><span>Atomizador de vidrio recargable</span><span>✦</span>
-      <span>Envíos a todo el país por Andreani</span><span>✦</span><span>Entregas en Córdoba Capital por WhatsApp</span><span>✦</span><span>Decants de 5 ml de frascos originales</span><span>✦</span><span>Atomizador de vidrio recargable</span><span>✦</span>
+      <span aria-hidden="true">Envíos a todo el país por Andreani</span><span aria-hidden="true">✦</span><span aria-hidden="true">Entregas en Córdoba Capital por WhatsApp</span><span aria-hidden="true">✦</span><span aria-hidden="true">Decants de 5 ml de frascos originales</span><span aria-hidden="true">✦</span><span aria-hidden="true">Atomizador de vidrio recargable</span><span aria-hidden="true">✦</span>
     </div>
   </div>
 
@@ -181,7 +181,7 @@ input{font-family:inherit}
     <div data-carousel="1" onMouseEnter="{{ pauseAuto }}" onMouseLeave="{{ resumeAuto }}" style="position:relative;height:{{ carH }}px;perspective:1600px;margin-top:20px;cursor:grab;touch-action:pan-y" style-active="cursor:grabbing">
       <div style="position:absolute;left:50%;top:{{ carTop }}px;zoom:{{ carScale }};width:290px;height:390px;margin-left:-145px;transform-style:preserve-3d;transform:{{ ringTransform }};transition:{{ ringTransition }}">
         <sc-for list="{{ ringItems }}" as="p" hint-placeholder-count="0">
-          <div onClick="{{ p.go }}" style="position:absolute;inset:0;transform:{{ p.transform }};opacity:{{ p.opacity }};transition:opacity .6s;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#FFFCF2;color:#16140F;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:10px;cursor:pointer;border:3px solid {{ p.border }};box-shadow:0 30px 60px rgba(0,0,0,.35)">
+          <div onClick="{{ p.go }}" onKeyDown="{{ p.goKey }}" role="button" tabindex="0" aria-label="Ver {{ p.name }}" style="position:absolute;inset:0;transform:{{ p.transform }};opacity:{{ p.opacity }};transition:opacity .6s;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#FFFCF2;color:#16140F;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:10px;cursor:pointer;border:3px solid {{ p.border }};box-shadow:0 30px 60px rgba(0,0,0,.35)">
             <div style="position:relative;height:216px;border-radius:16px;background:#F3EEDD;overflow:hidden">
               <img src="{{ p.img }}" alt="{{ p.name }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;object-position:center"></img>
               <span style="position:absolute;top:10px;left:10px;font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;font-size:11px;background:#16140F;color:#FFD400;padding:4px 8px;border-radius:999px">5 ML</span>
@@ -197,9 +197,9 @@ input{font-family:inherit}
     </div>
 
     <div style="display:flex;justify-content:center;align-items:center;gap:20px">
-      <button onClick="{{ prev }}" style="width:52px;height:52px;border-radius:50%;border:1px solid rgba(22,20,15,.3);background:transparent;color:#16140F;font-size:18px" style-hover="border-color:#16140F;background:#16140F;color:#FFD400">←</button>
+      <button onClick="{{ prev }}" aria-label="Perfume anterior" style="width:52px;height:52px;border-radius:50%;border:1px solid rgba(22,20,15,.3);background:transparent;color:#16140F;font-size:18px" style-hover="border-color:#16140F;background:#16140F;color:#FFD400">←</button>
       <span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-size:13px;min-width:80px;text-align:center;color:#16140F">{{ counter }}</span>
-      <button onClick="{{ next }}" style="width:52px;height:52px;border-radius:50%;border:1px solid rgba(22,20,15,.3);background:transparent;color:#16140F;font-size:18px" style-hover="border-color:#16140F;background:#16140F;color:#FFD400">→</button>
+      <button onClick="{{ next }}" aria-label="Siguiente perfume" style="width:52px;height:52px;border-radius:50%;border:1px solid rgba(22,20,15,.3);background:transparent;color:#16140F;font-size:18px" style-hover="border-color:#16140F;background:#16140F;color:#FFD400">→</button>
     </div>
   </section>
 
@@ -214,7 +214,7 @@ input{font-family:inherit}
 
     <div data-reveal="40" class="cat-grid" style="margin-bottom:32px">
       <sc-for list="{{ catCards }}" as="c" hint-placeholder-count="6">
-        <div onClick="{{ c.select }}" onMouseEnter="{{ c.enter }}" onMouseLeave="{{ catLeave }}" style="position:relative;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;height:390px;padding:32px;border-radius:24px;background:{{ c.cardBg }};overflow:hidden">
+        <div onClick="{{ c.select }}" onKeyDown="{{ c.selectKey }}" onMouseEnter="{{ c.enter }}" onMouseLeave="{{ catLeave }}" role="button" tabindex="0" aria-label="Ver perfumes {{ c.title }}" style="position:relative;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;height:390px;padding:32px;border-radius:24px;background:{{ c.cardBg }};overflow:hidden">
           <sc-if value="{{ c.hasBg }}" hint-placeholder-val="{{ false }}">
             <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,20,15,.08) 0%,rgba(22,20,15,.62) 100%);z-index:0"></div>
           </sc-if>
@@ -337,9 +337,9 @@ input{font-family:inherit}
           <span>Decants Córdoba — Graciano · Córdoba, Argentina</span>
         </div>
         <div style="display:flex;gap:22px">
-          <a href="https://www.instagram.com/decantscordoba/" target="_blank" rel="noopener" style="color:#16140F">Instagram</a>
-          <a href="{{ waHref }}" target="_blank" style="color:#16140F">WhatsApp</a>
-          <a href="#categorias" style="color:#16140F">Catálogo</a>
+          <a href="https://www.instagram.com/decantscordoba/" target="_blank" rel="noopener" style="color:#16140F;display:inline-flex;align-items:center;padding:12px 0;margin:-12px 0">Instagram</a>
+          <a href="{{ waHref }}" target="_blank" style="color:#16140F;display:inline-flex;align-items:center;padding:12px 0;margin:-12px 0">WhatsApp</a>
+          <a href="#categorias" style="color:#16140F;display:inline-flex;align-items:center;padding:12px 0;margin:-12px 0">Catálogo</a>
         </div>
       </div>
     </div>
@@ -360,7 +360,7 @@ input{font-family:inherit}
     <div style="position:sticky;top:108px;z-index:40;background:#FFFCF2;padding-top:4px;padding-bottom:16px;margin-bottom:12px;border-bottom:1px solid rgba(22,20,15,.1)">
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
         <sc-for list="{{ catChips }}" as="c" hint-placeholder-count="7">
-          <button onClick="{{ c.select }}" style="background:{{ c.bg }};color:{{ c.fg }};border:1px solid {{ c.border }};border-radius:9px;padding:9px 15px;font-size:14px;font-weight:600">{{ c.label }}</button>
+          <button onClick="{{ c.select }}" aria-pressed="{{ c.pressed }}" style="background:{{ c.bg }};color:{{ c.fg }};border:1px solid {{ c.border }};border-radius:9px;padding:9px 15px;font-size:14px;font-weight:600">{{ c.label }}</button>
         </sc-for>
       </div>
 
@@ -370,15 +370,22 @@ input{font-family:inherit}
 
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
         <span style="font-family:var(--font-sans);font-size:12px;color:#5E584B">{{ catSubtitle }}</span>
-        <sc-if value="{{ showResetCat }}" hint-placeholder-val="{{ false }}">
-          <button onClick="{{ resetCat }}" style="background:transparent;border:none;font-size:13px;font-weight:600;text-decoration:underline;text-underline-offset:3px;color:#16140F;white-space:nowrap">Ver todos los perfumes</button>
-        </sc-if>
+        <div style="display:flex;align-items:center;gap:10px">
+          <sc-if value="{{ showResetCat }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ resetCat }}" style="background:transparent;border:none;font-size:13px;font-weight:600;text-decoration:underline;text-underline-offset:3px;color:#16140F;white-space:nowrap">Ver todos los perfumes</button>
+          </sc-if>
+          <select aria-label="Ordenar" value="{{ sortBy }}" onChange="{{ onSortBy }}" style="border:1px solid #16140F;border-radius:8px;padding:7px 10px;font-size:13px;font-weight:600;background:#FFFFFF">
+            <option value="pedidos">Más pedidos</option>
+            <option value="asc">Precio: menor a mayor</option>
+            <option value="desc">Precio: mayor a menor</option>
+          </select>
+        </div>
       </div>
     </div>
 
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:16px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(44%,200px),1fr));gap:16px">
       <sc-for list="{{ gridItems }}" as="p" hint-placeholder-count="12">
-        <div onClick="{{ p.open }}" style="display:flex;flex-direction:column;gap:10px;background:#FFFFFF;border:1px solid rgba(22,20,15,.18);border-radius:16px;padding:14px;overflow:hidden;cursor:pointer">
+        <div onClick="{{ p.open }}" onKeyDown="{{ p.openKey }}" role="button" tabindex="0" aria-label="Ver {{ p.name }}" style="display:flex;flex-direction:column;gap:10px;background:#FFFFFF;border:1px solid rgba(22,20,15,.18);border-radius:16px;padding:14px;overflow:hidden;cursor:pointer">
           <div style="position:relative;aspect-ratio:1;border-radius:12px;background:#F3EEDD;overflow:hidden">
             <img src="{{ p.img }}" alt="{{ p.name }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;object-position:center"></img>
           </div>
@@ -391,7 +398,7 @@ input{font-family:inherit}
               <span style="font-family:var(--font-sans);font-weight:700;font-size:19px;letter-spacing:-.02em;font-variant-numeric:tabular-nums">{{ p.priceTxt }}</span>
               <span style="font-family:var(--font-sans);font-weight:600;letter-spacing:.12em;font-size:11px;color:#5E584B">5 ML</span>
             </div>
-            <button onClick="{{ p.add }}" style="background:#16140F;border:none;border-radius:8px;padding:8px 14px;font-weight:600;font-size:13px;color:#FFFCF2" style-hover="background:#33301f">+</button>
+            <button onClick="{{ p.add }}" aria-label="Agregar {{ p.name }} al carrito" style="background:#16140F;border:none;border-radius:8px;padding:8px 14px;font-weight:600;font-size:13px;color:#FFFCF2" style-hover="background:#33301f">+</button>
           </div>
         </div>
       </sc-for>
@@ -414,10 +421,10 @@ input{font-family:inherit}
   <sc-if value="{{ cartOpen }}" hint-placeholder-val="{{ false }}">
     <div style="position:fixed;inset:0;z-index:70;display:flex;justify-content:flex-end">
       <div onClick="{{ closeCart }}" style="position:absolute;inset:0;background:rgba(22,20,15,.5);backdrop-filter:blur(3px)"></div>
-      <div style="position:relative;width:min(100%,440px);height:100%;background:#FFFCF2;display:flex;flex-direction:column;border-left:2px solid #16140F">
+      <div role="dialog" aria-modal="true" aria-label="Tu carrito" style="position:relative;width:min(100%,440px);height:100%;background:#FFFCF2;display:flex;flex-direction:column;border-left:2px solid #16140F">
         <div style="display:flex;justify-content:space-between;align-items:center;padding:22px 24px;border-bottom:1.5px solid #16140F">
           <span style="font-family:var(--font-sans);font-weight:700;font-size:28px;letter-spacing:-.01em">Tu carrito</span>
-          <button onClick="{{ closeCart }}" style="width:40px;height:40px;border-radius:50%;border:1px solid #16140F;background:transparent;font-size:16px">✕</button>
+          <button data-cart-close onClick="{{ closeCart }}" aria-label="Cerrar carrito" style="width:40px;height:40px;border-radius:50%;border:1px solid #16140F;background:transparent;font-size:16px">✕</button>
         </div>
 
         <sc-if value="{{ done }}" hint-placeholder-val="{{ false }}">
@@ -451,9 +458,9 @@ input{font-family:inherit}
                   </sc-if>
                 </div>
                 <div style="display:flex;align-items:center;gap:6px">
-                  <button onClick="{{ it.dec }}" style="width:28px;height:28px;border-radius:50%;border:1px solid #16140F;background:transparent">−</button>
+                  <button onClick="{{ it.dec }}" aria-label="Restar {{ it.name }}" style="width:40px;height:40px;border-radius:50%;border:1px solid #16140F;background:transparent">−</button>
                   <span style="font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;min-width:18px;text-align:center">{{ it.qty }}</span>
-                  <button onClick="{{ it.inc }}" style="width:28px;height:28px;border-radius:50%;border:none;background:#16140F;color:#FFFCF2">+</button>
+                  <button onClick="{{ it.inc }}" aria-label="Sumar {{ it.name }}" style="width:40px;height:40px;border-radius:50%;border:none;background:#16140F;color:#FFFCF2">+</button>
                 </div>
               </div>
             </sc-for>
@@ -482,19 +489,40 @@ input{font-family:inherit}
           <div style="flex:1;overflow:auto;padding:20px 24px;display:flex;flex-direction:column;gap:16px">
             <button onClick="{{ backToCart }}" style="align-self:flex-start;background:transparent;border:none;padding:0;font-size:13px;font-weight:600;text-decoration:underline;text-underline-offset:3px;color:#16140F">← Volver al carrito</button>
             <span style="font-family:var(--font-sans);font-size:11px;font-weight:600;color:#5E584B;letter-spacing:.12em">{{ infoTitle }}</span>
-            <input value="{{ formNombre }}" onChange="{{ onFormNombre }}" placeholder="Nombre" style="width:100%;border:1.5px solid #16140F;border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
-            <input value="{{ formApellido }}" onChange="{{ onFormApellido }}" placeholder="Apellido" style="width:100%;border:1.5px solid #16140F;border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
-            <input value="{{ formTelefono }}" onChange="{{ onFormTelefono }}" placeholder="Teléfono" inputmode="tel" style="border:1.5px solid #16140F;border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
+            <label style="display:flex;flex-direction:column;gap:5px">
+              <span style="font-size:12px;font-weight:600;color:#5E584B">Nombre</span>
+              <input value="{{ formNombre }}" onChange="{{ onFormNombre }}" autocomplete="given-name" style="width:100%;border:1.5px solid {{ nombreBorder }};border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:5px">
+              <span style="font-size:12px;font-weight:600;color:#5E584B">Apellido</span>
+              <input value="{{ formApellido }}" onChange="{{ onFormApellido }}" autocomplete="family-name" style="width:100%;border:1.5px solid {{ apellidoBorder }};border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:5px">
+              <span style="font-size:12px;font-weight:600;color:#5E584B">Teléfono</span>
+              <input value="{{ formTelefono }}" onChange="{{ onFormTelefono }}" autocomplete="tel" inputmode="tel" style="border:1.5px solid {{ telefonoBorder }};border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none;width:100%"></input>
+            </label>
             <sc-if value="{{ isAndreani }}" hint-placeholder-val="{{ true }}">
-              <input value="{{ formDireccion }}" onChange="{{ onFormDireccion }}" placeholder="Dirección (calle, número, ciudad)" style="border:1.5px solid #16140F;border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
+              <label style="display:flex;flex-direction:column;gap:5px">
+                <span style="font-size:12px;font-weight:600;color:#5E584B">Dirección (calle, número, ciudad)</span>
+                <input value="{{ formDireccion }}" onChange="{{ onFormDireccion }}" autocomplete="street-address" style="border:1.5px solid {{ direccionBorder }};border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none;width:100%"></input>
+              </label>
               <div style="display:flex;flex-direction:column;gap:6px">
-                <input value="{{ cp }}" onChange="{{ onCp }}" placeholder="Código postal" inputmode="numeric" style="border:1.5px solid {{ cpBorder }};border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
+                <label style="display:flex;flex-direction:column;gap:5px">
+                  <span style="font-size:12px;font-weight:600;color:#5E584B">Código postal</span>
+                  <input value="{{ cp }}" onChange="{{ onCp }}" autocomplete="postal-code" inputmode="numeric" style="border:1.5px solid {{ cpBorder }};border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none;width:100%"></input>
+                </label>
                 <span style="font-size:12px;color:#5E584B">{{ shipNote }}</span>
               </div>
-              <input value="{{ formEmail }}" onChange="{{ onFormEmail }}" placeholder="Email (para el seguimiento del pedido)" type="email" style="border:1.5px solid #16140F;border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
+              <label style="display:flex;flex-direction:column;gap:5px">
+                <span style="font-size:12px;font-weight:600;color:#5E584B">Email (para el seguimiento del pedido)</span>
+                <input value="{{ formEmail }}" onChange="{{ onFormEmail }}" autocomplete="email" type="email" style="border:1.5px solid {{ emailBorder }};border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none;width:100%"></input>
+              </label>
             </sc-if>
             <sc-if value="{{ notAndreani }}" hint-placeholder-val="{{ false }}">
-              <input value="{{ formZona }}" onChange="{{ onFormZona }}" placeholder="Zona o barrio para coordinar la entrega" style="border:1.5px solid #16140F;border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none"></input>
+              <label style="display:flex;flex-direction:column;gap:5px">
+                <span style="font-size:12px;font-weight:600;color:#5E584B">Zona o barrio para coordinar la entrega</span>
+                <input value="{{ formZona }}" onChange="{{ onFormZona }}" autocomplete="address-level2" style="border:1.5px solid {{ zonaBorder }};border-radius:10px;padding:12px 14px;font-size:15px;background:#FFFCF2;outline:none;width:100%"></input>
+              </label>
             </sc-if>
             <sc-if value="{{ formErr }}" hint-placeholder-val="{{ false }}">
               <span style="font-size:13px;color:#C0392B">{{ formErrMsg }}</span>
@@ -515,8 +543,8 @@ input{font-family:inherit}
   <sc-if value="{{ detailOpen }}" hint-placeholder-val="{{ false }}">
     <div style="position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:20px">
       <div onClick="{{ closeDetail }}" style="position:absolute;inset:0;background:rgba(22,20,15,.55);backdrop-filter:blur(3px)"></div>
-      <div style="position:relative;width:min(100%,520px);max-height:88vh;overflow:auto;background:#FFFCF2;border-radius:24px;border:1.5px solid #16140F;padding:28px;display:flex;flex-direction:column;gap:18px">
-        <button onClick="{{ closeDetail }}" style="position:absolute;top:18px;right:18px;width:36px;height:36px;border-radius:50%;border:1px solid #16140F;background:#FFFFFF;font-size:14px">✕</button>
+      <div role="dialog" aria-modal="true" aria-label="{{ detailName }}" style="position:relative;width:min(100%,520px);max-height:88vh;overflow:auto;background:#FFFCF2;border-radius:24px;border:1.5px solid #16140F;padding:28px;display:flex;flex-direction:column;gap:18px">
+        <button data-detail-close onClick="{{ closeDetail }}" aria-label="Cerrar" style="position:absolute;top:18px;right:18px;width:36px;height:36px;border-radius:50%;border:1px solid #16140F;background:#FFFFFF;font-size:14px">✕</button>
         <div style="display:flex;gap:18px;align-items:center;padding-right:30px">
           <div style="width:110px;height:110px;flex-shrink:0;border-radius:14px;background:#F3EEDD;overflow:hidden">
             <img src="{{ detailImg }}" alt="{{ detailName }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;object-position:center"></img>
@@ -541,14 +569,14 @@ input{font-family:inherit}
   <sc-if value="{{ kitPickerOpen }}" hint-placeholder-val="{{ false }}">
     <div style="position:fixed;inset:0;z-index:85;display:flex;align-items:center;justify-content:center;padding:20px">
       <div onClick="{{ closeKitPicker }}" style="position:absolute;inset:0;background:rgba(22,20,15,.55);backdrop-filter:blur(3px)"></div>
-      <div style="position:relative;width:min(100%,560px);max-height:88vh;overflow:hidden;background:#FFFCF2;border-radius:24px;border:1.5px solid #16140F;display:flex;flex-direction:column">
+      <div role="dialog" aria-modal="true" aria-label="Elegí tus 4 perfumes" style="position:relative;width:min(100%,560px);max-height:88vh;overflow:hidden;background:#FFFCF2;border-radius:24px;border:1.5px solid #16140F;display:flex;flex-direction:column">
         <div style="padding:24px 24px 16px;border-bottom:1px solid rgba(22,20,15,.12);display:flex;flex-direction:column;gap:10px">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
             <div style="display:flex;flex-direction:column;gap:2px">
               <span style="font-family:var(--font-sans);font-weight:700;font-size:22px;letter-spacing:-.01em">Elegí tus 4 perfumes</span>
               <span style="font-size:13px;color:#5E584B">{{ kitCount }}/4 elegidos</span>
             </div>
-            <button onClick="{{ closeKitPicker }}" style="width:36px;height:36px;border-radius:50%;border:1px solid #16140F;background:#FFFFFF;font-size:14px;flex-shrink:0">✕</button>
+            <button data-kit-close onClick="{{ closeKitPicker }}" aria-label="Cerrar" style="width:36px;height:36px;border-radius:50%;border:1px solid #16140F;background:#FFFFFF;font-size:14px;flex-shrink:0">✕</button>
           </div>
           <input value="{{ kitQ }}" onChange="{{ onKitQ }}" placeholder="Buscar perfume…" style="width:100%;border:1px solid #16140F;border-radius:10px;padding:11px 14px;font-size:15px;background:#FFFFFF;outline:none"></input>
         </div>
@@ -574,7 +602,7 @@ input{font-family:inherit}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;whatsapp&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;5493516598378&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;autoRotate&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
 class Component extends DCLogic {
-  state = { w: typeof window !== 'undefined' ? window.innerWidth : 1280, idx: 0, q: '', cat: 'todos', view: 'home', cart: [], open: false, now: Date.now(), method: 'andreani', cp: '', cpErr: false, done: false, toast: null, paused: false, dragging: false, dragDeg: 0, scrolled: false, catHover: -1, sprayed: false, detail: null, detailQty: 1, infoOpen: false, formNombre: '', formApellido: '', formTelefono: '', formDireccion: '', formEmail: '', formZona: '', formErr: false, products: [], offer: null, kitPicker: false, kitPicks: [], kitQ: '' };
+  state = { w: typeof window !== 'undefined' ? window.innerWidth : 1280, idx: 0, q: '', cat: 'todos', view: 'home', cart: [], open: false, now: Date.now(), method: 'andreani', cp: '', cpErr: false, done: false, toast: null, paused: false, dragging: false, dragDeg: 0, scrolled: false, catHover: -1, sprayed: false, detail: null, detailQty: 1, infoOpen: false, formNombre: '', formApellido: '', formTelefono: '', formDireccion: '', formEmail: '', formZona: '', formErr: false, products: [], offer: null, kitPicker: false, kitPicks: [], kitQ: '', sortBy: 'pedidos' };
 
   SUPABASE_URL = 'https://eismbrnbuhqmrpvkamxj.supabase.co';
   SUPABASE_KEY = 'sb_publishable_vezM1qG5XGm3wVJgdHx0ig_ujua9Oab';
@@ -617,6 +645,15 @@ class Component extends DCLogic {
 
     this.onPopState = () => { if (this.state.view === 'catalog') this.setState({ view: 'home' }); };
     window.addEventListener('popstate', this.onPopState);
+
+    this.onEscKey = e => {
+      if (e.key !== 'Escape') return;
+      const s = this.state;
+      if (s.kitPicker) { this.setState({ kitPicker: false }); this.syncBodyScroll(); }
+      else if (s.detail) { this.setState({ detail: null }); this.syncBodyScroll(); }
+      else if (s.open) { this.setState({ open: false }); this.syncBodyScroll(); }
+    };
+    window.addEventListener('keydown', this.onEscKey);
   }
   persistCart(cart) {
     try { localStorage.setItem('dc_cart', JSON.stringify(cart)); } catch (e) {}
@@ -743,6 +780,7 @@ class Component extends DCLogic {
     window.removeEventListener('mousemove', this.mm);
     window.removeEventListener('resize', this.onResize);
     window.removeEventListener('popstate', this.onPopState);
+    window.removeEventListener('keydown', this.onEscKey);
   }
 
   setupFx() {
@@ -818,6 +856,7 @@ class Component extends DCLogic {
   wa() { return this.props.whatsapp || '5493516598378'; }
   waLink(msg) { return `https://wa.me/${this.wa()}?text=${encodeURIComponent(msg)}`; }
   find(id) { return id === 'kit' ? { ...this.KIT, price: this.state.offer ? this.state.offer.price : this.KIT.price, name: this.state.offer ? this.state.offer.name : this.KIT.name } : this.state.products.find(p => p.id === id); }
+  keyActivate(fn) { return e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn(); } }; }
 
   add(id, qty = 1) {
     this.setState(s => {
@@ -828,7 +867,18 @@ class Component extends DCLogic {
     });
     clearTimeout(this.tt); this.tt = setTimeout(() => this.setState({ toast: null }), 1800);
   }
-  openDetail(id) { this.setState({ detail: id, detailQty: 1 }); }
+  syncBodyScroll() {
+    const s = this.state;
+    document.body.style.overflow = (s.open || s.detail || s.kitPicker) ? 'hidden' : '';
+  }
+  focusModal(selector) {
+    setTimeout(() => { const el = document.querySelector(selector); if (el) el.focus(); }, 60);
+  }
+  openDetail(id) {
+    this.setState({ detail: id, detailQty: 1 });
+    this.syncBodyScroll();
+    this.focusModal('[data-detail-close]');
+  }
   setQty(id, d) {
     this.setState(s => {
       const c = s.cart.map(x => x.id === id ? { ...x, qty: x.qty + d } : x).filter(x => x.qty > 0);
@@ -838,6 +888,8 @@ class Component extends DCLogic {
   }
   openKitPicker(preSelected) {
     this.setState({ kitPicker: true, kitPicks: preSelected || [], kitQ: '' });
+    this.syncBodyScroll();
+    this.focusModal('[data-kit-close]');
   }
   toggleKitPick(id) {
     this.setState(s => {
@@ -857,6 +909,7 @@ class Component extends DCLogic {
       this.persistCart(c);
       return { cart: c, kitPicker: false, toast: 'Kit Descubrimiento', done: false };
     });
+    this.syncBodyScroll();
     clearTimeout(this.tt); this.tt = setTimeout(() => this.setState({ toast: null }), 1800);
   }
   scrollTo(id) {
@@ -900,6 +953,7 @@ class Component extends DCLogic {
         opacity: d === 0 ? 1 : Math.abs(d) === 1 ? .8 : .25,
         border: d === 0 ? '#FFD400' : '#16140F',
         go: () => d === 0 ? this.openDetail(p.id) : this.setState(st => ({ idx: st.idx + d })),
+        goKey: this.keyActivate(() => d === 0 ? this.openDetail(p.id) : this.setState(st => ({ idx: st.idx + d }))),
         add: e => { e.stopPropagation(); this.add(p.id); }
       };
     });
@@ -918,16 +972,29 @@ class Component extends DCLogic {
 
     const detailP = s.detail ? this.find(s.detail) : null;
     const detailCatObj = detailP ? this.catOf(detailP.id) : null;
-    const qNorm = s.q.trim().toLowerCase();
+    const norm = str => (str || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+    const qNorm = norm(s.q.trim());
+    const qTokens = qNorm.split(/\s+/).filter(Boolean);
     const activeCat = s.cat || 'todos';
-    const byCat = (activeCat === 'todos' ? this.state.products : this.state.products.filter(p => p.category === activeCat)).filter(p => p.stock_ml > 0);
-    const gridList = qNorm ? byCat.filter(p => p.name.toLowerCase().includes(qNorm)) : byCat;
-    const gridItems = gridList.map(p => {
+    const inStock = p => p.stock_ml > 0;
+    const byCat = (activeCat === 'todos' ? this.state.products : this.state.products.filter(p => p.category === activeCat)).filter(inStock);
+    const gridList = qTokens.length
+      ? this.state.products.filter(inStock).filter(p => {
+          const cat = this.catOf(p.id);
+          const haystack = norm(`${p.name} ${p.house || ''} ${cat ? cat.notes + ' ' + cat.title : ''}`);
+          return qTokens.every(t => haystack.includes(t));
+        })
+      : byCat;
+    const sortedGridList = s.sortBy === 'asc' ? gridList.slice().sort((a, b) => a.price - b.price)
+      : s.sortBy === 'desc' ? gridList.slice().sort((a, b) => b.price - a.price)
+      : gridList;
+    const gridItems = sortedGridList.map(p => {
       const cat = this.catOf(p.id);
       return {
         ...p, priceTxt: this.fmt(p.price),
         catTitle: cat ? cat.title : '',
         open: () => this.openDetail(p.id),
+        openKey: this.keyActivate(() => this.openDetail(p.id)),
         add: e => { e.stopPropagation(); this.add(p.id); }
       };
     });
@@ -946,6 +1013,7 @@ class Component extends DCLogic {
         arrowBg: hasBg ? '#FFFCF2' : '#16140F',
         arrowColor: hasBg ? '#16140F' : '#FFFCF2',
         select: () => this.openCatalogView(c.id),
+        selectKey: this.keyActivate(() => this.openCatalogView(c.id)),
         enter: () => this.setState({ catHover: i }),
         rot: hovered ? 'rotate(-45deg)' : 'none',
         lift: hovered ? 'translate(-50%,-14px) rotate(-2deg) scale(1.05)' : 'translate(-50%,0)'
@@ -958,13 +1026,16 @@ class Component extends DCLogic {
       bg: activeCat === c.id ? '#16140F' : 'transparent',
       fg: activeCat === c.id ? '#FFFCF2' : '#16140F',
       border: activeCat === c.id ? '#16140F' : 'rgba(22,20,15,.25)',
+      pressed: activeCat === c.id,
       select: () => this.setState({ cat: c.id, q: '' })
     }));
-    const catSubtitle = activeCatObj ? `${activeCatObj.title} — ${activeCatObj.subtitle} · ${byCat.length} perfumes` : `${this.state.products.length} perfumes disponibles en decants de 5 ml.`;
+    const catSubtitle = qTokens.length
+      ? `${gridItems.length} resultado${gridItems.length === 1 ? '' : 's'} para "${s.q.trim()}"`
+      : activeCatObj ? `${activeCatObj.title} — ${activeCatObj.subtitle} · ${byCat.length} perfumes` : `${this.state.products.length} perfumes disponibles en decants de 5 ml.`;
     const showResetCat = activeCat !== 'todos';
     const isHome = s.view !== 'catalog', isCatalog = s.view === 'catalog';
-    const headerVisible = s.scrolled || isCatalog;
-    const headerTransform = headerVisible ? 'translateY(0)' : 'translateY(-100%)';
+    const headerTransform = 'translateY(0)';
+    const headerShadow = s.scrolled ? '0 4px 20px rgba(0,0,0,.12)' : 'none';
 
     const cartItems = s.cart.map(x => {
       const p = this.find(x.id);
@@ -980,6 +1051,8 @@ class Component extends DCLogic {
     const subtotal = cartItems.reduce((t, i) => t + i.price * i.qty, 0);
     const cartCount = s.cart.reduce((t, i) => t + i.qty, 0);
     const isAndreani = s.method === 'andreani';
+    const phoneValid = str => (str.match(/\d/g) || []).length >= 6;
+    const invalidB = bad => bad ? '#C0392B' : '#16140F';
 
     const mobile = s.w < 760, sc = mobile ? Math.min(1, (s.w - 40) / 300) * .74 : 1;
     return {
@@ -1007,7 +1080,7 @@ class Component extends DCLogic {
         };
       }),
       kitNoResults: !!s.kitQ && !s.products.some(p => p.name.toLowerCase().includes(s.kitQ.toLowerCase())),
-      closeKitPicker: () => this.setState({ kitPicker: false }),
+      closeKitPicker: () => { this.setState({ kitPicker: false }); this.syncBodyScroll(); },
       confirmKitPicks: () => this.confirmKitPicks(),
       kitConfirmBg: s.kitPicks.length === 4 ? '#16140F' : '#EDE9DD',
       kitConfirmFg: s.kitPicks.length === 4 ? '#FFFCF2' : '#8C8576',
@@ -1017,10 +1090,10 @@ class Component extends DCLogic {
       waKitHref: this.waLink('¡Hola Graciano! Quiero armar mi Kit Descubrimiento de 4 decants.'),
       showToast: !!s.toast && !s.open, toast: s.toast,
       cartOpen: s.open,
-      openCart: () => this.setState({ open: true }),
-      closeCart: () => this.setState({ open: false }),
+      openCart: () => { this.setState({ open: true }); this.syncBodyScroll(); this.focusModal('[data-cart-close]'); },
+      closeCart: () => { this.setState({ open: false }); this.syncBodyScroll(); },
       goCatalog: () => { this.setState({ open: false }); this.scrollTo('categorias'); },
-      resetCart: () => this.setState({ open: false, done: false }),
+      resetCart: () => { this.setState({ open: false, done: false }); this.syncBodyScroll(); },
       done: s.done, showEmpty: !s.done && !s.cart.length, showItems: !s.done && !!s.cart.length && !s.infoOpen,
       showInfo: !s.done && !!s.cart.length && s.infoOpen,
       cartItems, subtotalTxt: this.fmt(subtotal),
@@ -1041,7 +1114,13 @@ class Component extends DCLogic {
       formEmail: s.formEmail, onFormEmail: e => this.setState({ formEmail: e.target.value, formErr: false }),
       formZona: s.formZona, onFormZona: e => this.setState({ formZona: e.target.value, formErr: false }),
       formErr: s.formErr,
-      formErrMsg: isAndreani ? 'Completá todos los campos con un email válido.' : 'Completá nombre, apellido, teléfono y zona.',
+      nombreBorder: invalidB(s.formErr && !s.formNombre.trim()),
+      apellidoBorder: invalidB(s.formErr && !s.formApellido.trim()),
+      telefonoBorder: invalidB(s.formErr && !phoneValid(s.formTelefono)),
+      direccionBorder: invalidB(s.formErr && isAndreani && !s.formDireccion.trim()),
+      emailBorder: invalidB(s.formErr && isAndreani && !/\S+@\S+\.\S+/.test(s.formEmail)),
+      zonaBorder: invalidB(s.formErr && !isAndreani && !s.formZona.trim()),
+      formErrMsg: isAndreani ? 'Completá todos los campos con un teléfono y email válidos.' : 'Completá nombre, apellido, un teléfono válido y la zona.',
       doneMsg: 'Te abrimos WhatsApp con el resumen de tu pedido: enviá el mensaje para confirmarlo con Graciano. Si no se abrió solo, escribinos directo.',
       backToCart: () => this.setState({ infoOpen: false }),
       confirmOrder: () => {
@@ -1050,11 +1129,11 @@ class Component extends DCLogic {
         let infoMsg;
         if (isAndreani) {
           if (s.cp.length !== 4) return this.setState({ cpErr: true, formErr: true });
-          const valid = s.formNombre.trim() && s.formApellido.trim() && s.formTelefono.trim() && s.formDireccion.trim() && /\S+@\S+\.\S+/.test(s.formEmail);
+          const valid = s.formNombre.trim() && s.formApellido.trim() && phoneValid(s.formTelefono) && s.formDireccion.trim() && /\S+@\S+\.\S+/.test(s.formEmail);
           if (!valid) return this.setState({ formErr: true });
           infoMsg = `¡Hola Graciano! Confirmo mi pedido por Andreani:\n${cartItems.map(lineLabel).join('\n')}\nTotal: ${this.fmt(subtotal)}\n\nDatos de envío:\n${s.formNombre} ${s.formApellido}\nTel: ${s.formTelefono}\nDirección: ${s.formDireccion}, CP ${s.cp}\nEmail para seguimiento: ${s.formEmail}`;
         } else {
-          const valid = s.formNombre.trim() && s.formApellido.trim() && s.formTelefono.trim() && s.formZona.trim();
+          const valid = s.formNombre.trim() && s.formApellido.trim() && phoneValid(s.formTelefono) && s.formZona.trim();
           if (!valid) return this.setState({ formErr: true });
           infoMsg = `¡Hola Graciano! Quiero coordinar la entrega en Córdoba Capital:\n${cartItems.map(lineLabel).join('\n')}\nTotal: ${this.fmt(subtotal)}\n\nDatos:\n${s.formNombre} ${s.formApellido}\nTel: ${s.formTelefono}\nZona: ${s.formZona}`;
         }
@@ -1073,6 +1152,7 @@ class Component extends DCLogic {
         this.setState({ done: true, cart: [], cp: '', infoOpen: false, formNombre: '', formApellido: '', formTelefono: '', formDireccion: '', formEmail: '', formZona: '', formErr: false });
       },
       q: s.q, onQ: e => this.setState({ q: e.target.value }),
+      sortBy: s.sortBy, onSortBy: e => this.setState({ sortBy: e.target.value }),
       catCards, catChips, catSubtitle, showResetCat, resetCat: () => this.setState({ cat: 'todos', q: '' }), gridItems, noResults: gridItems.length === 0,
       isHome, isCatalog,
       openCatalog: () => this.openCatalogView('todos'),
@@ -1080,7 +1160,7 @@ class Component extends DCLogic {
       goCategoriasSection: () => this.goHomeSection('categorias'),
       goOfertaSection: () => this.goHomeSection('oferta'),
       goNosotrosSection: () => this.goHomeSection('nosotros'),
-      fullTotal: this.state.products.length, headerTransform, catLeave,
+      fullTotal: this.state.products.length, headerTransform, headerShadow, catLeave,
       detailOpen: !!s.detail,
       detailImg: detailP ? detailP.img : '',
       detailName: detailP ? detailP.name : '',
@@ -1092,7 +1172,7 @@ class Component extends DCLogic {
       detailDec: () => this.setState(st => ({ detailQty: Math.max(1, st.detailQty - 1) })),
       detailInc: () => this.setState(st => ({ detailQty: Math.min(20, st.detailQty + 1) })),
       detailAddTxt: `Agregar ${s.detailQty} al carrito — ${detailP ? this.fmt(detailP.price * s.detailQty) : ''}`,
-      closeDetail: () => this.setState({ detail: null }),
+      closeDetail: () => { this.setState({ detail: null }); this.syncBodyScroll(); },
       detailAdd: () => { this.add(s.detail, s.detailQty); this.setState({ detail: null }); },
       headlineWords, headlineWord, headlineEnd, highlightStyle,
       quoteStyle, paraStyle, btnsStyle, bulletsStyle
