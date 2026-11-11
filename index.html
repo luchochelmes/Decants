@@ -364,9 +364,9 @@ input{font-family:inherit}
     </div>
 
     <div style="position:sticky;top:108px;z-index:40;background:#FFFCF2;padding-top:4px;padding-bottom:16px;margin-bottom:12px;border-bottom:1px solid rgba(22,20,15,.1)">
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+      <div style="display:flex;gap:8px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin-bottom:14px;padding-bottom:2px">
         <sc-for list="{{ catChips }}" as="c" hint-placeholder-count="7">
-          <button onClick="{{ c.select }}" aria-pressed="{{ c.pressed }}" style="background:{{ c.bg }};color:{{ c.fg }};border:1px solid {{ c.border }};border-radius:9px;padding:9px 15px;font-size:14px;font-weight:600">{{ c.label }}</button>
+          <button onClick="{{ c.select }}" aria-pressed="{{ c.pressed }}" style="background:{{ c.bg }};color:{{ c.fg }};border:1px solid {{ c.border }};border-radius:9px;padding:9px 15px;font-size:14px;font-weight:600;white-space:nowrap;flex-shrink:0">{{ c.label }}</button>
         </sc-for>
       </div>
 
