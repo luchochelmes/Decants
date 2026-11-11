@@ -96,7 +96,7 @@ html{scroll-behavior:smooth}
   [data-hero-btns] a{padding:11px 16px !important;font-size:13px !important;gap:6px !important}
   [data-hero-bullets]{margin-top:28px !important}
 }
-body{margin:0;background:#FFFCF2;color:#16140F;font-family:var(--font-sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{margin:0;background:#FFFCF2;color:#16140F;font-family:var(--font-sans);-webkit-font-smoothing:antialiased;overflow-x:clip}
 *{box-sizing:border-box}
 a{color:#16140F;text-decoration:none}
 a:hover{color:#000}
@@ -535,7 +535,7 @@ input{font-family:inherit}
   </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;whatsapp&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;5493510000000&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;autoRotate&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;whatsapp&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;5493516598378&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;autoRotate&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
 class Component extends DCLogic {
   state = { w: typeof window !== 'undefined' ? window.innerWidth : 1280, idx: 0, q: '', cat: 'todos', view: 'home', cart: [], open: false, now: Date.now(), method: 'andreani', cp: '', cpErr: false, done: false, toast: null, paused: false, dragging: false, dragDeg: 0, scrolled: false, catHover: -1, sprayed: false, detail: null, detailQty: 1, infoOpen: false, formNombre: '', formApellido: '', formTelefono: '', formDireccion: '', formEmail: '', formZona: '', formErr: false, products: [] };
 
@@ -589,7 +589,8 @@ class Component extends DCLogic {
       const p = this.state.products.find(x => x.id === id);
       if (!p) return;
       const next = Math.max(0, (p.stock_ml || 0) + deltaMl);
-      await this.db.from('products').update({ stock_ml: next }).eq('id', id);
+      const { error } = await this.db.rpc('decrement_stock', { p_id: id, p_amount: -deltaMl });
+      if (error) throw error;
       this.setState(s => ({ products: s.products.map(x => x.id === id ? { ...x, stock_ml: next } : x) }));
     } catch (e) {
       console.error('No se pudo actualizar el stock', e);
@@ -739,7 +740,7 @@ class Component extends DCLogic {
     if (!this.state.sprayed) return 'opacity:0;transform:translateY(16px)';
     return `opacity:0;transform:translateY(16px);animation:blockIn .7s cubic-bezier(.2,.8,.2,1) ${delayMs}ms forwards`;
   }
-  wa() { return this.props.whatsapp || '5493510000000'; }
+  wa() { return this.props.whatsapp || '5493516598378'; }
   waLink(msg) { return `https://wa.me/${this.wa()}?text=${encodeURIComponent(msg)}`; }
   find(id) { return id === 'kit' ? this.KIT : this.state.products.find(p => p.id === id); }
 
