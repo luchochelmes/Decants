@@ -510,10 +510,12 @@ class Component extends DCLogic {
     try {
       const dbPatch = { ...patch };
       if ('img' in dbPatch) { dbPatch.image = dbPatch.img; delete dbPatch.img; }
-      await this.db().from('products').update(dbPatch).eq('id', id);
+      const { error } = await this.db().from('products').update(dbPatch).eq('id', id);
+      if (error) throw error;
     } catch (e) {
       console.error('No se pudo guardar', e);
-      this.flash('Error guardando el cambio');
+      this.flash('No se guardó el cambio: ' + (e.message || 'error desconocido'));
+      this.loadProducts();
     }
   }
   async uploadImage(id, file) {
