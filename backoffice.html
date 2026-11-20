@@ -107,10 +107,10 @@ input,select{font-family:inherit;color:#16140F}
       <sc-if value="{{ vResumen }}" hint-placeholder-val="{{ true }}">
         <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
           <label style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#5E584B">Desde
-            <input type="date" value="{{ dateFrom }}" onChange="{{ onDateFrom }}" style="border:1.5px solid #16140F;border-radius:999px;padding:7px 12px;font-size:13px;background:#FFFFFF"></input>
+            <input type="date" value="{{ dateFrom }}" onInput="{{ onDateFrom }}" style="border:1.5px solid #16140F;border-radius:999px;padding:7px 12px;font-size:13px;background:#FFFFFF"></input>
           </label>
           <label style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#5E584B">Hasta
-            <input type="date" value="{{ dateTo }}" onChange="{{ onDateTo }}" style="border:1.5px solid #16140F;border-radius:999px;padding:7px 12px;font-size:13px;background:#FFFFFF"></input>
+            <input type="date" value="{{ dateTo }}" onInput="{{ onDateTo }}" style="border:1.5px solid #16140F;border-radius:999px;padding:7px 12px;font-size:13px;background:#FFFFFF"></input>
           </label>
           <sc-if value="{{ hasDateFilter }}" hint-placeholder-val="{{ false }}">
             <button onClick="{{ clearDates }}" style="border:none;background:none;font-weight:600;font-size:13px;text-decoration:underline;text-underline-offset:2px">Limpiar</button>
@@ -185,8 +185,8 @@ input,select{font-family:inherit;color:#16140F}
             </sc-for>
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-            <input type="date" value="{{ dateFrom }}" onChange="{{ onDateFrom }}" title="Desde" style="border:1.5px solid #16140F;border-radius:999px;padding:9px 12px;font-size:13px;background:#FFFFFF"></input>
-            <input type="date" value="{{ dateTo }}" onChange="{{ onDateTo }}" title="Hasta" style="border:1.5px solid #16140F;border-radius:999px;padding:9px 12px;font-size:13px;background:#FFFFFF"></input>
+            <input type="date" value="{{ dateFrom }}" onInput="{{ onDateFrom }}" title="Desde" style="border:1.5px solid #16140F;border-radius:999px;padding:9px 12px;font-size:13px;background:#FFFFFF"></input>
+            <input type="date" value="{{ dateTo }}" onInput="{{ onDateTo }}" title="Hasta" style="border:1.5px solid #16140F;border-radius:999px;padding:9px 12px;font-size:13px;background:#FFFFFF"></input>
             <select value="{{ metodoF }}" onChange="{{ onMetodo }}" style="border:1.5px solid #16140F;border-radius:999px;padding:9px 14px;font-size:13px;font-weight:600;background:#FFFFFF">
               <option value="todos">Todos los envíos</option>
               <option value="andreani">Andreani</option>
